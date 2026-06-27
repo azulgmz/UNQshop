@@ -39,6 +39,10 @@ public abstract class Producto {
 	public String getCategoria() {
 		return categoria;
 	}
+	
+	public ArrayList<Atributo> getAtributos() {
+		return atributos;
+	}
 
 
 	public float getPrecio() {

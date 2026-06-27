@@ -7,4 +7,13 @@ public class Atributo {
 		this.tipo = tipo;
 		this.especificacion = especificacion;
 	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public String getEspecificacion() {
+		return especificacion;
+	}
+
 }

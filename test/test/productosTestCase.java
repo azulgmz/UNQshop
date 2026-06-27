@@ -12,6 +12,7 @@ import static org.mockito.Mockito.*;
 
 import src.Atributo;
 import src.Catalogo;
+import src.Individuales;
 
 class productosTestCase {
 
@@ -25,16 +26,25 @@ class productosTestCase {
 		catalogo = new Catalogo();
 		peso = new Atributo("Peso", "500g");
 		atributos.add(peso);
+		catalogo.registrarIndividual("Harina", "Marolio", "Almacen", atributos, 1500f, 10); // SKU = 1
 	}
 	
 	@Test
 	void testSeRegistraProductoEnElCatalogo() {
 		
-		catalogo.registrarIndividual("Harina", "Marolio", "Almacen", atributos, 1500f, 10);
-		
 		assertTrue(catalogo.tieneProducto("Harina"));    // Comprueba si hay al menos un producto que sea harina
-		assertEquals(10, catalogo.cantidadDe(1));        // Comprueba la cantidad que hay de tal prodcuto
+		assertEquals(10, catalogo.cantidadDe(1));        // Comprueba la cantidad que hay de tal prodcuto (con SKU=1)
 		assertEquals(1, catalogo.cantidadDeProductos()); // Comprueba cuantos productos distintos hay en el catalogo
+	}
+	
+	@Test
+	void testLosProductosDelCatalagoExponenSuInformación() {
+		
+		Individuales harina = (Individuales) catalogo.buscarProducto(1);
+		
+		assertEquals("Harina", harina.getNombre());
+		assertEquals("Peso: 500g.\n", harina.getDescripcion());
+		assertEquals(1500f, harina.precioBase());
 	}
 
 }
