@@ -1,12 +1,12 @@
-package Sistemas;
+package sistemas;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import Productos.Atributo;
-import Productos.Individuales;
-import Productos.Paquete;
-import Productos.Producto;
+import productos.Atributo;
+import productos.Individuales;
+import productos.Paquete;
+import productos.Producto;
 
 public class Catalogo {
 	

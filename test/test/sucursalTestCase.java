@@ -2,13 +2,12 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Sistemas.Catalogo;
-import Sistemas.Sucursal;
+import pedido.Pedido;
+import sistemas.Catalogo;
+import sistemas.Sucursal;
 
 class sucursalTestCase {
 
@@ -30,6 +29,17 @@ class sucursalTestCase {
 		assertTrue(sucursalCorrientes.tieneCatalogo());
 		assertEquals(100000f, sucursalCorrientes.getDineroDisponible());
 		assertEquals("Avenida Corrientes 1661", sucursalCorrientes.getDireccion());
+	}
+	
+	@Test
+	void testLaSurcusalCreaYGuardaPedidos() {
+		 Pedido pedido = sucursalCorrientes.crearPedido("juan@gmail.com", "Juan Domingo Peron 133");
+		 
+		 assertTrue(sucursalCorrientes.tienePedidoActivo(pedido));
+		 
+		 assertEquals("juan@gmail.com", pedido.getMail());
+		 assertEquals("Juan Domingo Peron 133", pedido.getDireccion());
+		 assertTrue(pedido.estaEnEstadoBorrador());
 	}
 
 }

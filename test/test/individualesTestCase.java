@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Productos.Atributo;
-import Productos.Individuales;
-import Sistemas.Catalogo;
+import productos.Atributo;
+import productos.Individuales;
+import sistemas.Catalogo;
 
 class individualesTestCase {
 
