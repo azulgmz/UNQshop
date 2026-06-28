@@ -1,13 +1,13 @@
 package pedido;
 
-public class Borrador implements EstadoDelPedido {
+public class Confirmado implements EstadoDelPedido {
 
 	public Boolean estaEnEstadoBorrador() {
-		return true;
+		return false;
 	}
 
 	public Boolean estaEnEstadoConfirmado() {
-		return false;
+		return true;
 	}
 
 }

@@ -1,6 +1,11 @@
 package pedido;
 
 import java.util.ArrayList;
+
+import envios.Envio;
+import envios.SinEnvioDefinido;
+import metodosDePago.MetodoDePago;
+import metodosDePago.SinMetodoDePagoDefinido;
 import productos.Producto;
 import sistemas.Sucursal;
 
@@ -11,6 +16,8 @@ public class Pedido {
 	private ArrayList<Producto> listaDeProductos;
 	private String              mail;
 	private String              direccion;
+	private MetodoDePago        metodoDePago;
+	private Envio               envio;
 	
 	public Pedido(Sucursal sucursal, EstadoDelPedido estadoActual, ArrayList<Producto> listaDeProductos, String mail, String direccion) {
 		this.sucursal         = sucursal;
@@ -18,6 +25,8 @@ public class Pedido {
 		this.listaDeProductos = listaDeProductos;
 		this.mail             = mail;
 		this.direccion        = direccion;
+		this.metodoDePago     = new SinMetodoDePagoDefinido();
+	    this.envio            = new SinEnvioDefinido();
 	}
 
 	public String getMail() {
@@ -49,6 +58,27 @@ public class Pedido {
 
 	public void eliminarProducto(Producto producto) {
 		listaDeProductos.remove(producto);
+	}
+
+	public void confirmarPedido(MetodoDePago metodoDePago, Envio envio) {
+		this.metodoDePago = metodoDePago;
+		this.envio = envio;
+		
+		sucursal.getCatalogo().descontarStock(listaDeProductos);
+		
+		this.estadoActual = new Confirmado();
+	}
+
+	public Boolean estaSinDefinirMetodoDePago() {
+		return metodoDePago.esSinDefinir();
+	}
+
+	public Boolean estaSinDefinirEnvio() {
+		return envio.esSinDefinir();
+	}
+
+	public Boolean estaEnEstadoConfirmado() {
+		return estadoActual.estaEnEstadoConfirmado();
 	}
 
 }

@@ -2,10 +2,13 @@ package test;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import envios.RetiroEnSucursal;
+import metodosDePago.BilleteraVirtual;
 import pedido.Pedido;
 import productos.Atributo;
 import productos.Individuales;
@@ -70,6 +73,23 @@ class pedidoTestCase {
 		pedido.eliminarProducto(monitor); // Se elimina 'monitor' del pedido
 		assertFalse(pedido.agregoA(1));   // Se verifica que se elimino un Monitor SnapDragon del pedido
 		assertTrue(pedido.estaEnEstadoBorrador());
+	}
+	
+	@Test
+	void testIUnPedidoCuandoSeConfirmaBajaElStockDelCatalogo() {
+		
+		Individuales monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+		BilleteraVirtual billeteraDummy = mock(BilleteraVirtual.class);
+		RetiroEnSucursal retiroDummy = mock(RetiroEnSucursal.class);
+		
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		
+		pedido.confirmarPedido(billeteraDummy, retiroDummy);
+		assertEquals(96, catalogoCorrientes.cantidadDe(1)); // Se verifica que el stock de 'Monitor' baja
+		assertTrue(pedido.estaEnEstadoConfirmado());        // Se verifica que cambio el estado del pedido
 	}
 		
 

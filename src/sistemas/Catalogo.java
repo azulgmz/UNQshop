@@ -87,7 +87,6 @@ public class Catalogo {
 	}
 
 	public void descontarStockDe(Producto producto) {
-		asertarQueNoSePuedeDescontarUnStockQueEs0(producto);
 		producto.descontarUno();
 	}
 
@@ -99,6 +98,14 @@ public class Catalogo {
 
 	public void tieneStockDe(Producto producto) {
 		asertarQueNoSePuedeDescontarUnStockQueEs0(producto);
+	}
+
+	public void descontarStock(ArrayList<Producto> listaDeProductos) {
+		int lista = listaDeProductos.size();
+		
+		for(int i=0; i < lista; i++) {
+			descontarStockDe(listaDeProductos.get(i));
+		}
 	}
 
 }
