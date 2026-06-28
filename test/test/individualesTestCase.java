@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.*;
+
 
 import src.Atributo;
 import src.Catalogo;
 import src.Individuales;
 
-class productosTestCase {
+class individualesTestCase {
 
 	private Catalogo catalogo;
 	private ArrayList<Atributo> atributos;
@@ -24,27 +24,28 @@ class productosTestCase {
 	public void setUp() {
 		atributos = new ArrayList<Atributo>();
 		catalogo = new Catalogo();
-		peso = new Atributo("Peso", "500g");
+		peso = new Atributo("Peso", "250g");
 		atributos.add(peso);
-		catalogo.registrarIndividual("Harina", "Marolio", "Almacen", atributos, 1500f, 10); // SKU = 1
+		catalogo.registrarIndividual("Teclado", "SnapDragon", "Periferico", atributos, 6500f, 10); // SKU = 1
 	}
 	
 	@Test
-	void testSeRegistraProductoEnElCatalogo() {
+	void testSeRegistraProductoIndividualEnElCatalogo() {
 		
-		assertTrue(catalogo.tieneProducto("Harina"));    // Comprueba si hay al menos un producto que sea harina
+		assertTrue(catalogo.tieneProducto("Teclado"));    // Comprueba si hay al menos un producto que sea harina
 		assertEquals(10, catalogo.cantidadDe(1));        // Comprueba la cantidad que hay de tal prodcuto (con SKU=1)
 		assertEquals(1, catalogo.cantidadDeProductos()); // Comprueba cuantos productos distintos hay en el catalogo
 	}
 	
 	@Test
-	void testLosProductosDelCatalagoExponenSuInformación() {
+	void testLosProductosIndividualesDelCatalagoExponenSuInformación() {
 		
-		Individuales harina = (Individuales) catalogo.buscarProducto(1);
+		Individuales teclado = (Individuales) catalogo.buscarProducto(1);
 		
-		assertEquals("Harina", harina.getNombre());
-		assertEquals("Peso: 500g.\n", harina.getDescripcion());
-		assertEquals(1500f, harina.precioBase());
+		assertEquals("Teclado", teclado.getNombre());
+		assertEquals("Peso: 250g.\n", teclado.getDescripcion());
+		assertEquals(1500f, teclado.precioFinal());
 	}
-
+	
+	
 }

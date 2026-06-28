@@ -14,6 +14,9 @@ public class Catalogo {
 	}
 
 	public void registrarIndividual(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
+		if(precio < 0) {
+			throw new IllegalArgumentException("El descuento no puede ser negativo");
+		} 
 		ultimoSKU++;
 		Individuales productoNuevo = new Individuales(ultimoSKU, nombre, marca, categoria, atributos, precio, cantidad);
 		productos.add(productoNuevo);
@@ -48,6 +51,15 @@ public class Catalogo {
 
 	public int cantidadDeProductos() {
 		return productos.size();
+	}
+
+	public void registrarPaquete(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye, float precio, int descuento, int cantidad) {
+		if(descuento < 0 || precio < 0) {
+			throw new IllegalArgumentException("El descuento y/o precio no puede ser negativo");
+		}
+		ultimoSKU++;
+		Paquete productoNuevo = new Paquete(ultimoSKU, nombre, marca, categoria, atributos, productosQueIncluye, precio, descuento,cantidad);
+		productos.add(productoNuevo);
 	}
 
 }

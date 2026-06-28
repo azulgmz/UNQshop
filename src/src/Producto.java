@@ -53,4 +53,8 @@ public abstract class Producto {
 	public int getCantidad() {
 		return cantidad;
 	}
+	
+	public abstract float precioFinal();
+	
+	public abstract String getDescripcion();
 }

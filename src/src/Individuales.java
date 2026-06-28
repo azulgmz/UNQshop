@@ -19,7 +19,7 @@ public class Individuales extends Producto {
 		return descripcion;
 	}
 
-	public float precioBase() {
+	public float precioFinal() {
 		return getPrecio();
 	}
 	
