@@ -26,7 +26,7 @@ public class Paquete extends Producto {
 	}
 	
 	public float precioFinal() {
-		int precioTotal = 0;
+		float precioTotal = 0;
 		int cantidadDeProductos = productosQueIncluye.size(); 
 		
 		for (int i=0; i < cantidadDeProductos; i++) {
@@ -35,7 +35,7 @@ public class Paquete extends Producto {
 		if (descuento == 100) {
 			return precioTotal;
 		}
-		return precioTotal -= (1 - 0*descuento);
+		return precioTotal *= (1 - (descuento/100f));
 	}
 
 }

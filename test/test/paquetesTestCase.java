@@ -76,9 +76,26 @@ class paquetesTestCase {
 		
 		assertEquals("Pack para computadora", packParaComputadora.getNombre());
 		assertEquals("Peso: 250g.\n" + "Peso: 50g.\n" + "Peso: 150g.\n" + "Peso: 25g.\n", packParaComputadora.getDescripcion());
-		assertEquals(22999, packParaComputadora.precioFinal());
+		assertEquals(20700, packParaComputadora.precioFinal());
 	}
 	
+	@Test
+	void testLosProductosPaquetesTambiénPuedenTenerIncluidosPaquetes() {
+		
+		catalogo.registrarIndividual("Microfono", "SnapDragon", "Periferico", a4, 1500f, 10);    // SKU = 6
+	
+		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
+		Individuales microfono = (Individuales) catalogo.buscarProducto(6);
+		
+		ArrayList<Producto> productos2 = new ArrayList<>(productos);
+		productos2.add(packParaComputadora);
+		productos2.add(microfono);
+		
+		catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, 2);   // SKU = 7
+		
+		assertEquals(27120.002, catalogo.buscarProducto(7).precioFinal(), 0.01f);
+		// Se suma el precio del paquete 'Pack para computadora' + el precio del 'Microfono' y el descuento del paquete 'Pack para computadora 2'
+	}
 	
 
 }
