@@ -14,12 +14,24 @@ public class Catalogo {
 	}
 
 	public void registrarIndividual(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
-		if(precio < 0) {
-			throw new IllegalArgumentException("El descuento no puede ser negativo");
-		} 
+		asertarQueNoTengaPrecioNegativo(precio);
+		asertarQueNoTengaStockNegativo(cantidad);
+		
 		ultimoSKU++;
 		Individuales productoNuevo = new Individuales(ultimoSKU, nombre, marca, categoria, atributos, precio, cantidad);
 		productos.add(productoNuevo);
+	}
+
+	private void asertarQueNoTengaStockNegativo(int cantidad) {
+		if(cantidad < 0) {
+			throw new IllegalArgumentException("El stock no puede ser negativo");
+		}
+	}
+
+	private void asertarQueNoTengaPrecioNegativo(float precio) {
+		if(precio < 0) {
+			throw new IllegalArgumentException("El precio no puede ser negativo");
+		}
 	}
 
 	public Producto buscarProducto(int SKU) {

@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,8 +45,31 @@ class individualesTestCase {
 		
 		assertEquals("Teclado", teclado.getNombre());
 		assertEquals("Peso: 250g.\n", teclado.getDescripcion());
-		assertEquals(1500f, teclado.precioFinal());
+		assertEquals(6500f, teclado.precioFinal());
 	}
+	
+	@Test
+	void testNoSePuedeRegistrarUnProductoConUnPrecioMenorA0() {
+		
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, -1f, 10));
+		
+		 assertEquals("El precio no puede ser negativo", error.getMessage());
+		
+		 assertEquals(1, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
+	}
+	
+	@Test
+	void testNoSePuedeRegistrarUnProductoConUnStockMenorA0() {
+		
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 1000f, -1));
+		
+		 assertEquals("El stock no puede ser negativo", error.getMessage());
+		
+		 assertEquals(1, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
+	}
+	
+	
+	
 	
 	
 }
