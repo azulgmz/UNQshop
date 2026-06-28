@@ -68,9 +68,17 @@ public class Catalogo {
 	public void registrarPaquete(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye, float precio, int descuento, int cantidad) {
 		asertarQueNoTengaPrecioNegativo(precio);
 		asertarQueNoTengaStockNegativo(cantidad);
+		asertarQueTengaAlMenosUnProducto(productosQueIncluye);
+		
 		ultimoSKU++;
 		Paquete productoNuevo = new Paquete(ultimoSKU, nombre, marca, categoria, atributos, productosQueIncluye, precio, descuento,cantidad);
 		productos.add(productoNuevo);
+	}
+
+	private void asertarQueTengaAlMenosUnProducto(ArrayList<Producto> productosQueIncluye) {
+		if(productosQueIncluye.isEmpty()) {
+			throw new IllegalArgumentException("El paquete debe tener al menos un producto");
+		}
 	}
 
 }

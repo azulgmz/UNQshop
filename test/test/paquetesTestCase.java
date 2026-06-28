@@ -100,10 +100,11 @@ class paquetesTestCase {
 	
 	@Test
 	void testNoSePuedeRegistrarUnPaqueteConUnPrecioMenorA0() {
+		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
+		ArrayList<Producto> productos2 = new ArrayList<>(productos);
+		productos2.add(packParaComputadora);
 		
-		ArrayList<Producto> dummyProductos = new ArrayList<>();
-		
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, dummyProductos, -1, 40, 2));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, -1, 40, 2));
 		 																											// SKU = 6
 		 assertEquals("El precio no puede ser negativo", error.getMessage());
 		
@@ -111,11 +112,12 @@ class paquetesTestCase {
 	}
 	
 	@Test
-	void testNoSePuedeRegistrarUnProductoConUnStockMenorA0() {
+	void testNoSePuedeRegistrarUnPaqueteConUnStockMenorA0() {
+		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
+		ArrayList<Producto> productos2 = new ArrayList<>(productos);
+		productos2.add(packParaComputadora);
 		
-		ArrayList<Producto> dummyProductos = new ArrayList<>();
-		
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, dummyProductos, 0, 40, -1));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, -1));
 																													// SKU = 6
 		 assertEquals("El stock no puede ser negativo", error.getMessage());
 		
@@ -123,16 +125,28 @@ class paquetesTestCase {
 	}
 	
 	@Test
-	void testSePuedeRegistrarUnProductoConUnStock0() {
-		
-		 ArrayList<Producto> dummyProductos = new ArrayList<>();
+	void testSePuedeRegistrarUnPaqueteConUnStock0() {
+		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
+		ArrayList<Producto> productos2 = new ArrayList<>(productos);
+		productos2.add(packParaComputadora);
 		 
-		 catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, dummyProductos, 0, 40, 0);
+		 catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, 0);
 							// SKU = 6
 			
 		 assertTrue(catalogo.tieneProducto("Pack para computadora 2")); // Verifica que se registro el producto 
 		 assertEquals(0, catalogo.cantidadDe(6)); 		                // Verifica que el prefio sea 0
 		 assertEquals(6, catalogo.cantidadDeProductos());               // Verifica que se sumo al catalogo
+	}
+	
+	@Test
+	void testNoSePuedeRegistrarUnPaqueteQueNoTieneProdcutos() {
+		
+		 ArrayList<Producto> productos2 = new ArrayList<>();
+		 
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, 10));
+			                                                                                                    // SKU = 6
+		 assertEquals("El paquete debe tener al menos un producto", error.getMessage());
+		 assertEquals(5, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
 	}
 	
 
