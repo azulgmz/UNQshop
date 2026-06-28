@@ -33,7 +33,7 @@ class individualesTestCase {
 	@Test
 	void testSeRegistraProductoIndividualEnElCatalogo() {
 		
-		assertTrue(catalogo.tieneProducto("Teclado"));    // Comprueba si hay al menos un producto que sea harina
+		assertTrue(catalogo.tieneProducto("Teclado"));    // Comprueba si hay al menos un producto que sea teclado
 		assertEquals(10, catalogo.cantidadDe(1));        // Comprueba la cantidad que hay de tal prodcuto (con SKU=1)
 		assertEquals(1, catalogo.cantidadDeProductos()); // Comprueba cuantos productos distintos hay en el catalogo
 	}
@@ -68,7 +68,27 @@ class individualesTestCase {
 		 assertEquals(1, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
 	}
 	
+	@Test
+	void testSePuedeRegistrarUnProductoConUnPrecio0() {
+		
+		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 0f, 10); // SKU = 2
 	
+		 assertTrue(catalogo.tieneProducto("Mousepad"));          // Verifica que se registro el producto 
+		 assertEquals(0, catalogo.buscarProducto(2).getPrecio()); // Verifica que el prefio sea 0
+		 assertEquals(2, catalogo.cantidadDeProductos());         // Verifica que se sumo al catalogo
+		 
+	}
+	
+	@Test
+	void testSePuedeRegistrarUnProductoConUnStock0() {
+		 
+		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 100f, 0); // SKU = 2
+			
+		 assertTrue(catalogo.tieneProducto("Mousepad"));    // Verifica que se registro el producto 
+		 assertEquals(0, catalogo.cantidadDe(2)); 			// Verifica que el prefio sea 0
+		 assertEquals(2, catalogo.cantidadDeProductos());   // Verifica que se sumo al catalogo
+	}
+
 	
 	
 	

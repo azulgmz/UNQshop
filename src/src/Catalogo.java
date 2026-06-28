@@ -66,9 +66,8 @@ public class Catalogo {
 	}
 
 	public void registrarPaquete(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye, float precio, int descuento, int cantidad) {
-		if(descuento < 0 || precio < 0) {
-			throw new IllegalArgumentException("El descuento y/o precio no puede ser negativo");
-		}
+		asertarQueNoTengaPrecioNegativo(precio);
+		asertarQueNoTengaStockNegativo(cantidad);
 		ultimoSKU++;
 		Paquete productoNuevo = new Paquete(ultimoSKU, nombre, marca, categoria, atributos, productosQueIncluye, precio, descuento,cantidad);
 		productos.add(productoNuevo);

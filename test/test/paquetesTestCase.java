@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -95,6 +96,43 @@ class paquetesTestCase {
 		
 		assertEquals(27120.002, catalogo.buscarProducto(7).precioFinal(), 0.01f);
 		// Se suma el precio del paquete 'Pack para computadora' + el precio del 'Microfono' y el descuento del paquete 'Pack para computadora 2'
+	}
+	
+	@Test
+	void testNoSePuedeRegistrarUnPaqueteConUnPrecioMenorA0() {
+		
+		ArrayList<Producto> dummyProductos = new ArrayList<>();
+		
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, dummyProductos, -1, 40, 2));
+		 																											// SKU = 6
+		 assertEquals("El precio no puede ser negativo", error.getMessage());
+		
+		 assertEquals(5, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
+	}
+	
+	@Test
+	void testNoSePuedeRegistrarUnProductoConUnStockMenorA0() {
+		
+		ArrayList<Producto> dummyProductos = new ArrayList<>();
+		
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, dummyProductos, 0, 40, -1));
+																													// SKU = 6
+		 assertEquals("El stock no puede ser negativo", error.getMessage());
+		
+		 assertEquals(5, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
+	}
+	
+	@Test
+	void testSePuedeRegistrarUnProductoConUnStock0() {
+		
+		 ArrayList<Producto> dummyProductos = new ArrayList<>();
+		 
+		 catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, dummyProductos, 0, 40, 0);
+							// SKU = 6
+			
+		 assertTrue(catalogo.tieneProducto("Pack para computadora 2")); // Verifica que se registro el producto 
+		 assertEquals(0, catalogo.cantidadDe(6)); 		                // Verifica que el prefio sea 0
+		 assertEquals(6, catalogo.cantidadDeProductos());               // Verifica que se sumo al catalogo
 	}
 	
 
