@@ -1,4 +1,4 @@
-package src;
+package Productos;
 
 public class Atributo {
 	private String tipo, especificacion;

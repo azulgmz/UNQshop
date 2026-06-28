@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.Atributo;
-import src.Catalogo;
-import src.Individuales;
-import src.Producto;
-import src.Paquete;
+import Productos.Atributo;
+import Productos.Individuales;
+import Productos.Paquete;
+import Productos.Producto;
+import Sistemas.Catalogo;
 
 class paquetesTestCase {
 	
