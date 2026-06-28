@@ -24,7 +24,7 @@ public class Pedido {
 		return mail;
 	}
 
-	public Object getDireccion() {
+	public String getDireccion() {
 		return direccion;
 	}
 

@@ -39,7 +39,7 @@ class sucursalTestCase {
 		 
 		 assertEquals("juan@gmail.com", pedido.getMail());
 		 assertEquals("Juan Domingo Peron 133", pedido.getDireccion());
-		 assertTrue(pedido.estaEnEstadoBorrador());
+		 assertTrue(pedido.estaEnEstadoBorrador()); // Cuando se crea el pedido debe estar en estado Borrador para que se pueda modificar
 	}
 
 }
