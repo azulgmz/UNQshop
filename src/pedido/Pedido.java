@@ -33,7 +33,7 @@ public class Pedido {
 	}
 
 	public void agregarProducto(Producto producto) {
-		sucursal.getCatalogo().descontarStockDe(producto);
+		sucursal.getCatalogo().tieneStockDe(producto);
 		listaDeProductos.add(producto);
 	}
 
@@ -45,6 +45,10 @@ public class Pedido {
 			}
 		}
 		return false;
+	}
+
+	public void eliminarProducto(Producto producto) {
+		listaDeProductos.remove(producto);
 	}
 
 }

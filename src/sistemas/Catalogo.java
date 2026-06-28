@@ -93,8 +93,12 @@ public class Catalogo {
 
 	private void asertarQueNoSePuedeDescontarUnStockQueEs0(Producto producto) {
 		if(producto.getCantidad() == 0) {
-			throw new IllegalArgumentException("No hay stock de " + producto.getNombre() + ", no se puede agregar.");
+			throw new IllegalArgumentException("No hay stock de " + producto.getNombre() + ".");
 		}
+	}
+
+	public void tieneStockDe(Producto producto) {
+		asertarQueNoSePuedeDescontarUnStockQueEs0(producto);
 	}
 
 }

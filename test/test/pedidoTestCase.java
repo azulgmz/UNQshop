@@ -39,27 +39,37 @@ class pedidoTestCase {
 	}             
 	
 	@Test
-	void testCuandoUnPedidoAgregaUnProductoBajaElStockDelCatalogo() {
-		
+	void testUnPedidoPuedeAgregarUnProductoSiEstaEnEstadoBorrador() {
+
 		pedido.agregarProducto(catalogoCorrientes.buscarProducto(1)); // Se agrega 'monitor' al pedido
 		
-		assertEquals(99, catalogoCorrientes.cantidadDe(1));  // Se verifica que se bajo uno en stock de 'Monitor'
-		assertEquals(100, catalogoCorrientes.cantidadDe(2)); // Se verifica que el stock de 'CPU' queda intacto
-		
-		assertTrue(pedido.agregoA(1));  // Se verifica que se agrego un Monitor SnapDragon al pedido
+		assertTrue(pedido.agregoA(1));              // Se verifica que se agrego un Monitor SnapDragon al pedido
+		assertTrue(pedido.estaEnEstadoBorrador());
 	}
 	
 	@Test
-	void testCuandoUnPedidoNoPuedeAgregarUnProductoQueTenga0Stock() {
+	void testUnPedidoNoPuedeAgregarUnProductoQueTenga0Stock() {
 		
 		catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0); // SKU = 3
 		
 		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.agregarProducto(catalogoCorrientes.buscarProducto(3)));
 																												
-		assertEquals("No hay stock de " + catalogoCorrientes.buscarProducto(3).getNombre() + ", no se puede agregar.", error.getMessage());
+		assertEquals("No hay stock de " + catalogoCorrientes.buscarProducto(3).getNombre() + ".", error.getMessage());
 		
 		assertEquals(0, catalogoCorrientes.cantidadDe(3)); // Se verifica que el stock de 'Mouse' queda intacto
 		assertFalse(pedido.agregoA(3));                      // Se verifica que no se agrego el 'Mouse' al pedido
+	}
+	
+	@Test
+	void testIUnPedidoPuedeEliminarUnProductoSiEstaEnEstadoBorrador() {
+		
+		Individuales monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+		
+		pedido.agregarProducto(monitor);
+		
+		pedido.eliminarProducto(monitor); // Se elimina 'monitor' del pedido
+		assertFalse(pedido.agregoA(1));   // Se verifica que se elimino un Monitor SnapDragon del pedido
+		assertTrue(pedido.estaEnEstadoBorrador());
 	}
 		
 
