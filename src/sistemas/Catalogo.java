@@ -87,7 +87,14 @@ public class Catalogo {
 	}
 
 	public void descontarStockDe(Producto producto) {
+		asertarQueNoSePuedeDescontarUnStockQueEs0(producto);
 		producto.descontarUno();
+	}
+
+	private void asertarQueNoSePuedeDescontarUnStockQueEs0(Producto producto) {
+		if(producto.getCantidad() == 0) {
+			throw new IllegalArgumentException("No hay stock de " + producto.getNombre() + ", no se puede agregar.");
+		}
 	}
 
 }
