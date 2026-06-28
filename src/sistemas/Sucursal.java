@@ -53,4 +53,8 @@ public class Sucursal {
 		return pedidosActivos.contains(pedido);
 	}
 
+	public Catalogo getCatalogo() {
+		return catalogo;
+	}
+
 }

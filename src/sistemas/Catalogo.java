@@ -86,4 +86,8 @@ public class Catalogo {
 		}
 	}
 
+	public void descontarStockDe(Producto producto) {
+		producto.descontarUno();
+	}
+
 }

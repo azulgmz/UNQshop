@@ -1,7 +1,6 @@
 package pedido;
 
 import java.util.ArrayList;
-
 import productos.Producto;
 import sistemas.Sucursal;
 
@@ -31,6 +30,21 @@ public class Pedido {
 
 	public Boolean estaEnEstadoBorrador() {
 		return estadoActual.estaEnEstadoBorrador();
+	}
+
+	public void agregarProducto(Producto producto) {
+		sucursal.getCatalogo().descontarStockDe(producto);
+		listaDeProductos.add(producto);
+	}
+
+	public Boolean agregoA(int SKU) {
+		int cantidadDeProductos = listaDeProductos.size();
+		for (int i=0; i < cantidadDeProductos; i++) {
+			if(listaDeProductos.get(i).getSKU() == SKU) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

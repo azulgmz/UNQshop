@@ -57,6 +57,9 @@ public abstract class Producto {
 	public abstract float precioFinal();
 	
 	public abstract String getDescripcion();
-	
+
+	public void descontarUno() {
+		this.cantidad--;
+	}
 	
 }
