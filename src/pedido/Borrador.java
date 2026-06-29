@@ -10,4 +10,13 @@ public class Borrador implements EstadoDelPedido {
 		return false;
 	}
 
+	public void cancelarPedido(Pedido pedido) {
+		pedido.cancelarse();
+		pedido.getSucursal().eliminarPedidoActivo(pedido);
+	}
+
+	public Boolean estaEnEstadoCancelado() {
+		return false;
+	}
+
 }

@@ -57,4 +57,8 @@ public class Sucursal {
 		return catalogo;
 	}
 
+	public void eliminarPedidoActivo(Pedido pedido) {
+		pedidosActivos.remove(pedido);
+	}
+
 }

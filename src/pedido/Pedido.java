@@ -81,4 +81,20 @@ public class Pedido {
 		return estadoActual.estaEnEstadoConfirmado();
 	}
 
+	public void cancelarPedido() {
+		estadoActual.cancelarPedido(this);
+	}
+
+	public void cancelarse() {
+		this.estadoActual = new Cancelado();
+	}
+
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	public Boolean estaEnEstadoCancelado() {
+		return estadoActual.estaEnEstadoCancelado();
+	}
+
 }

@@ -6,4 +6,8 @@ public interface EstadoDelPedido {
 
 	Boolean estaEnEstadoConfirmado();
 
+	void cancelarPedido(Pedido pedido);
+
+	Boolean estaEnEstadoCancelado();
+
 }

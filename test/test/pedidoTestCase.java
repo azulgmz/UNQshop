@@ -91,6 +91,15 @@ class pedidoTestCase {
 		assertEquals(96, catalogoCorrientes.cantidadDe(1)); // Se verifica que el stock de 'Monitor' baja
 		assertTrue(pedido.estaEnEstadoConfirmado());        // Se verifica que cambio el estado del pedido
 	}
+	
+	@Test
+	void testIUnPedidoEnEstadoBorradorSePuedeCancelar() {
+		
+		assertTrue(pedido.estaEnEstadoBorrador());                 // Se verifica que esta como Borrador
+		pedido.cancelarPedido();
+		assertTrue(pedido.estaEnEstadoCancelado());                // Se verifica que cambio el estado del pedido
+		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
+	}
 		
 
 }

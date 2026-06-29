@@ -1,18 +1,22 @@
 package pedido;
 
-public class Confirmado implements EstadoDelPedido {
+public class Cancelado implements EstadoDelPedido {
 
 	public Boolean estaEnEstadoBorrador() {
 		return false;
 	}
 
-	public Boolean estaEnEstadoConfirmado() {
-		return true;
-	}
 	
-	public Boolean estaEnEstadoCancelado() {
+	public Boolean estaEnEstadoConfirmado() {
 		return false;
 	}
 
+	public void cancelarPedido(Pedido pedido) {
+		
+	}
+	
+	public Boolean estaEnEstadoCancelado() {
+		return true;
+	}
 
 }
