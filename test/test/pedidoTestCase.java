@@ -100,6 +100,27 @@ class pedidoTestCase {
 		assertTrue(pedido.estaEnEstadoCancelado());                // Se verifica que cambio el estado del pedido
 		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
 	}
+	
+	@Test
+	void testIUnPedidoEnEstadoConfirmadoSePuedeCancelarYDevuelveElStock() {
+		Individuales monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+		BilleteraVirtual billeteraDummy = mock(BilleteraVirtual.class);
+		RetiroEnSucursal retiroDummy = mock(RetiroEnSucursal.class);
+		
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		
+		pedido.confirmarPedido(billeteraDummy, retiroDummy);
+		// El stock de 'Monitor' en el catalogo pasa de 100 -> 96
+		
+		pedido.cancelarPedido();
+		
+		assertTrue(pedido.estaEnEstadoCancelado());                // Se verifica que cambio el estado del pedido
+		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
+		assertEquals(100, catalogoCorrientes.cantidadDe(1));       // Se verifica que el stock de 'Monitor' vuelve a 100
+	}
 		
 
 }

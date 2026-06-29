@@ -61,5 +61,10 @@ public abstract class Producto {
 	public void descontarUno() {
 		this.cantidad--;
 	}
+
+
+	public void aumentarUno() {
+		this.cantidad++;
+	}
 	
 }

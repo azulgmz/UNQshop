@@ -14,5 +14,11 @@ public class Confirmado implements EstadoDelPedido {
 		return false;
 	}
 
+	public void cancelarPedido(Pedido pedido) {
+		pedido.getSucursal().getCatalogo().devolverStock(pedido.getListaDeProductos());
+		pedido.cancelarse();
+		pedido.getSucursal().eliminarPedidoActivo(pedido);
+	}
+
 
 }

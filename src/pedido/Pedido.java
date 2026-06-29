@@ -97,4 +97,8 @@ public class Pedido {
 		return estadoActual.estaEnEstadoCancelado();
 	}
 
+	public ArrayList<Producto> getListaDeProductos() {
+		return listaDeProductos;
+	}
+
 }

@@ -3,6 +3,7 @@ package sistemas;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
+import pedido.Pedido;
 import productos.Atributo;
 import productos.Individuales;
 import productos.Paquete;
@@ -53,8 +54,8 @@ public class Catalogo {
 	}
 
 	public Boolean tieneProducto(String nombre) {
-		int cantidadDeProdcutos = productos.size();
-		for(int i=0; i < cantidadDeProdcutos ; i++) {
+		int cantidadDeProductos = productos.size();
+		for(int i=0; i < cantidadDeProductos ; i++) {
 			if(productos.get(i).getNombre() == nombre) {
 				return true;
 			}
@@ -107,5 +108,23 @@ public class Catalogo {
 			descontarStockDe(listaDeProductos.get(i));
 		}
 	}
+
+	public void devolverStock(ArrayList<Producto> listaDeProductos) {
+		int cantidad = listaDeProductos.size();
+		for(int i=0; i < cantidad; i++) {
+			sumarProducto(listaDeProductos.get(i));
+		}
+	}
+
+	private void sumarProducto(Producto producto) {
+		int cantidadDeProductos = productos.size();
+		for(int i=0; i < cantidadDeProductos ; i++) {
+			if(productos.get(i).getSKU() == producto.getSKU()) {
+				producto.aumentarUno();
+			}
+		}
+	}
+
+
 
 }
