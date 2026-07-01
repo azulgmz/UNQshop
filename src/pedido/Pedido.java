@@ -101,4 +101,13 @@ public class Pedido {
 		return listaDeProductos;
 	}
 
+	public void cambiarEstado(EstadoDelPedido estado) {
+		estadoActual = estado;
+	}
+	public void reservarStock() {
+		sucursal.getCatalogo().descontarStock(listaDeProductos);
+	}
+	public void devolverStock() {
+		sucursal.getCatalogo().devolverStock(listaDeProductos);
+	}
 }

@@ -1,13 +1,29 @@
 package pedido;
 
-public interface EstadoDelPedido {
+public abstract class EstadoDelPedido {
 
-	Boolean estaEnEstadoBorrador();
-
-	Boolean estaEnEstadoConfirmado();
-
-	void cancelarPedido(Pedido pedido);
-
-	Boolean estaEnEstadoCancelado();
-
+	public Boolean estaEnEstadoBorrador() {
+		return false;
+	}
+	public Boolean estaEnEstadoConfirmado() {
+		return false;
+	}
+	public boolean estaEnEstadoEnPreparación() {
+		return false;
+	}
+	public Boolean estaEnEstadoEnviado() {
+		return false;
+	}
+	public Boolean estaEnEstadoEntregado() {
+		return false;
+	}
+	public Boolean estaEnEstadoCancelado() {
+		return false;
+	}
+	public abstract void avanzarEstado(Pedido pedido);
+	
+	public void cancelarPedido(Pedido pedido) {
+		pedido.cancelarse();
+		pedido.getSucursal().eliminarPedidoActivo(pedido);
+	}
 }

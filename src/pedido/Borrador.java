@@ -1,22 +1,17 @@
 package pedido;
 
-public class Borrador implements EstadoDelPedido {
+public class Borrador extends EstadoDelPedido {
 
+	@Override
 	public Boolean estaEnEstadoBorrador() {
 		return true;
-	}
-
-	public Boolean estaEnEstadoConfirmado() {
-		return false;
 	}
 
 	public void cancelarPedido(Pedido pedido) {
 		pedido.cancelarse();
 		pedido.getSucursal().eliminarPedidoActivo(pedido);
 	}
-
-	public Boolean estaEnEstadoCancelado() {
-		return false;
+	public void avanzarEstado(Pedido pedido) {
+		pedido.cambiarEstado(new Confirmado());
 	}
-
 }
