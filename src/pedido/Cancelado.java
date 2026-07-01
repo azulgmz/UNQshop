@@ -1,22 +1,18 @@
 package pedido;
 
-public class Cancelado implements EstadoDelPedido {
+public class Cancelado extends EstadoDelPedido {
 
-	public Boolean estaEnEstadoBorrador() {
-		return false;
-	}
-
-	
-	public Boolean estaEnEstadoConfirmado() {
-		return false;
+	@Override
+	public Boolean estaEnEstadoCancelado() {
+		return true;
 	}
 
 	public void cancelarPedido(Pedido pedido) {
-		
+		throw new ExceptionMsg("Pedido ya cancelado");
 	}
-	
-	public Boolean estaEnEstadoCancelado() {
-		return true;
+
+	public void avanzarEstado(Pedido pedido) {
+		throw new ExceptionMsg("Pedido cancelado");
 	}
 
 }
