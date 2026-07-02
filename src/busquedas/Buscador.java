@@ -44,5 +44,11 @@ public class Buscador {
 		
 		return productos.filter(p -> p.getCategoria().equals(categoriaABuscar)).toList();
 	}
+
+	public List<Producto> buscarPorDisponibilidad(Catalogo catalogo) {
+		Stream<Producto> productos = convertirAStream(catalogo);
+		
+		return productos.filter(p -> p.getCantidad() > 0).toList();
+	}
 	
 }
