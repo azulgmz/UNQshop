@@ -26,4 +26,7 @@ public abstract class EstadoDelPedido {
 		pedido.cancelarse();
 		pedido.getSucursal().eliminarPedidoActivo(pedido);
 	}
+	public Boolean sePuedeModificarPedido() {
+		return false;
+	}
 }

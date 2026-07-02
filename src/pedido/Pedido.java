@@ -42,8 +42,10 @@ public class Pedido {
 	}
 
 	public void agregarProducto(Producto producto) {
-		sucursal.getCatalogo().tieneStockDe(producto);
-		listaDeProductos.add(producto);
+		if (estadoActual.sePuedeModificarPedido()) {
+			sucursal.getCatalogo().tieneStockDe(producto);
+			listaDeProductos.add(producto);
+		}
 	}
 
 	public Boolean agregoA(int SKU) {
@@ -57,7 +59,9 @@ public class Pedido {
 	}
 
 	public void eliminarProducto(Producto producto) {
-		listaDeProductos.remove(producto);
+		if (estadoActual.sePuedeModificarPedido()) {
+			listaDeProductos.remove(producto);
+		}
 	}
 
 	public void confirmarPedido(MetodoDePago metodoDePago, Envio envio) {
@@ -66,7 +70,7 @@ public class Pedido {
 		
 		sucursal.getCatalogo().descontarStock(listaDeProductos);
 		
-		this.estadoActual = new Confirmado();
+		this.cambiarEstado(new Confirmado());
 	}
 
 	public Boolean estaSinDefinirMetodoDePago() {
@@ -86,7 +90,7 @@ public class Pedido {
 	}
 
 	public void cancelarse() {
-		this.estadoActual = new Cancelado();
+		this.cambiarEstado(new Cancelado());
 	}
 
 	public Sucursal getSucursal() {
@@ -109,5 +113,8 @@ public class Pedido {
 	}
 	public void devolverStock() {
 		sucursal.getCatalogo().devolverStock(listaDeProductos);
+	}
+	public void avanzarEstado() {
+		estadoActual.avanzarEstado(this);
 	}
 }

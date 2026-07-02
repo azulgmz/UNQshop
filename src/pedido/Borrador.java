@@ -14,4 +14,8 @@ public class Borrador extends EstadoDelPedido {
 	public void avanzarEstado(Pedido pedido) {
 		pedido.cambiarEstado(new Confirmado());
 	}
+	@Override
+	public Boolean sePuedeModificarPedido() {
+		return true;
+	}
 }
