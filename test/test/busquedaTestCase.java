@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import busquedas.Buscador;
 import busquedas.BuscarPorNombre;
+import busquedas.BusquedaPorCategoria;
 import busquedas.BusquedaPorPrecioMax;
 import productos.Atributo;
 import productos.Producto;
@@ -58,6 +59,19 @@ class busquedaTestCase {
 	    Buscador buscador =  catalogoCorrientes.getBuscador();
 	    
 	    buscador.setTipoDeBusqueda(new BusquedaPorPrecioMax(100, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosPorCategoria() {
+		
+		
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Hardwar 
+	    
+	    Buscador buscador =  catalogoCorrientes.getBuscador();
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorCategoria("Hardwar", buscador));
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}

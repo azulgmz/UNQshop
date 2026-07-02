@@ -38,5 +38,11 @@ public class Buscador {
 		
 		return productos.filter(p -> p.getPrecio() <= precioMax).toList();
 	}
+
+	public List<Producto> buscarPorCategoria(String categoriaABuscar, Catalogo catalogo) {
+		Stream<Producto> productos = convertirAStream(catalogo);
+		
+		return productos.filter(p -> p.getCategoria().equals(categoriaABuscar)).toList();
+	}
 	
 }
