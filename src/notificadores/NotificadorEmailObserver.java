@@ -16,11 +16,11 @@ public class NotificadorEmailObserver implements PedidoObserver {
 		if (!seDebeNotificar(estadoNuevo)) {
 			return;
 		}
-		else; 
+		else {
 			String titulo = "Tu pedido cambbio de estado";
 			String mensaje = "Tu pedido ahora esta en estado " + nombreEstado(estadoNuevo);
 			mailSender.enviarMail(pedido.getMail(), titulo, mensaje, null);
-		
+		}
 	}
 	private Boolean seDebeNotificar(EstadoDelPedido estado) {
 		return estado.estaEnEstadoConfirmado() || estado.estaEnEstadoEnviado() || estado.estaEnEstadoEntregado();
