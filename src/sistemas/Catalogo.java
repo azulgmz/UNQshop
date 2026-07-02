@@ -1,9 +1,10 @@
 package sistemas;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-import pedido.Pedido;
+import busquedas.Buscador;
 import productos.Atributo;
 import productos.Individuales;
 import productos.Paquete;
@@ -13,10 +14,12 @@ public class Catalogo {
 	
 	private ArrayList<Producto> productos;
 	private int ultimoSKU;
+	private Buscador buscador;
 	
 	public Catalogo() {
 		this.productos = new ArrayList<Producto>();
 		this.ultimoSKU = 0;
+		this.buscador = new Buscador();
 	}
 
 	public void registrarIndividual(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
@@ -123,6 +126,18 @@ public class Catalogo {
 				producto.aumentarUno();
 			}
 		}
+	}
+
+	public Buscador getBuscador() {
+		return buscador;
+	}
+
+	public List<Producto> buscarProductos() {
+		return buscador.getTipoDeBusqueda().buscarProductos(this);
+	}
+
+	public ArrayList<Producto> getProductos() {
+		return productos;
 	}
 
 

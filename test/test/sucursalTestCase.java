@@ -21,6 +21,7 @@ class sucursalTestCase {
 	public void setUp() {
 		catalogoCorrientes = new Catalogo();
 	    sucursalCorrientes = new Sucursal(28062026, catalogoCorrientes, 100000f, "Avenida Corrientes 1661");
+	                                    //  CIUT        CATALOGO         DINERO         DIRECCION
 	}
 	
 	@Test
