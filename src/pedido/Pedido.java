@@ -1,6 +1,8 @@
 package pedido;
 
 import java.util.ArrayList;
+import java.util.List;
+import notificadores.*;
 
 import envios.Envio;
 import envios.SinEnvioDefinido;
@@ -18,6 +20,7 @@ public class Pedido {
 	private String              direccion;
 	private MetodoDePago        metodoDePago;
 	private Envio               envio;
+	private List<PedidoObserver> observers = new ArrayList<>();
 	
 	public Pedido(Sucursal sucursal, EstadoDelPedido estadoActual, ArrayList<Producto> listaDeProductos, String mail, String direccion) {
 		this.sucursal         = sucursal;
@@ -27,6 +30,7 @@ public class Pedido {
 		this.direccion        = direccion;
 		this.metodoDePago     = new SinMetodoDePagoDefinido();
 	    this.envio            = new SinEnvioDefinido();
+	    
 	}
 
 	public String getMail() {
@@ -106,7 +110,9 @@ public class Pedido {
 	}
 
 	public void cambiarEstado(EstadoDelPedido estado) {
+		EstadoDelPedido estadoAnterior = estadoActual;
 		estadoActual = estado;
+		this.notificarObservers(estadoAnterior,estado);
 	}
 	public void reservarStock() {
 		sucursal.getCatalogo().descontarStock(listaDeProductos);
@@ -116,5 +122,16 @@ public class Pedido {
 	}
 	public void avanzarEstado() {
 		estadoActual.avanzarEstado(this);
+	}
+	public void agregarObserver(PedidoObserver observer) {
+		observers.add(observer);
+	}
+	public void quitarObserver(PedidoObserver observer) {
+		observers.remove(observer);
+	}
+	public void notificarObservers(EstadoDelPedido estadoAnterior, EstadoDelPedido estadoNuevo) {
+		for (PedidoObserver observer : observers) {
+			observer.enCambioEstado(this,estadoAnterior,estadoNuevo);
+		}
 	}
 }
