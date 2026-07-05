@@ -2,9 +2,8 @@ package pedido;
 
 public class Enviado extends EstadoDelPedido {
 
-	@Override
-	public Boolean estaEnEstadoEnviado() {
-		return true;
+	public TipoEstado getTipo() {
+		return TipoEstado.ENVIADO;
 	}
 	@Override
 	public void avanzarEstado(Pedido pedido) {
@@ -16,5 +15,10 @@ public class Enviado extends EstadoDelPedido {
 		pedido.devolverStock();
 		super.cancelarPedido(pedido);
 	}
-
+	public Boolean debeNotificar() {
+		return true;
+	}
+	public String getNombre() {
+		return "ENVIADO";
+	}
 }

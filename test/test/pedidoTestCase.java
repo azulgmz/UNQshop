@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import envios.RetiroEnSucursal;
 import metodosDePago.BilleteraVirtual;
 import pedido.Pedido;
+import pedido.TipoEstado;
 import productos.Atributo;
 import productos.Individuales;
 
@@ -47,7 +48,7 @@ class pedidoTestCase {
 		pedido.agregarProducto(catalogoCorrientes.buscarProducto(1)); // Se agrega 'monitor' al pedido
 		
 		assertTrue(pedido.agregoA(1));              // Se verifica que se agrego un Monitor SnapDragon al pedido
-		assertTrue(pedido.estaEnEstadoBorrador());
+		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);
 	}
 	
 	@Test
@@ -72,7 +73,7 @@ class pedidoTestCase {
 		
 		pedido.eliminarProducto(monitor); // Se elimina 'monitor' del pedido
 		assertFalse(pedido.agregoA(1));   // Se verifica que se elimino un Monitor SnapDragon del pedido
-		assertTrue(pedido.estaEnEstadoBorrador());
+		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);
 	}
 	
 	@Test
@@ -89,15 +90,15 @@ class pedidoTestCase {
 		
 		pedido.confirmarPedido(billeteraDummy, retiroDummy);
 		assertEquals(96, catalogoCorrientes.cantidadDe(1)); // Se verifica que el stock de 'Monitor' baja
-		assertTrue(pedido.estaEnEstadoConfirmado());        // Se verifica que cambio el estado del pedido
+		assertEquals(pedido.getEstado(), TipoEstado.CONFIRMADO);        // Se verifica que cambio el estado del pedido
 	}
 	
 	@Test
 	void testIUnPedidoEnEstadoBorradorSePuedeCancelar() {
 		
-		assertTrue(pedido.estaEnEstadoBorrador());                 // Se verifica que esta como Borrador
+		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);                 // Se verifica que esta como Borrador
 		pedido.cancelarPedido();
-		assertTrue(pedido.estaEnEstadoCancelado());                // Se verifica que cambio el estado del pedido
+		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);                // Se verifica que cambio el estado del pedido
 		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
 	}
 	
@@ -117,7 +118,7 @@ class pedidoTestCase {
 		
 		pedido.cancelarPedido();
 		
-		assertTrue(pedido.estaEnEstadoCancelado());                // Se verifica que cambio el estado del pedido
+		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);                // Se verifica que cambio el estado del pedido
 		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
 		assertEquals(100, catalogoCorrientes.cantidadDe(1));       // Se verifica que el stock de 'Monitor' vuelve a 100
 	}

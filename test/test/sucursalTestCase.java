@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import pedido.Pedido;
+import pedido.TipoEstado;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 
@@ -40,7 +41,7 @@ class sucursalTestCase {
 		 
 		 assertEquals("juan@gmail.com", pedido.getMail());
 		 assertEquals("Juan Domingo Peron 133", pedido.getDireccion());
-		 assertTrue(pedido.estaEnEstadoBorrador()); // Cuando se crea el pedido debe estar en estado Borrador para que se pueda modificar
+		 assertEquals(pedido.getEstado(), TipoEstado.BORRADOR); // Cuando se crea el pedido debe estar en estado Borrador para que se pueda modificar
 		 assertTrue(pedido.estaSinDefinirMetodoDePago());
 		 assertTrue(pedido.estaSinDefinirEnvio());
 	}

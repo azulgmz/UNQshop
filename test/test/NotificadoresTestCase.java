@@ -88,7 +88,7 @@ class NotificadoresTestCase {
     void enviaCuponDeFidelizacionAlCancelarDesdeBorrador() {
         pedido.cancelarPedido();
 
-        assertTrue(pedido.estaEnEstadoCancelado());
+        assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);
         assertEquals(1, mailSender.destinatarios.size());
         assertEquals("ana@mail.com", mailSender.destinatarios.get(0));
     }

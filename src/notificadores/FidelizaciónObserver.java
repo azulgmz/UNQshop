@@ -2,6 +2,7 @@ package notificadores;
 
 import pedido.EstadoDelPedido;
 import pedido.Pedido;
+import pedido.TipoEstado;
 
 public class FidelizaciónObserver implements PedidoObserver {
 
@@ -14,7 +15,7 @@ public class FidelizaciónObserver implements PedidoObserver {
 	}
 	@Override
 	public void enCambioEstado(Pedido pedido, EstadoDelPedido estadoAnterior, EstadoDelPedido estadoNuevo) {
-		if (estadoNuevo.estaEnEstadoCancelado()) {
+		if (estadoNuevo.getTipo() == TipoEstado.CANCELADO) {
 			String titulo = "Te regalamos un cupon";
 			String mensaje = "Por la cancelación de tu compra, te regalamos un cupon de " + cuponDescuentoPorcentaje + "% para tu proxima compra";
 			mailSender.enviarMail(pedido.getMail(), titulo, mensaje, null);

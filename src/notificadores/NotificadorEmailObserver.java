@@ -23,13 +23,10 @@ public class NotificadorEmailObserver implements PedidoObserver {
 		}
 	}
 	private Boolean seDebeNotificar(EstadoDelPedido estado) {
-		return estado.estaEnEstadoConfirmado() || estado.estaEnEstadoEnviado() || estado.estaEnEstadoEntregado();
+		return estado.debeNotificar();
 	}
 	private String nombreEstado(EstadoDelPedido estado) {
-		if (estado.estaEnEstadoConfirmado()) return "CONFIRMADO";
-		if (estado.estaEnEstadoEnviado()) return "ENVIADO";
-		if (estado.estaEnEstadoEntregado()) return "ENTREGADO";
-		else return "";
+		return estado.getNombre();
 	}
 
 }

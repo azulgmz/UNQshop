@@ -2,9 +2,8 @@ package pedido;
 
 public class Borrador extends EstadoDelPedido {
 
-	@Override
-	public Boolean estaEnEstadoBorrador() {
-		return true;
+	public TipoEstado getTipo() {
+		return TipoEstado.BORRADOR;
 	}
 
 	public void cancelarPedido(Pedido pedido) {
@@ -17,5 +16,8 @@ public class Borrador extends EstadoDelPedido {
 	@Override
 	public Boolean sePuedeModificarPedido() {
 		return true;
+	}
+	public String getNombre() {
+		return "BORRADOR";
 	}
 }

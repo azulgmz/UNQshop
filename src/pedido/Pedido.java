@@ -41,9 +41,6 @@ public class Pedido {
 		return direccion;
 	}
 
-	public Boolean estaEnEstadoBorrador() {
-		return estadoActual.estaEnEstadoBorrador();
-	}
 
 	public void agregarProducto(Producto producto) {
 		if (estadoActual.sePuedeModificarPedido()) {
@@ -85,9 +82,6 @@ public class Pedido {
 		return envio.esSinDefinir();
 	}
 
-	public Boolean estaEnEstadoConfirmado() {
-		return estadoActual.estaEnEstadoConfirmado();
-	}
 
 	public void cancelarPedido() {
 		estadoActual.cancelarPedido(this);
@@ -101,9 +95,6 @@ public class Pedido {
 		return sucursal;
 	}
 
-	public Boolean estaEnEstadoCancelado() {
-		return estadoActual.estaEnEstadoCancelado();
-	}
 
 	public ArrayList<Producto> getListaDeProductos() {
 		return listaDeProductos;
@@ -133,5 +124,8 @@ public class Pedido {
 		for (PedidoObserver observer : observers) {
 			observer.enCambioEstado(this,estadoAnterior,estadoNuevo);
 		}
+	}
+	public TipoEstado getEstado() {
+		return estadoActual.getTipo();
 	}
 }

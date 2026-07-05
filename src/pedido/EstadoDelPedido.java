@@ -2,25 +2,11 @@ package pedido;
 
 public abstract class EstadoDelPedido {
 
-	public Boolean estaEnEstadoBorrador() {
-		return false;
-	}
-	public Boolean estaEnEstadoConfirmado() {
-		return false;
-	}
-	public boolean estaEnEstadoEnPreparación() {
-		return false;
-	}
-	public Boolean estaEnEstadoEnviado() {
-		return false;
-	}
-	public Boolean estaEnEstadoEntregado() {
-		return false;
-	}
-	public Boolean estaEnEstadoCancelado() {
-		return false;
-	}
+	public abstract TipoEstado getTipo();
+	
 	public abstract void avanzarEstado(Pedido pedido);
+	
+	public abstract String getNombre();
 	
 	public void cancelarPedido(Pedido pedido) {
 		pedido.cancelarse();
@@ -29,4 +15,8 @@ public abstract class EstadoDelPedido {
 	public Boolean sePuedeModificarPedido() {
 		return false;
 	}
+	public Boolean debeNotificar() {
+		return false;
+	}
+	
 }
