@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 import busquedas.Buscador;
 import productos.Atributo;
-import productos.Individuales;
+import productos.Individual;
 import productos.Paquete;
 import productos.Producto;
 
@@ -27,7 +27,7 @@ public class Catalogo {
 		asertarQueNoTengaStockNegativo(cantidad);
 		
 		ultimoSKU++;
-		Individuales productoNuevo = new Individuales(ultimoSKU, nombre, marca, categoria, atributos, precio, cantidad);
+		Individual productoNuevo = new Individual(ultimoSKU, nombre, marca, categoria, atributos, precio, cantidad);
 		productos.add(productoNuevo);
 	}
 
@@ -74,13 +74,12 @@ public class Catalogo {
 		return productos.size();
 	}
 
-	public void registrarPaquete(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye, float precio, int descuento, int cantidad) {
-		asertarQueNoTengaPrecioNegativo(precio);
+	public void registrarPaquete(String nombre, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye, int descuento, int cantidad) {
 		asertarQueNoTengaStockNegativo(cantidad);
 		asertarQueTengaAlmenosUnProducto(productosQueIncluye);
 		
 		ultimoSKU++;
-		Paquete productoNuevo = new Paquete(ultimoSKU, nombre, marca, categoria, atributos, productosQueIncluye, precio, descuento,cantidad);
+		Paquete productoNuevo = new Paquete(ultimoSKU, nombre, categoria, atributos, productosQueIncluye, descuento, cantidad);
 		productos.add(productoNuevo);
 	}
 

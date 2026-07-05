@@ -2,10 +2,15 @@ package productos;
 
 import java.util.ArrayList;
 
-public class Individuales extends Producto {
+public class Individual extends Producto {
 
-	public Individuales(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
-		super(SKU, nombre, marca, categoria, atributos, precio, cantidad);
+	private String marca;
+	private float precio;
+	
+	public Individual(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
+		super(SKU, nombre, categoria, atributos, cantidad);
+		this.marca = marca;
+		this.precio = precio;
 	}
 
 	public String getDescripcion() {
@@ -20,7 +25,7 @@ public class Individuales extends Producto {
 	}
 
 	public float precioFinal() {
-		return getPrecio();
+		return precio;
 	}
 	
 

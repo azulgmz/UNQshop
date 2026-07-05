@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import productos.Atributo;
-import productos.Individuales;
+import productos.Individual;
 import productos.Paquete;
 import productos.Producto;
 import sistemas.Catalogo;
 
-class paquetesTestCase {
+class PaqueteTestCase {
 	
 	private Catalogo catalogo;
 	private ArrayList<Atributo> atributos, a2, a3, a4, a5;
@@ -50,16 +50,16 @@ class paquetesTestCase {
 		a4.add(p4);
 		catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesesorio", a4, 6500f, 10);    // SKU = 4
 		
-		Individuales teclado     = (Individuales) catalogo.buscarProducto(1);
-		Individuales mouse       = (Individuales) catalogo.buscarProducto(2);
-		Individuales auriculares = (Individuales) catalogo.buscarProducto(3);
-		Individuales mousepad    = (Individuales) catalogo.buscarProducto(4);
+		Individual teclado     = (Individual) catalogo.buscarProducto(1);
+		Individual mouse       = (Individual) catalogo.buscarProducto(2);
+		Individual auriculares = (Individual) catalogo.buscarProducto(3);
+		Individual mousepad    = (Individual) catalogo.buscarProducto(4);
 		
 		productos.add(teclado);
 		productos.add(mouse);
 		productos.add(auriculares);
 		productos.add(mousepad);
-		catalogo.registrarPaquete("Pack para computadora", "SnapDragon", "Accesesorios y Perifericos", a5, productos, 0, 10, 3);   // SKU = 5
+		catalogo.registrarPaquete("Pack para computadora", "Accesesorios y Perifericos", a5, productos, 10, 3);   // SKU = 5
 	}
 
 	@Test
@@ -86,29 +86,16 @@ class paquetesTestCase {
 		catalogo.registrarIndividual("Microfono", "SnapDragon", "Periferico", a4, 1500f, 10);    // SKU = 6
 	
 		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
-		Individuales microfono = (Individuales) catalogo.buscarProducto(6);
+		Individual microfono = (Individual) catalogo.buscarProducto(6);
 		
 		ArrayList<Producto> productos2 = new ArrayList<>(productos);
 		productos2.add(packParaComputadora);
 		productos2.add(microfono);
 		
-		catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, 2);   // SKU = 7
+		catalogo.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 2);   // SKU = 7
 		
 		assertEquals(27120.002, catalogo.buscarProducto(7).precioFinal(), 0.01f);
 		// Se suma el precio del paquete 'Pack para computadora' + el precio del 'Microfono' y el descuento del paquete 'Pack para computadora 2'
-	}
-	
-	@Test
-	void testNoSePuedeRegistrarUnPaqueteConUnPrecioMenorA0() {
-		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
-		ArrayList<Producto> productos2 = new ArrayList<>(productos);
-		productos2.add(packParaComputadora);
-		
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, -1, 40, 2));
-		 																											// SKU = 6
-		 assertEquals("El precio no puede ser negativo", error.getMessage());
-		
-		 assertEquals(5, catalogo.cantidadDeProductos()); // No se registro el nuevo producto
 	}
 	
 	@Test
@@ -117,7 +104,7 @@ class paquetesTestCase {
 		ArrayList<Producto> productos2 = new ArrayList<>(productos);
 		productos2.add(packParaComputadora);
 		
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, -1));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, -1));
 																													// SKU = 6
 		 assertEquals("El stock no puede ser negativo", error.getMessage());
 		
@@ -130,7 +117,7 @@ class paquetesTestCase {
 		ArrayList<Producto> productos2 = new ArrayList<>(productos);
 		productos2.add(packParaComputadora);
 		 
-		 catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, 0);
+		 catalogo.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 0);
 							// SKU = 6
 			
 		 assertTrue(catalogo.tieneProducto("Pack para computadora 2")); // Verifica que se registro el producto 
@@ -143,7 +130,7 @@ class paquetesTestCase {
 		
 		 ArrayList<Producto> productos2 = new ArrayList<>();
 		 
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "SnapDragon", "Accesesorios y Perifericos", a5, productos2, 0, 40, 10));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 10));
 			                                                                                                    // SKU = 6
 		 assertEquals("El paquete debe tener al menos un producto", error.getMessage());
 		 assertEquals(5, catalogo.cantidadDeProductos()); // No se registro el nuevo producto

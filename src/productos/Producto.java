@@ -5,18 +5,15 @@ import java.util.ArrayList;
 public abstract class Producto {
 
 	private int SKU, cantidad;
-	private String nombre, marca, categoria;
-	private float precio;
+	private String nombre, categoria;
 	private ArrayList<Atributo> atributos;
 	
 	
-	public Producto(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) { 
+	public Producto(int SKU, String nombre, String categoria, ArrayList<Atributo> atributos, int cantidad) { 
 		this.SKU = SKU;
 		this.nombre = nombre;
-		this.marca = marca;
 		this.categoria = categoria;
 		this.atributos = atributos;
-		this.precio = precio;
 		this.cantidad = cantidad;
 	}
 
@@ -30,12 +27,6 @@ public abstract class Producto {
 		return nombre;
 	}
 
-
-	public String getMarca() {
-		return marca;
-	}
-
-
 	public String getCategoria() {
 		return categoria;
 	}
@@ -43,12 +34,6 @@ public abstract class Producto {
 	public ArrayList<Atributo> getAtributos() {
 		return atributos;
 	}
-
-
-	public float getPrecio() {
-		return precio;
-	}
-
 
 	public int getCantidad() {
 		return cantidad;
@@ -61,7 +46,6 @@ public abstract class Producto {
 	public void descontarUno() {
 		this.cantidad--;
 	}
-
 
 	public void aumentarUno() {
 		this.cantidad++;

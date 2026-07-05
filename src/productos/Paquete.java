@@ -7,9 +7,8 @@ public class Paquete extends Producto {
 	private  ArrayList<Producto> productosQueIncluye;
 	private int descuento;
 
-	public Paquete(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye,float precio, int descuento,
-			int cantidad) {
-		super(SKU, nombre, marca, categoria, atributos, precio, cantidad);
+	public Paquete(int SKU, String nombre, String categoria, ArrayList<Atributo> atributos, ArrayList<Producto> productosQueIncluye, int descuento, int cantidad) {
+		super(SKU, nombre, categoria, atributos, cantidad);
 		this.productosQueIncluye = productosQueIncluye;
 		this.descuento = descuento;
 	}

@@ -11,14 +11,14 @@ import envios.RetiroEnSucursal;
 import metodosDePago.BilleteraVirtual;
 import pedido.Pedido;
 import productos.Atributo;
-import productos.Individuales;
+import productos.Individual;
 
 import java.util.ArrayList;
 
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 
-class pedidoTestCase {
+class PedidoTestCase {
 
 	private int                 CUIT;
 	private Catalogo            catalogoCorrientes;
@@ -66,7 +66,7 @@ class pedidoTestCase {
 	@Test
 	void testIUnPedidoPuedeEliminarUnProductoSiEstaEnEstadoBorrador() {
 		
-		Individuales monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+		Individual monitor = (Individual) catalogoCorrientes.buscarProducto(1);
 		
 		pedido.agregarProducto(monitor);
 		
@@ -78,7 +78,7 @@ class pedidoTestCase {
 	@Test
 	void testIUnPedidoCuandoSeConfirmaBajaElStockDelCatalogo() {
 		
-		Individuales monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+		Individual monitor = (Individual) catalogoCorrientes.buscarProducto(1);
 		BilleteraVirtual billeteraDummy = mock(BilleteraVirtual.class);
 		RetiroEnSucursal retiroDummy = mock(RetiroEnSucursal.class);
 		
@@ -103,7 +103,7 @@ class pedidoTestCase {
 	
 	@Test
 	void testIUnPedidoEnEstadoConfirmadoSePuedeCancelarYDevuelveElStock() {
-		Individuales monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+		Individual monitor = (Individual) catalogoCorrientes.buscarProducto(1);
 		BilleteraVirtual billeteraDummy = mock(BilleteraVirtual.class);
 		RetiroEnSucursal retiroDummy = mock(RetiroEnSucursal.class);
 		

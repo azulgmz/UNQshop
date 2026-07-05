@@ -36,7 +36,7 @@ public class Buscador {
 	public List<Producto> buscarPorPrecioMax(float precioMax, Catalogo catalogo) {
 		Stream<Producto> productos = convertirAStream(catalogo);
 		
-		return productos.filter(p -> p.getPrecio() <= precioMax).toList();
+		return productos.filter(p -> p.precioFinal() <= precioMax).toList();
 	}
 
 	public List<Producto> buscarPorCategoria(String categoriaABuscar, Catalogo catalogo) {

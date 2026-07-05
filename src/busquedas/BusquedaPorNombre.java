@@ -5,12 +5,12 @@ import java.util.List;
 import productos.Producto;
 import sistemas.Catalogo;
 
-public class BuscarPorNombre implements TipoDeBusqueda {
+public class BusquedaPorNombre implements TipoDeBusqueda {
 	
 	private String nombreABuscar;
 	private Buscador buscador;
 
-	public BuscarPorNombre(String nombreABuscar, Buscador buscador) {
+	public BusquedaPorNombre(String nombreABuscar, Buscador buscador) {
 		this.nombreABuscar = nombreABuscar;
 		this.buscador = buscador;
 	}

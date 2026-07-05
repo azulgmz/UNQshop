@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import productos.Atributo;
-import productos.Individuales;
+import productos.Individual;
 import sistemas.Catalogo;
 
-class individualesTestCase {
+class IndividualTestCase {
 
 	private Catalogo catalogo;
 	private ArrayList<Atributo> atributos;
@@ -39,7 +39,7 @@ class individualesTestCase {
 	@Test
 	void testLosProductosIndividualesDelCatalagoExponenSuInformación() {
 		
-		Individuales teclado = (Individuales) catalogo.buscarProducto(1);
+		Individual teclado = (Individual) catalogo.buscarProducto(1);
 		
 		assertEquals("Teclado", teclado.getNombre());
 		assertEquals("Peso: 250g.\n", teclado.getDescripcion());
@@ -72,7 +72,7 @@ class individualesTestCase {
 		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 0f, 10); // SKU = 2
 	
 		 assertTrue(catalogo.tieneProducto("Mousepad"));          // Verifica que se registro el producto 
-		 assertEquals(0, catalogo.buscarProducto(2).getPrecio()); // Verifica que el prefio sea 0
+		 assertEquals(0, catalogo.buscarProducto(2).precioFinal()); // Verifica que el prefio sea 0
 		 assertEquals(2, catalogo.cantidadDeProductos());         // Verifica que se sumo al catalogo
 		 
 	}
