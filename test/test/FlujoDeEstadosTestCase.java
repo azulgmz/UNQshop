@@ -14,7 +14,7 @@ import pedido.ExceptionMsg;
 import pedido.Pedido;
 import pedido.TipoEstado;
 import productos.Atributo;
-import productos.Individuales;
+import productos.Individual;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 
@@ -23,7 +23,7 @@ public class FlujoDeEstadosTestCase {
     private Sucursal sucursalCorrientes;
     private ArrayList<Atributo> atributosDummy;
     private Pedido pedido;
-    private Individuales monitor;
+    private Individual monitor;
  
     @BeforeEach
     void setUp() {
@@ -34,7 +34,7 @@ public class FlujoDeEstadosTestCase {
         pedido = sucursalCorrientes.crearPedido("juan@gmail.com", "Juan Domingo Peron 133");
  
         catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100); // SKU = 1
-        monitor = (Individuales) catalogoCorrientes.buscarProducto(1);
+        monitor = (Individual) catalogoCorrientes.buscarProducto(1);
         pedido.agregarProducto(monitor);
     }
  
