@@ -2,9 +2,8 @@ package pedido;
 
 public class Confirmado extends EstadoDelPedido {
 
-	@Override
-	public Boolean estaEnEstadoConfirmado() {
-		return true;
+	public TipoEstado getTipo() {
+		return TipoEstado.CONFIRMADO;
 	}
 
 
@@ -17,5 +16,10 @@ public class Confirmado extends EstadoDelPedido {
 		pedido.reservarStock();
 		pedido.cambiarEstado(new EnPreparacion());
 	}
-
+	public Boolean debeNotificar() {
+		return true;
+	}
+	public String getNombre() {
+		return "CONFIRMADO";
+	}
 }

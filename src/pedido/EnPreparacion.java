@@ -2,9 +2,8 @@ package pedido;
 
 public class EnPreparacion extends EstadoDelPedido {
 
-	@Override
-	public boolean estaEnEstadoEnPreparación() {
-		return true;
+	public TipoEstado getTipo() {
+		return TipoEstado.ENPREPARACION;
 	}
 	@Override
 	public void avanzarEstado(Pedido pedido) {
@@ -16,5 +15,7 @@ public class EnPreparacion extends EstadoDelPedido {
 		pedido.devolverStock();
 		super.cancelarPedido(pedido);
 	}
-
+	public String getNombre() {
+		return "ENPREPARACION";
+	}
 }

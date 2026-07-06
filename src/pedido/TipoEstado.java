@@ -1,0 +1,5 @@
+package pedido;
+
+public enum TipoEstado {
+	BORRADOR,CONFIRMADO,ENPREPARACION,ENVIADO,ENTREGADO,CANCELADO
+}
