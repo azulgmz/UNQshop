@@ -12,7 +12,9 @@ import busquedas.Buscador;
 import busquedas.BusquedaPorNombre;
 import busquedas.BusquedaPorCategoria;
 import busquedas.BusquedaPorDisponibilidad;
+import busquedas.BusquedaPorNOT;
 import busquedas.BusquedaPorPrecioMax;
+import busquedas.TipoDeBusqueda;
 import productos.Atributo;
 import productos.Producto;
 import sistemas.Catalogo;
@@ -22,12 +24,14 @@ class busquedaTestCase {
 	private Catalogo		    catalogoCorrientes;
 	private ArrayList<Atributo> atributosDummy;
 	private List<Producto>      productosDeseados;
+	private Buscador            buscador;
 	
 	@BeforeEach
 	void setUp() {
 		catalogoCorrientes = new Catalogo();
 		atributosDummy     = new ArrayList<>();
 		productosDeseados  = new ArrayList<>();
+		buscador =  catalogoCorrientes.getBuscador();
 		
 		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 100.1f, 1); // SKU = 1
 	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 100f, 0);           // SKU = 2
@@ -43,8 +47,6 @@ class busquedaTestCase {
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(1)); // 'Monitor'
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(4)); // 'monitor'
 	    
-	    Buscador buscador =  catalogoCorrientes.getBuscador();
-	    
 	    buscador.setTipoDeBusqueda(new BusquedaPorNombre("Monitor", buscador));
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
@@ -53,11 +55,8 @@ class busquedaTestCase {
 	@Test
 	void testEnElCatalogoSePuedeBuscarProductosPorPrecioMaximo() {
 		
-		
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Precio 100
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(4)); // Precio 99
-	    
-	    Buscador buscador =  catalogoCorrientes.getBuscador();
 	    
 	    buscador.setTipoDeBusqueda(new BusquedaPorPrecioMax(100, buscador));
 	    
@@ -66,11 +65,8 @@ class busquedaTestCase {
 	
 	@Test
 	void testEnElCatalogoSePuedeBuscarProductosPorCategoria() {
-		
-		
+	
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Hardwar 
-	    
-	    Buscador buscador =  catalogoCorrientes.getBuscador();
 	    
 	    buscador.setTipoDeBusqueda(new BusquedaPorCategoria("Hardwar", buscador));
 	    
@@ -79,18 +75,64 @@ class busquedaTestCase {
 	
 	@Test
 	void testEnElCatalogoSePuedeBuscarProductosPorStock() {
-		
-		
+
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(1)); // stock = 1 
 	    productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // stock = 10
-	    
-	    Buscador buscador =  catalogoCorrientes.getBuscador();
 	    
 	    buscador.setTipoDeBusqueda(new BusquedaPorDisponibilidad(buscador));
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}
 	
-
-
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosQueNoTenganUnNombre() {
+		
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // nombre = CPU
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // nombre = Mouse
+	    
+	    TipoDeBusqueda busquedaPorNombre = new BusquedaPorNombre("Monitor", buscador);
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorNOT(busquedaPorNombre, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosQueNoTenganUnaCategoria() {
+		
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // categoria = Hardwar
+	    
+	    TipoDeBusqueda busquedaPorCategoria = new BusquedaPorCategoria("Perifericos", buscador);
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorNOT(busquedaPorCategoria, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosQueNoTenganPrecioMax() {
+		
+		productosDeseados.add(catalogoCorrientes.buscarProducto(1)); // Precio 100.1
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // Precio 101
+	    
+	    TipoDeBusqueda busquedaPorPrecioMax = new BusquedaPorPrecioMax(100, buscador);
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorNOT(busquedaPorPrecioMax, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosQueNoTenganDisponibilidad() {
+		
+		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Stock = 0
+		productosDeseados.add(catalogoCorrientes.buscarProducto(4)); // Stock = 0
+	    
+	    TipoDeBusqueda busquedaPorDisponibilidad = new BusquedaPorDisponibilidad(buscador);
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorNOT(busquedaPorDisponibilidad, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
 }

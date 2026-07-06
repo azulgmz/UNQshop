@@ -1,5 +1,6 @@
 package busquedas;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -49,6 +50,16 @@ public class Buscador {
 		Stream<Producto> productos = convertirAStream(catalogo);
 		
 		return productos.filter(p -> p.getCantidad() > 0).toList();
+	}
+
+	public List<Producto> buscarPorNOT(TipoDeBusqueda busqueda, Catalogo catalogo) {
+		List<Producto> productos = new ArrayList<>(catalogo.getProductos()); 		// Todos los productos del catalogo
+		this.setTipoDeBusqueda(busqueda);											// Cambio la busqueda por el tipo al que no queremos 
+		List<Producto> productosNOT = catalogo.buscarProductos();					// Todos esos prodcutos que no queremos
+		
+		productos.removeAll(productosNOT);
+		
+		return productos; // Devolvemos los productos que no cumplan con aquello
 	}
 	
 }
