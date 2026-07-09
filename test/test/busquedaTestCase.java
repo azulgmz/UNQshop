@@ -163,4 +163,22 @@ class busquedaTestCase {
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}
+	
+	@Test
+	void testEnElCatalogoSePuedeBuscarCombinandoLosComplejos() {
+		
+		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // 'CPU' && Hardwar
+		productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // 'Mouse' && Perifericos
+	    	
+		TipoDeBusqueda busquedaPorNombre = new BusquedaPorNombre("Monitor", buscador); 
+		TipoDeBusqueda busquedaPorCategoria = new BusquedaPorCategoria("Perifericos", buscador);
+		TipoDeBusqueda busquedaAND = new BusquedaPorAND(busquedaPorNombre, busquedaPorCategoria, buscador);
+		
+	    // Mi AND = ("Monitor" ^ Perifericos), si aplico De Morgan -> (~"Monitor" v ~Periferico)
+		// Entonces busco algo que no cumpla que sea Monitor y Perifericos a la vez
+	    buscador.setTipoDeBusqueda(new BusquedaPorNOT(busquedaAND, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
 }
