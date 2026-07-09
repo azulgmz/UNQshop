@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -180,5 +181,14 @@ class busquedaTestCase {
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}
+	
+	@Test
+	void testEnElCatalogoNoSePuedeBuscarSiNoSeSeleccionoElTipoDeBusqueda() {
+		
+		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogoCorrientes.buscarProductos());
+		
+		 assertEquals("Se debe seleccionar un tipo de busqueda antes", error.getMessage());
+	}
+	
 	
 }

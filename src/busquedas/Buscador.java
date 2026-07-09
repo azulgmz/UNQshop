@@ -12,7 +12,7 @@ public class Buscador {
 	private TipoDeBusqueda tipoDeBusqueda;
 	
 	public Buscador() {
-		this.tipoDeBusqueda = new SinTipoDeBusquedaDefinido();
+		this.tipoDeBusqueda = new SinTipoDeBusquedaDefinido(this);
 	}
 
 	public void setTipoDeBusqueda(TipoDeBusqueda nuevoTipo) {
@@ -95,6 +95,10 @@ public class Buscador {
 				}									     // ambas listas
 			}
 			return productosBusqueda1;
+	}
+
+	public List<Producto> errorPorSinBusqueda() {
+		throw new IllegalArgumentException("Se debe seleccionar un tipo de busqueda antes");
 	}
 
 	

@@ -7,10 +7,14 @@ import sistemas.Catalogo;
 
 public class SinTipoDeBusquedaDefinido implements TipoDeBusqueda {
 
-	@Override
+	private Buscador buscador;
+	
+	public SinTipoDeBusquedaDefinido(Buscador buscador) {
+		this.buscador = buscador;
+	}
+
 	public List<Producto> buscarProductos(Catalogo catalogo) {
-		// TODO Auto-generated method stub
-		return null;
+		return buscador.errorPorSinBusqueda();
 	}
 
 }
