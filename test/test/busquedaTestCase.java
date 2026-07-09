@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import busquedas.Buscador;
+import busquedas.BusquedaPorAND;
 import busquedas.BusquedaPorNombre;
 import busquedas.BusquedaPorCategoria;
 import busquedas.BusquedaPorDisponibilidad;
@@ -134,5 +135,19 @@ class busquedaTestCase {
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}
+	
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosQueCumplanConDosRequisitos() {
+		
+		productosDeseados.add(catalogoCorrientes.buscarProducto(4)); // Nombre = monitor y precio = 99
+	    
+		TipoDeBusqueda busquedaPorNombre = new BusquedaPorNombre("Monitor", buscador); 
+	    TipoDeBusqueda busquedaPorPrecioMax = new BusquedaPorPrecioMax(100, buscador);
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorAND(busquedaPorNombre, busquedaPorPrecioMax, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
+	
 	
 }

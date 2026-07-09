@@ -17,7 +17,27 @@ public abstract class Producto {
 		this.cantidad = cantidad;
 	}
 
-
+	public boolean equals(Object obj) {
+		if (this == obj) { // Si son el mismo objeto en memoria devuelve true
+			return true;
+		}
+		
+		if(obj == null || getClass() != obj.getClass()) { // Si el otro objeto es null o es otra clase,
+			return false;                                 // Devuelve false
+		}
+		
+		Producto otro = (Producto) obj; // Son la misma clase
+		
+		return this.SKU == otro.getSKU(); // Hace la igualdad segun su SKU
+	}
+	
+	@Override
+	public int hashCode() {
+	    return Integer.hashCode(SKU);
+	}
+	
+	
+	
 	public int getSKU() {
 		return SKU;
 	}
