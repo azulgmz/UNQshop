@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import busquedas.Buscador;
 import busquedas.BusquedaPorAND;
 import busquedas.BusquedaPorNombre;
+import busquedas.BusquedaPorOR;
 import busquedas.BusquedaPorCategoria;
 import busquedas.BusquedaPorDisponibilidad;
 import busquedas.BusquedaPorNOT;
@@ -149,5 +150,17 @@ class busquedaTestCase {
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}
 	
-	
+	@Test
+	void testEnElCatalogoSePuedeBuscarProductosQueCumplanConUnoDeLosDosRequisitos() {
+		
+		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Categoria = Hardwar
+		productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // Nombre = Mouse
+	    	
+		TipoDeBusqueda busquedaPorCategoria = new BusquedaPorCategoria("Hardwar", buscador);
+		TipoDeBusqueda busquedaPorNombre = new BusquedaPorNombre("Mouse", buscador); 
+	    
+	    buscador.setTipoDeBusqueda(new BusquedaPorOR(busquedaPorCategoria, busquedaPorNombre, buscador));
+	    
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	}
 }

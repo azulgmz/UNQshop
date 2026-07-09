@@ -70,22 +70,31 @@ public class Buscador {
 		List<Producto> productosBusqueda2 = catalogo.buscarProductos();   // Los guardo en una lista
 		
 		
-		List<Producto> resultado = new ArrayList<>();
-		if(productosBusqueda1.size() <= productosBusqueda2.size()) {
-			for (Producto p : productosBusqueda1) {
-				if(productosBusqueda2.contains(p)) {
-					resultado.add(p);
+		List<Producto> resultado = new ArrayList<>();  // Creo una lista en la cual añadire los productos que cumplan 
+		
+			for (Producto p : productosBusqueda1) {	  // Itero sobre la primer lista
+				if(productosBusqueda2.contains(p)) {  // Si esta el producto en la segunda lista
+					resultado.add(p);                 // Lo agrego al resultado
 				}
 			}
 			return resultado;
-		}
-		for (Producto p : productosBusqueda2) {
-			if(productosBusqueda1.contains(p)) {
-				resultado.add(p);
-			}
-		}
-		return resultado;
 		
+	}
+
+	public List<Producto> buscarPorOR(TipoDeBusqueda busqueda1, TipoDeBusqueda busqueda2, Catalogo catalogo) {
+		this.setTipoDeBusqueda(busqueda1);					           					   // Cambio la busqueda por el primero 
+		List<Producto> productosBusqueda1 = new ArrayList<>(catalogo.buscarProductos());   // Los guardo en la primera lista la 
+																						   // cual vamos a añadir los que faltan
+		
+		this.setTipoDeBusqueda(busqueda2);					              // Cambio la busqueda por la segunda 
+		List<Producto> productosBusqueda2 = catalogo.buscarProductos();   // Los guardo en una lista
+		
+			for (Producto p : productosBusqueda2) {      // Itero sobre los prodcutos de la segunda busqueda
+				if(!(productosBusqueda1.contains(p))) {  // Si no están en la primera busqueda, los agrego
+					productosBusqueda1.add(p);			 // De esta forma evito repetidos y hago una union de  
+				}									     // ambas listas
+			}
+			return productosBusqueda1;
 	}
 
 	
