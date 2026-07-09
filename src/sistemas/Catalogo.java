@@ -56,14 +56,8 @@ public class Catalogo {
 		throw new NoSuchElementException("No existe un producto con SKU " + SKU);
 	}
 
-	public Boolean tieneProducto(String nombre) {
-		int cantidadDeProductos = productos.size();
-		for(int i=0; i < cantidadDeProductos ; i++) {
-			if(productos.get(i).getNombre() == nombre) {
-				return true;
-			}
-		}
-		return false;
+	public Boolean tieneProducto(int SKU) {
+		return productos.stream().anyMatch(p -> p.getSKU() == SKU);
 	}
 
 	public int cantidadDe(int SKU) {

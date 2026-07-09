@@ -65,9 +65,9 @@ class PaqueteTestCase {
 	@Test
 	void testSeRegistraPaqueteEnElCatalogo() {
 		
-		assertTrue(catalogo.tieneProducto("Pack para computadora"));    // Comprueba si hay al menos un producto que sea Pack para computadora
-		assertEquals(3, catalogo.cantidadDe(5));                        // Comprueba la cantidad que hay de tal prodcuto (con SKU=5)
-		assertEquals(5, catalogo.cantidadDeProductos());                // Comprueba cuantos productos distintos hay en el catalogo
+		assertTrue(catalogo.tieneProducto(5));   		 // Comprueba si hay al menos un producto que tenga ese SKU
+		assertEquals(3, catalogo.cantidadDe(5));         // Comprueba la cantidad que hay de tal prodcuto (con SKU=5)
+		assertEquals(5, catalogo.cantidadDeProductos()); // Comprueba cuantos productos distintos hay en el catalogo
 	}
 	
 	@Test
@@ -120,9 +120,9 @@ class PaqueteTestCase {
 		 catalogo.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 0);
 							// SKU = 6
 			
-		 assertTrue(catalogo.tieneProducto("Pack para computadora 2")); // Verifica que se registro el producto 
-		 assertEquals(0, catalogo.cantidadDe(6)); 		                // Verifica que el prefio sea 0
-		 assertEquals(6, catalogo.cantidadDeProductos());               // Verifica que se sumo al catalogo
+		 assertTrue(catalogo.tieneProducto(6));   		  // Comprueba si hay al menos un producto que tenga ese SKU
+		 assertEquals(0, catalogo.cantidadDe(6)); 		  // Verifica que el prefio sea 0
+		 assertEquals(6, catalogo.cantidadDeProductos()); // Verifica que se sumo al catalogo
 	}
 	
 	@Test
