@@ -17,12 +17,13 @@ import busquedas.BusquedaPorCategoria;
 import busquedas.BusquedaPorDisponibilidad;
 import busquedas.BusquedaPorNOT;
 import busquedas.BusquedaPorPrecioMax;
+import busquedas.SinTipoDeBusquedaDefinido;
 import busquedas.TipoDeBusqueda;
 import productos.Atributo;
 import productos.Producto;
 import sistemas.Catalogo;
 
-class busquedaTestCase {
+class BusquedaTestCase {
 
 	private Catalogo		    catalogoCorrientes;
 	private ArrayList<Atributo> atributosDummy;
@@ -37,7 +38,7 @@ class busquedaTestCase {
 		buscador =  catalogoCorrientes.getBuscador();
 		
 		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 100.1f, 1); // SKU = 1
-	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 100f, 0);           // SKU = 2
+	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardware", atributosDummy, 100f, 0);           // SKU = 2
 	    catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 101f, 10);    // SKU = 3
 	    catalogoCorrientes.registrarIndividual("monitor", "LG", "Perifericos", atributosDummy, 99f, 0);            // SKU = 4
 	}
@@ -69,9 +70,9 @@ class busquedaTestCase {
 	@Test
 	void testEnElCatalogoSePuedeBuscarProductosPorCategoria() {
 	
-	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Hardwar 
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Hardware
 	    
-	    buscador.setTipoDeBusqueda(new BusquedaPorCategoria("Hardwar", buscador));
+	    buscador.setTipoDeBusqueda(new BusquedaPorCategoria("Hardware", buscador));
 	    
 	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
 	}
@@ -103,7 +104,7 @@ class busquedaTestCase {
 	@Test
 	void testEnElCatalogoSePuedeBuscarProductosQueNoTenganUnaCategoria() {
 		
-	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // categoria = Hardwar
+	    productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // categoria = Hardware
 	    
 	    TipoDeBusqueda busquedaPorCategoria = new BusquedaPorCategoria("Perifericos", buscador);
 	    
@@ -154,10 +155,10 @@ class busquedaTestCase {
 	@Test
 	void testEnElCatalogoSePuedeBuscarProductosQueCumplanConUnoDeLosDosRequisitos() {
 		
-		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Categoria = Hardwar
+		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Categoria = Hardware
 		productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // Nombre = Mouse
 	    	
-		TipoDeBusqueda busquedaPorCategoria = new BusquedaPorCategoria("Hardwar", buscador);
+		TipoDeBusqueda busquedaPorCategoria = new BusquedaPorCategoria("Hardware", buscador);
 		TipoDeBusqueda busquedaPorNombre = new BusquedaPorNombre("Mouse", buscador); 
 	    
 	    buscador.setTipoDeBusqueda(new BusquedaPorOR(busquedaPorCategoria, busquedaPorNombre, buscador));
@@ -168,7 +169,7 @@ class busquedaTestCase {
 	@Test
 	void testEnElCatalogoSePuedeBuscarCombinandoLosComplejos() {
 		
-		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // 'CPU' && Hardwar
+		productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // 'CPU' && Hardware
 		productosDeseados.add(catalogoCorrientes.buscarProducto(3)); // 'Mouse' && Perifericos
 	    	
 		TipoDeBusqueda busquedaPorNombre = new BusquedaPorNombre("Monitor", buscador); 
@@ -188,6 +189,21 @@ class busquedaTestCase {
 		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogoCorrientes.buscarProductos());
 		
 		 assertEquals("Se debe seleccionar un tipo de busqueda antes", error.getMessage());
+	}
+	
+	@Test
+	void testLuegoDeUnaBusquedaElBuscadorSeReinicia() {
+	    
+		 productosDeseados.add(catalogoCorrientes.buscarProducto(2)); // Hardware 
+		
+		 buscador.setTipoDeBusqueda(new BusquedaPorCategoria("Hardware", buscador));
+	    assertEquals(productosDeseados, catalogoCorrientes.buscarProductos());
+	    // Deja buscar porque tiene un tipo de busqueda definido
+		
+	    IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogoCorrientes.buscarProductos());
+		
+		assertEquals("Se debe seleccionar un tipo de busqueda antes", error.getMessage());
+		// No deja buscar porque se reinicia el tipo de busqueda y queda el sin tipo por defecto
 	}
 	
 	

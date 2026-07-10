@@ -27,6 +27,7 @@ public class Buscador {
 		
 		Stream<Producto> productos = convertirAStream(catalogo);
 		
+		setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 		return productos.filter(p -> p.getNombre().equalsIgnoreCase(nombreABuscar)).toList();
 	}
 
@@ -37,18 +38,21 @@ public class Buscador {
 	public List<Producto> buscarPorPrecioMax(float precioMax, Catalogo catalogo) {
 		Stream<Producto> productos = convertirAStream(catalogo);
 		
+		setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 		return productos.filter(p -> p.precioFinal() <= precioMax).toList();
 	}
 
 	public List<Producto> buscarPorCategoria(String categoriaABuscar, Catalogo catalogo) {
 		Stream<Producto> productos = convertirAStream(catalogo);
 		
+		setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 		return productos.filter(p -> p.getCategoria().equals(categoriaABuscar)).toList();
 	}
 
 	public List<Producto> buscarPorDisponibilidad(Catalogo catalogo) {
 		Stream<Producto> productos = convertirAStream(catalogo);
 		
+		setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 		return productos.filter(p -> p.getCantidad() > 0).toList();
 	}
 
@@ -59,6 +63,7 @@ public class Buscador {
 		
 		productos.removeAll(productosNOT);
 		
+		setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 		return productos; // Devolvemos los productos que no cumplan con aquello
 	}
 
@@ -77,8 +82,9 @@ public class Buscador {
 					resultado.add(p);                 // Lo agrego al resultado
 				}
 			}
+			
+			setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 			return resultado;
-		
 	}
 
 	public List<Producto> buscarPorOR(TipoDeBusqueda busqueda1, TipoDeBusqueda busqueda2, Catalogo catalogo) {
@@ -94,6 +100,7 @@ public class Buscador {
 					productosBusqueda1.add(p);			 // De esta forma evito repetidos y hago una union de  
 				}									     // ambas listas
 			}
+			setTipoDeBusqueda(new SinTipoDeBusquedaDefinido(this));
 			return productosBusqueda1;
 	}
 
