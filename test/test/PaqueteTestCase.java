@@ -36,19 +36,19 @@ class PaqueteTestCase {
 		
 		atributos.add(peso);
 		
-		catalogo.registrarIndividual("Teclado", "SnapDragon", "Periferico", atributos, 6500f, 10); // SKU = 1
+		catalogo.registrarIndividual("Teclado", "SnapDragon", "Periferico", atributos, 6500f, 10, 50f); // SKU = 1
 		
 		p2 = new Atributo("Peso", "50g");
 		a2.add(p2);
-		catalogo.registrarIndividual("Mouse", "SnapDragon", "Periferico", a2, 1500f, 10);         // SKU = 2
+		catalogo.registrarIndividual("Mouse", "SnapDragon", "Periferico", a2, 1500f, 10, 20f);         // SKU = 2
 		
 		p3 = new Atributo("Peso", "150g");
 		a3.add(p3);
-		catalogo.registrarIndividual("Auriculares", "SnapDragon", "Periferico", a3, 8500f, 10);   // SKU = 3
+		catalogo.registrarIndividual("Auriculares", "SnapDragon", "Periferico", a3, 8500f, 10, 130f);   // SKU = 3
 		
 		p4 = new Atributo("Peso", "25g");
 		a4.add(p4);
-		catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesesorio", a4, 6500f, 10);    // SKU = 4
+		catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesesorio", a4, 6500f, 10, 25f);    // SKU = 4
 		
 		Individual teclado     = (Individual) catalogo.buscarProducto(1);
 		Individual mouse       = (Individual) catalogo.buscarProducto(2);
@@ -83,7 +83,7 @@ class PaqueteTestCase {
 	@Test
 	void testLosProductosPaquetesTambiénPuedenTenerIncluidosPaquetes() {
 		
-		catalogo.registrarIndividual("Microfono", "SnapDragon", "Periferico", a4, 1500f, 10);    // SKU = 6
+		catalogo.registrarIndividual("Microfono", "SnapDragon", "Periferico", a4, 1500f, 10, 98f);    // SKU = 6
 	
 		Paquete packParaComputadora = (Paquete) catalogo.buscarProducto(5);
 		Individual microfono = (Individual) catalogo.buscarProducto(6);

@@ -25,7 +25,7 @@ class IndividualTestCase {
 		catalogo = new Catalogo();
 		peso = new Atributo("Peso", "250g");
 		atributos.add(peso);
-		catalogo.registrarIndividual("Teclado", "SnapDragon", "Periferico", atributos, 6500f, 10); // SKU = 1
+		catalogo.registrarIndividual("Teclado", "SnapDragon", "Periferico", atributos, 6500f, 10, 530f); // SKU = 1
 	}
 	
 	@Test
@@ -49,7 +49,7 @@ class IndividualTestCase {
 	@Test
 	void testNoSePuedeRegistrarUnProductoConUnPrecioMenorA0() {
 		
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, -1f, 10));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, -1f, 10, 25f));
 		
 		 assertEquals("El precio no puede ser negativo", error.getMessage());
 		
@@ -59,7 +59,7 @@ class IndividualTestCase {
 	@Test
 	void testNoSePuedeRegistrarUnProductoConUnStockMenorA0() {
 		
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 1000f, -1));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 1000f, -1, 25f));
 		
 		 assertEquals("El stock no puede ser negativo", error.getMessage());
 		
@@ -69,7 +69,7 @@ class IndividualTestCase {
 	@Test
 	void testSePuedeRegistrarUnProductoConUnPrecio0() {
 		
-		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 0f, 10); // SKU = 2
+		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 0f, 10, 25f); // SKU = 2
 	
 		 assertTrue(catalogo.tieneProducto(2));   		            // Comprueba si hay al menos un producto que tenga ese SKU
 		 assertEquals(0, catalogo.buscarProducto(2).precioFinal()); // Verifica que el prefio sea 0
@@ -80,7 +80,7 @@ class IndividualTestCase {
 	@Test
 	void testSePuedeRegistrarUnProductoConUnStock0() {
 		 
-		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 100f, 0); // SKU = 2
+		 catalogo.registrarIndividual("Mousepad", "SnapDragon", "Accesorio", atributos, 100f, 0, 25f); // SKU = 2
 			
 		 assertTrue(catalogo.tieneProducto(2));   	    	// Comprueba si hay al menos un producto que tenga ese SKU
 		 assertEquals(0, catalogo.cantidadDe(2)); 			// Verifica que el prefio sea 0

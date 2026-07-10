@@ -5,12 +5,13 @@ import java.util.ArrayList;
 public class Individual extends Producto {
 
 	private String marca;
-	private float precio;
+	private float precio, peso;
 	
-	public Individual(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
+	public Individual(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad, float peso) {
 		super(SKU, nombre, categoria, atributos, cantidad);
 		this.marca = marca;
 		this.precio = precio;
+		this.peso = peso;
 	}
 
 	public String getDescripcion() {

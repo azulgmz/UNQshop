@@ -37,10 +37,10 @@ class BusquedaTestCase {
 		productosDeseados  = new ArrayList<>();
 		buscador =  catalogoCorrientes.getBuscador();
 		
-		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 100.1f, 1); // SKU = 1
-	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardware", atributosDummy, 100f, 0);           // SKU = 2
-	    catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 101f, 10);    // SKU = 3
-	    catalogoCorrientes.registrarIndividual("monitor", "LG", "Perifericos", atributosDummy, 99f, 0);            // SKU = 4
+		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 100.1f, 1, 2000f); // SKU = 1
+	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardware", atributosDummy, 100f, 0, 6840f);          // SKU = 2
+	    catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 101f, 10, 20f);      // SKU = 3
+	    catalogoCorrientes.registrarIndividual("monitor", "LG", "Perifericos", atributosDummy, 99f, 0, 1900f);            // SKU = 4
 	}
 	
 	@Test

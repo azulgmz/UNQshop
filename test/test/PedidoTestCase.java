@@ -37,8 +37,8 @@ class PedidoTestCase {
 	    
 	    pedido = sucursalCorrientes.crearPedido("juan@gmail.com", "Juan Domingo Peron 133");
 	    
-	    catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100); // SKU = 1
-	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 10000f, 100);        // SKU = 2
+	    catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
+	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 10000f, 100, 6840f);        // SKU = 2
 	    
 	}             
 	
@@ -54,7 +54,7 @@ class PedidoTestCase {
 	@Test
 	void testUnPedidoNoPuedeAgregarUnProductoQueTenga0Stock() {
 		
-		catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0); // SKU = 3
+		catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0, 20f); // SKU = 3
 		
 		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.agregarProducto(catalogoCorrientes.buscarProducto(3)));
 																												

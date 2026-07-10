@@ -22,12 +22,12 @@ public class Catalogo {
 		this.buscador = new Buscador();
 	}
 
-	public void registrarIndividual(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad) {
+	public void registrarIndividual(String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad, float peso) {
 		asertarQueNoTengaPrecioNegativo(precio);
 		asertarQueNoTengaStockNegativo(cantidad);
 		
 		ultimoSKU++;
-		Individual productoNuevo = new Individual(ultimoSKU, nombre, marca, categoria, atributos, precio, cantidad);
+		Individual productoNuevo = new Individual(ultimoSKU, nombre, marca, categoria, atributos, precio, cantidad, peso);
 		productos.add(productoNuevo);
 	}
 

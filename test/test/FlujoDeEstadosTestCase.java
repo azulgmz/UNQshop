@@ -33,7 +33,7 @@ public class FlujoDeEstadosTestCase {
  
         pedido = sucursalCorrientes.crearPedido("juan@gmail.com", "Juan Domingo Peron 133");
  
-        catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100); // SKU = 1
+        catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
         monitor = (Individual) catalogoCorrientes.buscarProducto(1);
         pedido.agregarProducto(monitor);
     }
@@ -110,7 +110,7 @@ public class FlujoDeEstadosTestCase {
  
     @Test
     void testNoSePuedeAgregarUnProductoAUnPedidoQueYaNoEstaEnBorrador() {
-        catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 50); // SKU = 2
+        catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 50, 25f); // SKU = 2
         pedido.avanzarEstado(); 
  
         pedido.agregarProducto(catalogoCorrientes.buscarProducto(2));
