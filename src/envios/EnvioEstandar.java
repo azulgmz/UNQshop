@@ -20,20 +20,18 @@ public class EnvioEstandar implements Envio{
 		float peso = pedido.pesoTotal();
 		Direccion destino = pedido.getDireccion();
 		
-		return correo.estimarEnvio(peso, destino);
-		
-		
+		return correo.estimarEnvio(peso, destino);	
 	}
 
 	public String estimacionDeEntrega(Direccion origen, Direccion destino) {
 		double distancia = origen.distanciaHasta(destino);
 		
 		if(distancia <= 20) {
-			return "El envio llegará en 5 días";
+			return "El envio llegará en 5 días hábiles";
 		}else if(distancia <= 100) {
-			return "El envio llegará en 6 días";
+			return "El envio llegará en 6 días hábiles";
 		}else {
-			return "El envio llegará en 7 días";
+			return "El envio llegará en 7 días hábiles";
 		}
 		
 		

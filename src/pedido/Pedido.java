@@ -153,6 +153,17 @@ public class Pedido {
 		}
 		return pesoTotal;
 	}
+	
+	public float precioTotal() {
+		
+		float precioTotal = 0;
+		int cantidadDeProductos = listaDeProductos.size();
+		
+		for (int i=0; i < cantidadDeProductos; i++) {
+			precioTotal += listaDeProductos.get(i).precioFinal();
+		}
+		return precioTotal;
+	}
 
 	public String estimacionDeEntrega() {
 		return envio.estimacionDeEntrega(sucursal.getDireccion(), direccion);

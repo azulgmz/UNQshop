@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import envios.CorreoArgentina;
 import envios.EnvioEstandar;
+import envios.EnvioExpress;
 import envios.TipoEnvio;
 import pedido.Pedido;
 import sistemas.Catalogo;
@@ -43,7 +44,7 @@ class EnvioTestCase {
 
 	    assertEquals(TipoEnvio.ESTANDAR, pedido.getEnvio());
 	    assertEquals(1000f, pedido.calcularCosto());
-	    assertEquals("El envio llegará en 5 días", pedido.estimacionDeEntrega());
+	    assertEquals("El envio llegará en 5 días hábiles", pedido.estimacionDeEntrega());
 	}
 	
 	@Test
@@ -56,7 +57,7 @@ class EnvioTestCase {
 	    
 	    
 	    assertEquals(19.998407557024596, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
-	    assertEquals("El envio llegará en 5 días", pedido.estimacionDeEntrega());
+	    assertEquals("El envio llegará en 5 días hábiles", pedido.estimacionDeEntrega());
 	}
 	
 	@Test
@@ -69,7 +70,7 @@ class EnvioTestCase {
 	    
 	    
 	    assertEquals(20.002855354090286, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
-	    assertEquals("El envio llegará en 6 días", pedido.estimacionDeEntrega());
+	    assertEquals("El envio llegará en 6 días hábiles", pedido.estimacionDeEntrega());
 	}
 	
 	@Test
@@ -82,7 +83,7 @@ class EnvioTestCase {
 	    
 	    
 	    assertEquals(99.99982142998493, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
-	    assertEquals("El envio llegará en 6 días", pedido.estimacionDeEntrega());
+	    assertEquals("El envio llegará en 6 días hábiles", pedido.estimacionDeEntrega());
 	}
 	
 	@Test
@@ -95,7 +96,19 @@ class EnvioTestCase {
 	    
 	    
 	    assertEquals(100.00093337925155, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
-	    assertEquals("El envio llegará en 7 días", pedido.estimacionDeEntrega());
+	    assertEquals("El envio llegará en 7 días hábiles", pedido.estimacionDeEntrega());
+	}
+	
+	@Test
+	void testElCostoYEstimacionDeUnEnvioCuandoElPedidoEstaHechoComoExpress() {
+
+	    EnvioExpress envio = new EnvioExpress(10, 5000f);
+
+	    pedido.setEnvio(envio);
+
+	    assertEquals(TipoEnvio.EXPRESS, pedido.getEnvio());
+	    assertEquals(5000f, pedido.calcularCosto());
+	    assertEquals("El envio llegará en 1 día hábil", pedido.estimacionDeEntrega());
 	}
 
 
