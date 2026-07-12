@@ -22,8 +22,8 @@ public class BilleteraVirtual extends MetodoDePagoTemplate {
 		return api.bloquearSaldo(numeroCuenta, monto);
 	}
 	@Override
-	protected void ejecutarTransaccion(float monto) {
-		api.acreditarTransaccion(numeroCuenta, monto);
+	protected int ejecutarTransaccion(float monto) {
+		return api.acreditarTransaccion(numeroCuenta, monto);
 	}
 	@Override
 	public void notificarResultado(int codigoTransaccion) {

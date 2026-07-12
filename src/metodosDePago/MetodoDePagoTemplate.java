@@ -1,5 +1,7 @@
 package metodosDePago;
 
+import pedido.ExceptionMsg;
+
 public abstract class MetodoDePagoTemplate implements MetodoDePago {
 
 	@Override
@@ -9,7 +11,15 @@ public abstract class MetodoDePagoTemplate implements MetodoDePago {
 
 	@Override
 	public void procesarPago(float monto) {
-		
+		if (!validarDatos(monto)) {
+			throw new ExceptionMsg("Datos de pago inválidos");
+		}
+		if (!reservarFondos(monto)) {
+			throw new ExceptionMsg("No se pudieron reservar los fondos");
+		}
+		int codigoTransaccion = ejecutarTransaccion(monto);
+		notificarResultado(codigoTransaccion);
+
 
 	}
 	
@@ -17,7 +27,7 @@ public abstract class MetodoDePagoTemplate implements MetodoDePago {
 	
 	protected abstract boolean reservarFondos(float monto);
 	
-	protected abstract void ejecutarTransaccion(float monto);
+	protected abstract int ejecutarTransaccion(float monto);
 	
 	public void notificarResultado(int codigoTransaccion) {
 		

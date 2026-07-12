@@ -27,8 +27,8 @@ public class TransferenciaBancaria extends MetodoDePagoTemplate {
 	}
 
 	@Override
-	protected void ejecutarTransaccion(float monto) {
-		api.transferir(cbu, monto, esProgramada);
+	protected int ejecutarTransaccion(float monto) {
+		return api.transferir(cbu, monto, esProgramada);
 	}
 
 	public void notificarResultado(int codigoTransaccion) {

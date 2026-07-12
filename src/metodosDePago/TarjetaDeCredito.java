@@ -30,8 +30,8 @@ public class TarjetaDeCredito extends MetodoDePagoTemplate {
 	}
 
 	@Override
-	protected void ejecutarTransaccion(float monto) {
-		api.transferirInmediato(numeroTarjeta, monto);
+	protected int ejecutarTransaccion(float monto) {
+		return api.transferirInmediato(numeroTarjeta, monto);
 	}
 	@Override 
 	public void notificarResultado(int codigoTransaccion) {
