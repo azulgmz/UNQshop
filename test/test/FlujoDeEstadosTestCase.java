@@ -25,11 +25,13 @@ public class FlujoDeEstadosTestCase {
     private ArrayList<Atributo> atributosDummy;
     private Pedido pedido;
     private Individual monitor;
+    private ArrayList<Sucursal> sucursales;
  
     @BeforeEach
     void setUp() {
-    	catalogoUNQ = new Catalogo();
-	    sucusalUNQ = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d));
+    	catalogoUNQ    = new Catalogo();
+    	sucursales     = new ArrayList<Sucursal>();
+	    sucusalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
         atributosDummy = new ArrayList<>();
  
         pedido = sucusalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));

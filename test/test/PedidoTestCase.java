@@ -28,11 +28,13 @@ class PedidoTestCase {
 	private Sucursal            sucursalUNQ;
 	private ArrayList<Atributo> atributosDummy;
 	private Pedido              pedido;
+	private ArrayList<Sucursal> sucursales;
 	
 	@BeforeEach
 	public void setUp() {
 		catalogoUNQ    = new Catalogo();
-	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d));
+		sucursales      = new ArrayList<Sucursal>();
+	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
 	    atributosDummy = new ArrayList<>();
 	    
 	    pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));

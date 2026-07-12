@@ -13,13 +13,15 @@ public class Sucursal {
 	private float dineroDisponible;
 	private Direccion direccion;
 	private ArrayList<Pedido> pedidosActivos;
+	private ArrayList<Sucursal> sucursales;
 
-	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion) {
+	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion, ArrayList<Sucursal> sucursales) {
 		this.CUIT = CUIT;
 		this.catalogo = catalogo;
 		this.dineroDisponible = dineroDisponible; 
 		this.direccion = direccion;
 		this.pedidosActivos = new ArrayList<>();
+		this.sucursales = sucursales;
 	}
 
 	public int getCUIT() {

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,12 +24,14 @@ class EnvioTestCase {
 	private Sucursal            sucursalUNQ;
 	private Pedido              pedido;
 	private CorreoArgentina     correoStub;
+	private ArrayList<Sucursal> sucursales;
 	
 	@BeforeEach
 	public void setUp() {
 		correoStub = mock(CorreoArgentina.class); // Creo un correo Stub
 		catalogoDummy  = new Catalogo(); // Creo un catalogo dummy
-	    sucursalUNQ    = new Sucursal(28062026, catalogoDummy, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d));
+		sucursales     = new ArrayList<Sucursal>();
+	    sucursalUNQ    = new Sucursal(28062026, catalogoDummy, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
 	    
 	    pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
 	    
