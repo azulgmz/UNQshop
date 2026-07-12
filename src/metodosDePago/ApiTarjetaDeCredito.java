@@ -6,6 +6,8 @@ public interface ApiTarjetaDeCredito {
 	
 	boolean preAutorizar(int numeroTarjeta, float monto);
 	
+
 	int transferirInmediato(int numeroTarjeta, float monto);
+
 	
 }

@@ -1,5 +1,6 @@
 package metodosDePago;
 
+
 import pedido.ExceptionMsg;
 
 public abstract class MetodoDePagoTemplate implements MetodoDePago {
@@ -28,7 +29,8 @@ public abstract class MetodoDePagoTemplate implements MetodoDePago {
 	protected abstract boolean reservarFondos(float monto);
 	
 	protected abstract int ejecutarTransaccion(float monto);
-	
+
+
 	public void notificarResultado(int codigoTransaccion) {
 		
 	}
