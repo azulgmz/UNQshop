@@ -71,6 +71,32 @@ class EnvioTestCase {
 	    assertEquals(20.002855354090286, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
 	    assertEquals("El envio llegará en 6 días", pedido.estimacionDeEntrega());
 	}
+	
+	@Test
+	void testLaEstimacionDeEntregaEnEnvioEstandarEs6DiasSiLaDistanciaEsHasta100Inclusive() {
+	
+	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    
+	    pedido.setDireccion(new Direccion("Calle 189", -33.86561d, -58.278418d));
+	    pedido.setEnvio(envio);
+	    
+	    
+	    assertEquals(99.99982142998493, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
+	    assertEquals("El envio llegará en 6 días", pedido.estimacionDeEntrega());
+	}
+	
+	@Test
+	void testLaEstimacionDeEntregaEnEnvioEstandarEs7DiasSiLaDistanciaEsMasDe100() {
+	
+	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    
+	    pedido.setDireccion(new Direccion("Calle 189", -33.86560d, -58.278418d));
+	    pedido.setEnvio(envio);
+	    
+	    
+	    assertEquals(100.00093337925155, pedido.getDireccion().distanciaHasta(sucursalUNQ.getDireccion()));
+	    assertEquals("El envio llegará en 7 días", pedido.estimacionDeEntrega());
+	}
 
 
 }
