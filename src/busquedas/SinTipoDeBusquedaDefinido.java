@@ -6,15 +6,11 @@ import productos.Producto;
 import sistemas.Catalogo;
 
 public class SinTipoDeBusquedaDefinido implements TipoDeBusqueda {
-
-	private Buscador buscador;
 	
-	public SinTipoDeBusquedaDefinido(Buscador buscador) {
-		this.buscador = buscador;
-	}
+	public SinTipoDeBusquedaDefinido() {}
 
 	public List<Producto> buscarProductos(Catalogo catalogo) {
-		return buscador.errorPorSinBusqueda();
+		throw new IllegalArgumentException("Se debe seleccionar un tipo de busqueda antes");
 	}
 
 }

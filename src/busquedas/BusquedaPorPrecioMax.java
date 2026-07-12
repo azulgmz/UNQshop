@@ -1,6 +1,7 @@
 package busquedas;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import productos.Producto;
 import sistemas.Catalogo;
@@ -17,7 +18,10 @@ public class BusquedaPorPrecioMax implements TipoDeBusqueda {
 
 	@Override
 	public List<Producto> buscarProductos(Catalogo catalogo) {
-		return buscador.buscarPorPrecioMax(precioMax, catalogo);
+			Stream<Producto> productos = catalogo.getProductos().stream();
+			
+			buscador.setTipoDeBusqueda(new SinTipoDeBusquedaDefinido());
+			return productos.filter(p -> p.precioFinal() <= precioMax).toList();
 	}
 
 }
