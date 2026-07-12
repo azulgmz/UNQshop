@@ -70,5 +70,7 @@ public abstract class Producto {
 	public void aumentarUno() {
 		this.cantidad++;
 	}
+
+	public abstract float getPeso();
 	
 }

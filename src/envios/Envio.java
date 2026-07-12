@@ -1,6 +1,13 @@
 package envios;
 
-public interface Envio {
+import pedido.Pedido;
+import ubicacionGeografica.Direccion;
 
-	Boolean esSinDefinir();
+public interface Envio {
+	
+	public TipoEnvio getTipo();
+
+	public float costoEnvio(Pedido pedido);
+
+	public String estimacionDeEntrega(Direccion origen, Direccion destino);
 }

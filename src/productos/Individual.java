@@ -28,6 +28,10 @@ public class Individual extends Producto {
 	public float precioFinal() {
 		return precio;
 	}
+
+	public float getPeso() {
+		return peso;
+	}
 	
 
 }

@@ -2,8 +2,9 @@ package envios;
 
 public class SinEnvioDefinido implements Envio {
 
-	public Boolean esSinDefinir() {
-		return true;
+	public TipoEnvio getTipo() {
+		return TipoEnvio.SINENVIODEFINIDO;
 	}
+
 
 }

@@ -13,7 +13,9 @@ import pedido.*;
 import notificadores.*;
 
 import productos.Producto;
+import sistemas.Catalogo;
 import sistemas.Sucursal;
+import ubicacionGeografica.Direccion;
 
 class NotificadoresTestCase {
 
@@ -36,8 +38,8 @@ class NotificadoresTestCase {
     @BeforeEach
     void setUp() {
         Sucursal sucursal = mock(Sucursal.class);
-        pedido = new Pedido(sucursal, new Borrador(), new ArrayList<Producto>(), "ana@mail.com", "Av. Siempre Viva 742");
-
+        pedido = new Pedido(sucursal, new ArrayList<Producto>(), "ana@mail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
+        
         mailSender = new MailSenderFake();
         notificadorEmail = new NotificadorEmailObserver(mailSender);
         generadorFactura = new GeneradorFacturaObserver();

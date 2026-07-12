@@ -17,24 +17,25 @@ import productos.Atributo;
 import productos.Individual;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
+import ubicacionGeografica.Direccion;
 
 public class FlujoDeEstadosTestCase {
-    private Catalogo catalogoCorrientes;
-    private Sucursal sucursalCorrientes;
+    private Catalogo catalogoUNQ;
+    private Sucursal sucusalUNQ;
     private ArrayList<Atributo> atributosDummy;
     private Pedido pedido;
     private Individual monitor;
  
     @BeforeEach
     void setUp() {
-        catalogoCorrientes = new Catalogo();
-        sucursalCorrientes = new Sucursal(28062026, catalogoCorrientes, 100000f, "Avenida Corrientes 1661");
+    	catalogoUNQ = new Catalogo();
+	    sucusalUNQ = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d));
         atributosDummy = new ArrayList<>();
  
-        pedido = sucursalCorrientes.crearPedido("juan@gmail.com", "Juan Domingo Peron 133");
+        pedido = sucusalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
  
-        catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
-        monitor = (Individual) catalogoCorrientes.buscarProducto(1);
+        catalogoUNQ.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
+        monitor = (Individual) catalogoUNQ.buscarProducto(1);
         pedido.agregarProducto(monitor);
     }
  
@@ -42,11 +43,11 @@ public class FlujoDeEstadosTestCase {
     void testElPedidoAvanzaPorTodosLosEstadosHastaEntregado() {
         pedido.avanzarEstado(); 
         assertEquals(TipoEstado.CONFIRMADO, pedido.getEstado());
-        assertEquals(100, catalogoCorrientes.cantidadDe(1)); 
+        assertEquals(100, catalogoUNQ.cantidadDe(1)); 
  
         pedido.avanzarEstado(); 
         assertEquals(TipoEstado.ENPREPARACION, pedido.getEstado());
-        assertEquals(99, catalogoCorrientes.cantidadDe(1));
+        assertEquals(99, catalogoUNQ.cantidadDe(1));
  
         pedido.avanzarEstado(); 
         assertEquals(TipoEstado.ENVIADO, pedido.getEstado());
@@ -66,8 +67,8 @@ public class FlujoDeEstadosTestCase {
         pedido.cancelarPedido();
  
         assertEquals(TipoEstado.CANCELADO, pedido.getEstado());
-        assertFalse(sucursalCorrientes.tienePedidoActivo(pedido));
-        assertEquals(100, catalogoCorrientes.cantidadDe(1));
+        assertFalse(sucusalUNQ.tienePedidoActivo(pedido));
+        assertEquals(100, catalogoUNQ.cantidadDe(1));
     }
  
     @Test
@@ -78,7 +79,7 @@ public class FlujoDeEstadosTestCase {
         pedido.cancelarPedido();
  
         assertEquals(TipoEstado.CANCELADO, pedido.getEstado());
-        assertEquals(100, catalogoCorrientes.cantidadDe(1));
+        assertEquals(100, catalogoUNQ.cantidadDe(1));
     }
  
     @Test
@@ -110,10 +111,10 @@ public class FlujoDeEstadosTestCase {
  
     @Test
     void testNoSePuedeAgregarUnProductoAUnPedidoQueYaNoEstaEnBorrador() {
-        catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 50, 25f); // SKU = 2
+    	catalogoUNQ.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 50, 25f); // SKU = 2
         pedido.avanzarEstado(); 
  
-        pedido.agregarProducto(catalogoCorrientes.buscarProducto(2));
+        pedido.agregarProducto(catalogoUNQ.buscarProducto(2));
  
         assertFalse(pedido.agregoA(2)); 
     }

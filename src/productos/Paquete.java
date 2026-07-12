@@ -37,4 +37,14 @@ public class Paquete extends Producto {
 		return precioTotal *= (1 - (descuento/100f));
 	}
 
+	public float getPeso() {
+		float pesoTotal = 0;
+		int cantidadDeProductos = productosQueIncluye.size(); 
+		
+		for (int i=0; i < cantidadDeProductos; i++) {
+			pesoTotal += productosQueIncluye.get(i).getPeso();
+		}
+		return pesoTotal;
+	}
+
 }

@@ -5,11 +5,14 @@ import java.util.List;
 import notificadores.*;
 
 import envios.Envio;
+import envios.EnvioEstandar;
 import envios.SinEnvioDefinido;
+import envios.TipoEnvio;
 import metodosDePago.MetodoDePago;
 import metodosDePago.SinMetodoDePagoDefinido;
 import productos.Producto;
 import sistemas.Sucursal;
+import ubicacionGeografica.Direccion;
 
 public class Pedido {
 
@@ -17,14 +20,14 @@ public class Pedido {
 	private EstadoDelPedido     estadoActual;
 	private ArrayList<Producto> listaDeProductos;
 	private String              mail;
-	private String              direccion;
+	private Direccion              direccion;
 	private MetodoDePago        metodoDePago;
 	private Envio               envio;
 	private List<PedidoObserver> observers = new ArrayList<>();
 	
-	public Pedido(Sucursal sucursal, EstadoDelPedido estadoActual, ArrayList<Producto> listaDeProductos, String mail, String direccion) {
+	public Pedido(Sucursal sucursal, ArrayList<Producto> listaDeProductos, String mail, Direccion direccion) {
 		this.sucursal         = sucursal;
-		this.estadoActual     = estadoActual;
+		this.estadoActual     = new Borrador();
 		this.listaDeProductos = listaDeProductos;
 		this.mail             = mail;
 		this.direccion        = direccion;
@@ -37,7 +40,7 @@ public class Pedido {
 		return mail;
 	}
 
-	public String getDireccion() {
+	public Direccion getDireccion() {
 		return direccion;
 	}
 
@@ -77,11 +80,6 @@ public class Pedido {
 	public Boolean estaSinDefinirMetodoDePago() {
 		return metodoDePago.esSinDefinir();
 	}
-
-	public Boolean estaSinDefinirEnvio() {
-		return envio.esSinDefinir();
-	}
-
 
 	public void cancelarPedido() {
 		estadoActual.cancelarPedido(this);
@@ -127,5 +125,40 @@ public class Pedido {
 	}
 	public TipoEstado getEstado() {
 		return estadoActual.getTipo();
+	}
+
+	public TipoEnvio getEnvio() {
+		return envio.getTipo();
+	}
+	
+	public MetodoDePago getMetodoDePago() {
+		return metodoDePago;
+	}
+
+	public void setEnvio(Envio envio) {
+		this.envio = envio;
+	}
+
+	public float calcularCosto() {
+		return envio.costoEnvio(this);
+	}
+
+	public float pesoTotal() {
+		
+		float pesoTotal = 0;
+		int cantidadDeProductos = listaDeProductos.size();
+		
+		for (int i=0; i < cantidadDeProductos; i++) {
+			pesoTotal += listaDeProductos.get(i).getPeso();
+		}
+		return pesoTotal;
+	}
+
+	public String estimacionDeEntrega() {
+		return envio.estimacionDeEntrega(sucursal.getDireccion(), direccion);
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 }

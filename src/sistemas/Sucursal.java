@@ -2,20 +2,19 @@ package sistemas;
 
 import java.util.ArrayList;
 
-import pedido.Borrador;
-import pedido.EstadoDelPedido;
 import pedido.Pedido;
 import productos.Producto;
+import ubicacionGeografica.Direccion;
 
 public class Sucursal {
 	
 	private int CUIT;
 	private Catalogo catalogo;
 	private float dineroDisponible;
-	private String direccion;
+	private Direccion direccion;
 	private ArrayList<Pedido> pedidosActivos;
 
-	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, String direccion) {
+	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion) {
 		this.CUIT = CUIT;
 		this.catalogo = catalogo;
 		this.dineroDisponible = dineroDisponible; 
@@ -35,14 +34,13 @@ public class Sucursal {
 		return dineroDisponible;
 	}
 
-	public String getDireccion() {
+	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public Pedido crearPedido(String mail, String direccion) {
-		EstadoDelPedido estadoActual = new Borrador();
+	public Pedido crearPedido(String mail, Direccion direccion) {
 		ArrayList<Producto> listaDeProductos = new ArrayList<>();
-		Pedido pedido = new Pedido(this, estadoActual, listaDeProductos, mail, direccion);
+		Pedido pedido = new Pedido(this, listaDeProductos, mail, direccion);
 		
 		pedidosActivos.add(pedido);
 		

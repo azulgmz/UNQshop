@@ -8,7 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import envios.RetiroEnSucursal;
+import envios.TipoEnvio;
 import metodosDePago.BilleteraVirtual;
+import metodosDePago.TipoMetodoDePago;
 import pedido.Pedido;
 import pedido.TipoEstado;
 import productos.Atributo;
@@ -18,34 +20,41 @@ import java.util.ArrayList;
 
 import sistemas.Catalogo;
 import sistemas.Sucursal;
+import ubicacionGeografica.Direccion;
 
 class PedidoTestCase {
 
-	private int                 CUIT;
-	private Catalogo            catalogoCorrientes;
-	private float               dineroDisponible;
-	private String              direccion;
-	private Sucursal            sucursalCorrientes;
+	private Catalogo            catalogoUNQ;
+	private Sucursal            sucursalUNQ;
 	private ArrayList<Atributo> atributosDummy;
 	private Pedido              pedido;
 	
 	@BeforeEach
 	public void setUp() {
-		catalogoCorrientes = new Catalogo();
-	    sucursalCorrientes = new Sucursal(28062026, catalogoCorrientes, 100000f, "Avenida Corrientes 1661");
-	    atributosDummy     = new ArrayList<>();
+		catalogoUNQ    = new Catalogo();
+	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d));
+	    atributosDummy = new ArrayList<>();
 	    
-	    pedido = sucursalCorrientes.crearPedido("juan@gmail.com", "Juan Domingo Peron 133");
+	    pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
 	    
-	    catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
-	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 10000f, 100, 6840f);        // SKU = 2
+	    catalogoUNQ.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
+	    catalogoUNQ.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 10000f, 100, 6840f);        // SKU = 2
 	    
 	}             
 	
 	@Test
+	void testIUnPedidoRecienCreadoNoTieneDatosDeEnvioBilleteraNiProductosYEstaComoBorrador() {
+		
+		assertEquals(pedido.getEnvio(), TipoEnvio.SINENVIODEFINIDO);
+		//assertEquals(pedido.getMetodoDePago(), TipoMetodoDePago.SINMETODODEPAGODEFINIDO);
+		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);
+	}
+	
+	
+	@Test
 	void testUnPedidoPuedeAgregarUnProductoSiEstaEnEstadoBorrador() {
 
-		pedido.agregarProducto(catalogoCorrientes.buscarProducto(1)); // Se agrega 'monitor' al pedido
+		pedido.agregarProducto(catalogoUNQ.buscarProducto(1)); // Se agrega 'monitor' al pedido
 		
 		assertTrue(pedido.agregoA(1));              // Se verifica que se agrego un Monitor SnapDragon al pedido
 		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);
@@ -54,20 +63,20 @@ class PedidoTestCase {
 	@Test
 	void testUnPedidoNoPuedeAgregarUnProductoQueTenga0Stock() {
 		
-		catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0, 20f); // SKU = 3
+		catalogoUNQ.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0, 20f); // SKU = 3
 		
-		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.agregarProducto(catalogoCorrientes.buscarProducto(3)));
+		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.agregarProducto(catalogoUNQ.buscarProducto(3)));
 																												
-		assertEquals("No hay stock de " + catalogoCorrientes.buscarProducto(3).getNombre() + ".", error.getMessage());
+		assertEquals("No hay stock de " + catalogoUNQ.buscarProducto(3).getNombre() + ".", error.getMessage());
 		
-		assertEquals(0, catalogoCorrientes.cantidadDe(3)); // Se verifica que el stock de 'Mouse' queda intacto
+		assertEquals(0, catalogoUNQ.cantidadDe(3)); // Se verifica que el stock de 'Mouse' queda intacto
 		assertFalse(pedido.agregoA(3));                      // Se verifica que no se agrego el 'Mouse' al pedido
 	}
 	
 	@Test
 	void testIUnPedidoPuedeEliminarUnProductoSiEstaEnEstadoBorrador() {
 		
-		Individual monitor = (Individual) catalogoCorrientes.buscarProducto(1);
+		Individual monitor = (Individual) catalogoUNQ.buscarProducto(1);
 		
 		pedido.agregarProducto(monitor);
 		
@@ -79,7 +88,7 @@ class PedidoTestCase {
 	@Test
 	void testIUnPedidoCuandoSeConfirmaBajaElStockDelCatalogo() {
 		
-		Individual monitor = (Individual) catalogoCorrientes.buscarProducto(1);
+		Individual monitor = (Individual) catalogoUNQ.buscarProducto(1);
 		BilleteraVirtual billeteraDummy = mock(BilleteraVirtual.class);
 		RetiroEnSucursal retiroDummy = mock(RetiroEnSucursal.class);
 		
@@ -89,7 +98,7 @@ class PedidoTestCase {
 		pedido.agregarProducto(monitor);
 		
 		pedido.confirmarPedido(billeteraDummy, retiroDummy);
-		assertEquals(96, catalogoCorrientes.cantidadDe(1)); // Se verifica que el stock de 'Monitor' baja
+		assertEquals(96, catalogoUNQ.cantidadDe(1)); // Se verifica que el stock de 'Monitor' baja
 		assertEquals(pedido.getEstado(), TipoEstado.CONFIRMADO);        // Se verifica que cambio el estado del pedido
 	}
 	
@@ -99,12 +108,12 @@ class PedidoTestCase {
 		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);                 // Se verifica que esta como Borrador
 		pedido.cancelarPedido();
 		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);                // Se verifica que cambio el estado del pedido
-		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
+		assertFalse(sucursalUNQ.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
 	}
 	
 	@Test
 	void testIUnPedidoEnEstadoConfirmadoSePuedeCancelarYDevuelveElStock() {
-		Individual monitor = (Individual) catalogoCorrientes.buscarProducto(1);
+		Individual monitor = (Individual) catalogoUNQ.buscarProducto(1);
 		BilleteraVirtual billeteraDummy = mock(BilleteraVirtual.class);
 		RetiroEnSucursal retiroDummy = mock(RetiroEnSucursal.class);
 		
@@ -119,9 +128,11 @@ class PedidoTestCase {
 		pedido.cancelarPedido();
 		
 		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);                // Se verifica que cambio el estado del pedido
-		assertFalse(sucursalCorrientes.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
-		assertEquals(100, catalogoCorrientes.cantidadDe(1));       // Se verifica que el stock de 'Monitor' vuelve a 100
+		assertFalse(sucursalUNQ.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
+		assertEquals(100, catalogoUNQ.cantidadDe(1));       // Se verifica que el stock de 'Monitor' vuelve a 100
 	}
-		
+	
+	
+	
 
 }
