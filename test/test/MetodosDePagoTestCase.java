@@ -112,7 +112,7 @@ public class MetodosDePagoTestCase {
 		Direccion direccionCliente = new Direccion("Dirección del cliente", -34.6, -58.4);
  
 		Catalogo catalogo = new Catalogo();
-		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal);
+		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, new ArrayList<>() );
 		catalogo.registrarIndividual("Mouse", "Marca", "Categoria", new ArrayList<Atributo>(), 1500f, 10, 300f); // SKU = 1
  
 		Pedido pedido = sucursal.crearPedido("ana@mail.com", direccionCliente);
