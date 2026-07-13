@@ -61,30 +61,36 @@ public class Sucursal {
 	public double distanciaDeSucursalMasLejanaABuscarUnStock(ArrayList<Producto> listaDeProductos) {
 		double distanciaMasLejana = 0;
 		for(Producto p : listaDeProductos) {
-			if(!(catalogo.tieneProducto(p.getSKU())) && catalogo.cantidadDe(p.getSKU()) == 0) {
+			if(!tieneEnElDeposito(p)) {
 					Sucursal otraSucursal = sucursalConStockDe(p);
-				
-					double distancia = this.getDireccion().distanciaHasta(otraSucursal.getDireccion());
-				
+					double distancia = direccion.distanciaHasta(otraSucursal.getDireccion());
 					if (distancia > distanciaMasLejana) {
 						distanciaMasLejana = distancia;
-				}
+					}
 			} 
 		}
 		return distanciaMasLejana;
 	}
 	
 
+	public boolean tieneEnElDeposito(Producto producto) {
+		return deposito.contains(producto);
+	}
+
 	public Sucursal sucursalConStockDe(Producto producto) {
 		int cantidad = sucursales.size();
 		
 		for(int i=0; i < cantidad; i++) {
-			Catalogo catalogo2 = sucursales.get(i).getCatalogo();
-			if(catalogo2.tieneProducto(producto.getSKU()) && catalogo2.cantidadDe(producto.getSKU()) > 0) {
+			ArrayList<Producto> deposito = sucursales.get(i).getDeposito();
+			if(deposito.contains(producto)) {
 					return sucursales.get(i);
 				}		
 		}
 		return null; // Se deja null porque no haya una sucursal con el stock disponible
+	}
+
+	private ArrayList<Producto> getDeposito() {
+		return deposito;
 	}
 
 	public void setDireccion(Direccion direccion) {

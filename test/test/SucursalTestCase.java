@@ -39,7 +39,7 @@ class SucursalTestCase {
 	}
 	
 	@Test
-	void testLaSurcusalCreaYGuardaPedidos() {
+	void testLaSurcusalCreaPedidos() {
 		 direccion =  new Direccion("9 de Julio 217", -34.712445d, -58.284493d);
 		 Pedido pedido = sucursalUNQ.crearPedido("juan@gmail.com", direccion);
 		 
