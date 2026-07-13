@@ -72,7 +72,7 @@ public class Pedido {
 		this.metodoDePago = metodoDePago;
 		this.envio = envio;
 		
-		metodoDePago.procesarPago(calcularPrecioTotal());
+		metodoDePago.procesarPago(precioTotal());
 		
 		sucursal.reservarEnElDeposito(listaDeProductos);
 		this.cambiarEstado(new Confirmado());
@@ -172,15 +172,6 @@ public class Pedido {
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
-	}
-	
-	public float calcularPrecioTotal() {
-	    float total = 0;
-	    int cantidadDeProductos = listaDeProductos.size();
-	    for (int i = 0; i < cantidadDeProductos; i++) {
-	        total += listaDeProductos.get(i).precioFinal();
-	    }
-	    return total;
 	}
 	
 }

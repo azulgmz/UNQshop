@@ -1,10 +1,9 @@
 package envios;
 
-import java.util.ArrayList;
-
 import pedido.Pedido;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
+
 
 public class RetiroEnSucursal implements Envio {
 	
@@ -35,11 +34,7 @@ public class RetiroEnSucursal implements Envio {
 			return "El pedido se puede retirar en 2 días hábiles";
 		}else {
 			return "El pedido se puede retirar en 3 días hábiles";
-		}
-		
-		
-		
-		
+		}	
 	}
 
 }
