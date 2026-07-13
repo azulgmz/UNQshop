@@ -19,11 +19,13 @@ import metodosDePago.TarjetaDeCredito;
 import pedido.Pedido;
 import productos.Atributo;
 import sistemas.Catalogo;
+import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 
 class EnvioTestCase {
 	
+	private SistemaDeProductos sistemaDeProductos;
 	private Catalogo            catalogoUNQ, catalogoCorrientes;
 	private Sucursal            sucursalUNQ, sucursalCorrientes;
 	private Pedido              pedido;
@@ -35,6 +37,8 @@ class EnvioTestCase {
 	
 	@BeforeEach
 	public void setUp() {
+		sistemaDeProductos = new SistemaDeProductos();
+		
 		correoStub     = mock(CorreoArgentina.class);
 		catalogoUNQ    = new Catalogo();
 		sucursales     = new ArrayList<Sucursal>();
@@ -47,7 +51,10 @@ class EnvioTestCase {
 	    catalogoCorrientes = new Catalogo();
 		sucursalCorrientes = new Sucursal(895422, catalogoCorrientes, 20000, new Direccion("Direccion a 20km aprox", -34.58508d, -58.278418d), sucursales);
 		
-		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f);
+		sistemaDeProductos.agregarSucursal(sucursalUNQ);
+		sistemaDeProductos.agregarSucursal(sucursalCorrientes);
+		
+		sistemaDeProductos.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f);
 		
 		sucursalUNQ.agregarSucursal(sucursalCorrientes);
 		
@@ -138,7 +145,7 @@ class EnvioTestCase {
 	void testElCostoYEstimacionDeUnEnvioCuandoElPedidoEstaHechoComoRetiroEnSucursal() {
 		
 	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
-	    catalogoUNQ.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f);
+	    sistemaDeProductos.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f);
 	    
 	    pedido.agregarProducto(catalogoUNQ.buscarProducto(1));
 	    pedido.confirmarPedido(tarjetaDummy, envio);

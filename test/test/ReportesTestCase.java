@@ -24,6 +24,7 @@ import reportes.VisitorCSV;
 import reportes.VisitorHTML;
 import reportes.VisitorTextoPlano;
 import sistemas.Catalogo;
+import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 
@@ -93,11 +94,15 @@ public class ReportesTestCase {
 	void testConfirmarUnPedidoRegistraLaVentaDeSusItems() {
 		Direccion direccionSucursal = new Direccion("Dirección de la sucursal", -34.6, -58.4);
 		Direccion direccionCliente = new Direccion("Dirección del cliente", -34.6, -58.4);
- 
+		
+		SistemaDeProductos sistemaDeProductos = new SistemaDeProductos();
+		
 		Catalogo catalogo = new Catalogo();
 		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, new ArrayList<Sucursal>());
-		catalogo.registrarIndividual("Mouse inalámbrico", "MarcaX", "Electrónica",
-				new ArrayList<Atributo>(), 5000f, 10, 300f); // SKU = 1
+		
+		sistemaDeProductos.agregarSucursal(sucursal);
+		
+		sistemaDeProductos.registrarIndividual("Mouse inalámbrico", "MarcaX", "Electrónica", new ArrayList<Atributo>(), 5000f, 10, 300f); // SKU = 1
  
 		Pedido pedido = sucursal.crearPedido("ana@mail.com", direccionCliente);
 		pedido.agregarProducto(catalogo.buscarProducto(1));

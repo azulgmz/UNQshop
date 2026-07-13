@@ -19,11 +19,13 @@ import productos.Individual;
 import java.util.ArrayList;
 
 import sistemas.Catalogo;
+import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 
 class PedidoTestCase {
 
+	private SistemaDeProductos sistemaDeProductos;
 	private Catalogo            catalogoUNQ;
 	private Sucursal            sucursalUNQ;
 	private ArrayList<Atributo> atributosDummy;
@@ -32,15 +34,19 @@ class PedidoTestCase {
 	
 	@BeforeEach
 	public void setUp() {
+		sistemaDeProductos = new SistemaDeProductos();
+		
 		catalogoUNQ    = new Catalogo();
 		sucursales      = new ArrayList<Sucursal>();
 	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
 	    atributosDummy = new ArrayList<>();
 	    
+	    sistemaDeProductos.agregarSucursal(sucursalUNQ);
+	    
 	    pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
 	    
-	    catalogoUNQ.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
-	    catalogoUNQ.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 10000f, 100, 6840f);        // SKU = 2
+	    sistemaDeProductos.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
+	    sistemaDeProductos.registrarIndividual("CPU", "Snapdragon", "Hardwar", atributosDummy, 10000f, 100, 6840f);        // SKU = 2
 	    
 	}             
 	
@@ -65,7 +71,7 @@ class PedidoTestCase {
 	@Test
 	void testUnPedidoNoPuedeAgregarUnProductoQueTenga0Stock() {
 		
-		catalogoUNQ.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0, 20f); // SKU = 3
+		sistemaDeProductos.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 0, 20f); // SKU = 3
 		
 		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.agregarProducto(catalogoUNQ.buscarProducto(3)));
 																												

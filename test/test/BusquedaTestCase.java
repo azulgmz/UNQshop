@@ -22,25 +22,37 @@ import busquedas.TipoDeBusqueda;
 import productos.Atributo;
 import productos.Producto;
 import sistemas.Catalogo;
+import sistemas.SistemaDeProductos;
+import sistemas.Sucursal;
+import ubicacionGeografica.Direccion;
 
 class BusquedaTestCase {
 
+	private SistemaDeProductos sistemaDeProductos;
 	private Catalogo		    catalogoCorrientes;
+	private Sucursal            sucursalCorrientes;
 	private ArrayList<Atributo> atributosDummy;
 	private List<Producto>      productosDeseados;
 	private Buscador            buscador;
 	
 	@BeforeEach
 	void setUp() {
+		sistemaDeProductos = new SistemaDeProductos();
+		
 		catalogoCorrientes = new Catalogo();
+		
+		sucursalCorrientes = new Sucursal(28062026, catalogoCorrientes, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d),  new ArrayList<Sucursal>());
 		atributosDummy     = new ArrayList<>();
 		productosDeseados  = new ArrayList<>();
+		
 		buscador =  catalogoCorrientes.getBuscador();
 		
-		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 100.1f, 1, 2000f); // SKU = 1
-	    catalogoCorrientes.registrarIndividual("CPU", "Snapdragon", "Hardware", atributosDummy, 100f, 0, 6840f);          // SKU = 2
-	    catalogoCorrientes.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 101f, 10, 20f);      // SKU = 3
-	    catalogoCorrientes.registrarIndividual("monitor", "LG", "Perifericos", atributosDummy, 99f, 0, 1900f);            // SKU = 4
+		sistemaDeProductos.agregarSucursal(sucursalCorrientes);
+		
+		sistemaDeProductos.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 100.1f, 1, 2000f); // SKU = 1
+		sistemaDeProductos.registrarIndividual("CPU", "Snapdragon", "Hardware", atributosDummy, 100f, 0, 6840f);          // SKU = 2
+		sistemaDeProductos.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 101f, 10, 20f);      // SKU = 3
+		sistemaDeProductos.registrarIndividual("monitor", "LG", "Perifericos", atributosDummy, 99f, 0, 1900f);            // SKU = 4
 	}
 	
 	@Test

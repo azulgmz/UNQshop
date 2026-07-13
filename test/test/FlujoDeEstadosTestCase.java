@@ -16,12 +16,14 @@ import pedido.TipoEstado;
 import productos.Atributo;
 import productos.Individual;
 import sistemas.Catalogo;
+import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 
 public class FlujoDeEstadosTestCase {
+	private SistemaDeProductos sistemaDeProductos;
     private Catalogo catalogoUNQ;
-    private Sucursal sucusalUNQ;
+    private Sucursal sucursalUNQ;
     private ArrayList<Atributo> atributosDummy;
     private Pedido pedido;
     private Individual monitor;
@@ -29,14 +31,18 @@ public class FlujoDeEstadosTestCase {
  
     @BeforeEach
     void setUp() {
+    	sistemaDeProductos = new SistemaDeProductos();
+    	
     	catalogoUNQ    = new Catalogo();
     	sucursales     = new ArrayList<Sucursal>();
-	    sucusalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
+    	sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
         atributosDummy = new ArrayList<>();
  
-        pedido = sucusalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
+        sistemaDeProductos.agregarSucursal(sucursalUNQ);
+        
+        pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
  
-        catalogoUNQ.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
+        sistemaDeProductos.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f); // SKU = 1
         monitor = (Individual) catalogoUNQ.buscarProducto(1);
         pedido.agregarProducto(monitor);
     }
@@ -112,7 +118,7 @@ public class FlujoDeEstadosTestCase {
  
     @Test
     void testNoSePuedeAgregarUnProductoAUnPedidoQueYaNoEstaEnBorrador() {
-    	catalogoUNQ.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 50, 25f); // SKU = 2
+    	sistemaDeProductos.registrarIndividual("Mouse", "Snapdragon", "Perifericos", atributosDummy, 2000f, 50, 25f); // SKU = 2
         pedido.avanzarEstado(); 
  
         pedido.agregarProducto(catalogoUNQ.buscarProducto(2));
