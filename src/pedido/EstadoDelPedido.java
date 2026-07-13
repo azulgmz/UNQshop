@@ -8,15 +8,15 @@ public abstract class EstadoDelPedido {
 	
 	public abstract String getNombre();
 	
-	public void cancelarPedido(Pedido pedido) {
-		pedido.cancelarse();
-		pedido.getSucursal().eliminarPedidoActivo(pedido);
-	}
 	public Boolean sePuedeModificarPedido() {
 		return false;
 	}
 	public Boolean debeNotificar() {
 		return false;
+	}
+
+		public void cancelarPedido(Pedido pedido) {
+		pedido.cancelarse();
 	}
 	
 }

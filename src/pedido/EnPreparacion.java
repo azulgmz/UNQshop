@@ -5,6 +5,7 @@ public class EnPreparacion extends EstadoDelPedido {
 	public TipoEstado getTipo() {
 		return TipoEstado.ENPREPARACION;
 	}
+	
 	@Override
 	public void avanzarEstado(Pedido pedido) {
 		pedido.cambiarEstado(new Enviado());
@@ -13,8 +14,9 @@ public class EnPreparacion extends EstadoDelPedido {
 	@Override
 	public void cancelarPedido(Pedido pedido) {
 		pedido.devolverStock();
-		super.cancelarPedido(pedido);
+		pedido.cancelarse();
 	}
+	
 	public String getNombre() {
 		return "ENPREPARACION";
 	}

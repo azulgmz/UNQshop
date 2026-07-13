@@ -43,8 +43,6 @@ class SucursalTestCase {
 		 direccion =  new Direccion("9 de Julio 217", -34.712445d, -58.284493d);
 		 Pedido pedido = sucursalUNQ.crearPedido("juan@gmail.com", direccion);
 		 
-		 assertTrue(sucursalUNQ.tienePedidoActivo(pedido));
-		 
 		 assertEquals("juan@gmail.com", pedido.getMail());
 		 assertEquals(direccion, pedido.getDireccion());
 		 assertEquals(pedido.getEstado(), TipoEstado.BORRADOR); // Cuando se crea el pedido debe estar en estado Borrador para que se pueda modificar

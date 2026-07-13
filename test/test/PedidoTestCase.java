@@ -110,7 +110,6 @@ class PedidoTestCase {
 		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);                 // Se verifica que esta como Borrador
 		pedido.cancelarPedido();
 		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);                // Se verifica que cambio el estado del pedido
-		assertFalse(sucursalUNQ.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
 	}
 	
 	@Test
@@ -129,9 +128,8 @@ class PedidoTestCase {
 		
 		pedido.cancelarPedido();
 		
-		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO);                // Se verifica que cambio el estado del pedido
-		assertFalse(sucursalUNQ.tienePedidoActivo(pedido)); // Se verifica que se elimino de la sucursal el pedido
-		assertEquals(100, catalogoUNQ.cantidadDe(1));       // Se verifica que el stock de 'Monitor' vuelve a 100
+		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO); // Se verifica que cambio el estado del pedido
+		assertEquals(100, catalogoUNQ.cantidadDe(1));           // Se verifica que el stock de 'Monitor' vuelve a 100
 	}
 	
 	

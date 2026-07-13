@@ -13,8 +13,9 @@ public class Enviado extends EstadoDelPedido {
 	@Override
 	public void cancelarPedido(Pedido pedido) {
 		pedido.devolverStock();
-		super.cancelarPedido(pedido);
+		pedido.cancelarse();
 	}
+	
 	public Boolean debeNotificar() {
 		return true;
 	}

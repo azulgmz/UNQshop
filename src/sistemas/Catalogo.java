@@ -97,14 +97,6 @@ public class Catalogo {
 		asertarQueNoSePuedeDescontarUnStockQueEs0(producto);
 	}
 
-	public void descontarStock(ArrayList<Producto> listaDeProductos) {
-		int lista = listaDeProductos.size();
-		
-		for(int i=0; i < lista; i++) {
-			descontarStockDe(listaDeProductos.get(i));
-		}
-	}
-
 	public void devolverStock(ArrayList<Producto> listaDeProductos) {
 		int cantidad = listaDeProductos.size();
 		for(int i=0; i < cantidad; i++) {

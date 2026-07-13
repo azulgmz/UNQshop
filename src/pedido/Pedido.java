@@ -74,8 +74,7 @@ public class Pedido {
 		
 		metodoDePago.procesarPago(calcularPrecioTotal());
 		
-		sucursal.getCatalogo().descontarStock(listaDeProductos);
-		
+		sucursal.reservarEnElDeposito(listaDeProductos);
 		this.cambiarEstado(new Confirmado());
 	}
 
@@ -106,7 +105,7 @@ public class Pedido {
 		this.notificarObservers(estadoAnterior,estado);
 	}
 	public void reservarStock() {
-		sucursal.getCatalogo().descontarStock(listaDeProductos);
+		sucursal.reservarEnElDeposito(listaDeProductos);
 	}
 	public void devolverStock() {
 		sucursal.getCatalogo().devolverStock(listaDeProductos);

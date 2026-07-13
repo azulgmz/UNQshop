@@ -108,11 +108,12 @@ public class MetodosDePagoTestCase {
  
 	@Test
 	void testConfirmarPedidoInvocaElProcesamientoDelPagoConElMontoTotal() {
-		Direccion direccionSucursal = new Direccion("Dirección de la sucursal", -34.6, -58.4);
-		Direccion direccionCliente = new Direccion("Dirección del cliente", -34.6, -58.4);
+		Direccion direccionSucursal    = new Direccion("Dirección de la sucursal", -34.6, -58.4);
+		Direccion direccionCliente     = new Direccion("Dirección del cliente", -34.6, -58.4);
+		ArrayList<Sucursal> sucursales = new ArrayList<Sucursal>();
  
 		Catalogo catalogo = new Catalogo();
-		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal);
+		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, sucursales);
 		catalogo.registrarIndividual("Mouse", "Marca", "Categoria", new ArrayList<Atributo>(), 1500f, 10, 300f); // SKU = 1
  
 		Pedido pedido = sucursal.crearPedido("ana@mail.com", direccionCliente);

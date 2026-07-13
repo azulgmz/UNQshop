@@ -1,7 +1,9 @@
 package test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -12,29 +14,43 @@ import org.junit.jupiter.api.Test;
 import envios.CorreoArgentina;
 import envios.EnvioEstandar;
 import envios.EnvioExpress;
+import envios.RetiroEnSucursal;
 import envios.TipoEnvio;
 import pedido.Pedido;
+import productos.Atributo;
+import productos.Individual;
+import productos.Producto;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 
 class EnvioTestCase {
 	
-	private Catalogo            catalogoDummy;
-	private Sucursal            sucursalUNQ;
+	private Catalogo            catalogoUNQ, catalogoCorrientes;
+	private Sucursal            sucursalUNQ, sucursalCorrientes;
 	private Pedido              pedido;
 	private CorreoArgentina     correoStub;
 	private ArrayList<Sucursal> sucursales;
+	private ArrayList<Atributo> atributosDummy;
 	
 	@BeforeEach
 	public void setUp() {
-		correoStub = mock(CorreoArgentina.class); // Creo un correo Stub
-		catalogoDummy  = new Catalogo(); // Creo un catalogo dummy
+		correoStub     = mock(CorreoArgentina.class);
+		catalogoUNQ    = new Catalogo();
 		sucursales     = new ArrayList<Sucursal>();
-	    sucursalUNQ    = new Sucursal(28062026, catalogoDummy, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
+	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
+	    
+	    atributosDummy = new ArrayList<Atributo>();
 	    
 	    pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
 	    
+	    catalogoCorrientes = new Catalogo();
+		sucursalCorrientes = new Sucursal(895422, catalogoCorrientes, 20000, new Direccion("Direccion a 20km aprox", -34.58508d, -58.278418d), sucursales);
+		
+		catalogoCorrientes.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f);
+		
+		sucursalUNQ.agregarSucursal(sucursalCorrientes);
+		
 	}             
 	
 	@Test
@@ -114,6 +130,64 @@ class EnvioTestCase {
 	    assertEquals(5000f, pedido.calcularCosto());
 	    assertEquals("El envio llegará en 1 día hábil", pedido.estimacionDeEntrega());
 	}
+	
+	@Test
+	void testElCostoYEstimacionDeUnEnvioCuandoElPedidoEstaHechoComoRetiroEnSucursal() {
+		
+	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
+	    catalogoUNQ.registrarIndividual("Monitor", "Snapdragon", "Perifericos", atributosDummy, 8900f, 100, 2000f);
+	    
+	    
+	    pedido.setEnvio(envio);
+	    pedido.agregarProducto(catalogoUNQ.buscarProducto(1));
+
+	    assertEquals(TipoEnvio.RETIROENSUCURSAL, pedido.getEnvio());
+	    assertEquals(0f, pedido.calcularCosto());
+	    assertEquals("El pedido se puede retirar hoy", pedido.estimacionDeEntrega());
+	}
+	
+	@Test
+	void testLaEstimacionDeEntregaEsDe1DiaCuandoLaSucursalNoTieneElProductoYLaOtraSucursalEstaA20OMenosKilometros() {
+		
+	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
+
+	    pedido.setEnvio(envio);
+	    pedido.agregarProducto(catalogoCorrientes.buscarProducto(1));
+
+	    assertEquals("El pedido se puede retirar en 1 día hábil", pedido.estimacionDeEntrega());
+
+	}
+	
+	@Test
+	void testLaEstimacionDeEntregaEsDe2DiaCuandoLaSucursalNoTieneElProductoYLaOtraSucursalEstaA100OMenosKilometros() {
+		
+		Direccion direccion = new Direccion("Direccion a 100km aprox", -34.58504d, -58.278418d);
+		sucursalCorrientes.setDireccion(direccion);
+		
+	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
+
+	    pedido.setEnvio(envio);
+	    pedido.agregarProducto(catalogoCorrientes.buscarProducto(1));
+
+	    assertEquals("El pedido se puede retirar en 2 días hábiles", pedido.estimacionDeEntrega());
+
+	}
+	
+	@Test
+	void testLaEstimacionDeEntregaEsDe2DiaCuandoLaSucursalNoTieneElProductoYLaOtraSucursalEstaAMasDe100Km() {
+
+		Direccion direccion = new Direccion("Direccion a +100km", -33.86560d, -58.278418d);
+		sucursalCorrientes.setDireccion(direccion);
+		
+	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
+
+	    pedido.setEnvio(envio);
+	    pedido.agregarProducto(catalogoCorrientes.buscarProducto(1));
+
+	    assertEquals("El pedido se puede retirar en 3 días hábiles", pedido.estimacionDeEntrega());
+
+	}
+	
 
 
 }

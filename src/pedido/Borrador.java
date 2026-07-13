@@ -6,10 +6,6 @@ public class Borrador extends EstadoDelPedido {
 		return TipoEstado.BORRADOR;
 	}
 
-	public void cancelarPedido(Pedido pedido) {
-		pedido.cancelarse();
-		pedido.getSucursal().eliminarPedidoActivo(pedido);
-	}
 	public void avanzarEstado(Pedido pedido) {
 		pedido.cambiarEstado(new Confirmado());
 	}

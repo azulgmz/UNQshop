@@ -69,7 +69,6 @@ public class FlujoDeEstadosTestCase {
         pedido.cancelarPedido();
  
         assertEquals(TipoEstado.CANCELADO, pedido.getEstado());
-        assertFalse(sucusalUNQ.tienePedidoActivo(pedido));
         assertEquals(100, catalogoUNQ.cantidadDe(1));
     }
  
