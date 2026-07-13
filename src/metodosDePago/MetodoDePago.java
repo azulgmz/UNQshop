@@ -2,7 +2,7 @@ package metodosDePago;
 
 public interface MetodoDePago {
 
-	Boolean esSinDefinir();
+	boolean esSinDefinir();
 	
 	void procesarPago(float monto);
 }

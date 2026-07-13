@@ -4,7 +4,7 @@ import pedido.ExceptionMsg;
 
 public class SinMetodoDePagoDefinido implements MetodoDePago {
 
-	public Boolean esSinDefinir() {
+	public boolean esSinDefinir() {
 		return true;
 	}
 	public void procesarPago(float monto) {

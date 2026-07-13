@@ -6,7 +6,7 @@ import pedido.ExceptionMsg;
 public abstract class MetodoDePagoTemplate implements MetodoDePago {
 
 	@Override
-	public Boolean esSinDefinir() {
+	public boolean esSinDefinir() {
 		return false;
 	}
 
