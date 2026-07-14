@@ -58,6 +58,8 @@ class EnvioTestCase {
 		
 		sucursalUNQ.agregarSucursal(sucursalCorrientes);
 		
+		sucursalCorrientes.agregarSucursal(sucursalUNQ);
+		
 		tarjetaDummy = mock(TarjetaDeCredito.class);
 		
 		
@@ -158,10 +160,7 @@ class EnvioTestCase {
 	@Test
 	void testLaEstimacionDeEntregaEsDe1DiaCuandoLaSucursalNoTieneElProductoYLaOtraSucursalEstaA20OMenosKilometros() {
 		
-	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
-	    
-	    pedido.agregarProducto(catalogoCorrientes.buscarProducto(1));
-	    pedido.confirmarPedido(tarjetaDummy, envio);
+	    confirmarPedidoConEnvio();
 
 	    assertEquals("El pedido se puede retirar en 1 día hábil", pedido.estimacionDeEntrega());
 
@@ -173,10 +172,7 @@ class EnvioTestCase {
 		Direccion direccion = new Direccion("Direccion a 100km aprox", -34.58504d, -58.278418d);
 		sucursalCorrientes.setDireccion(direccion);
 		
-	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
-
-	    pedido.agregarProducto(catalogoCorrientes.buscarProducto(1));
-	    pedido.confirmarPedido(tarjetaDummy, envio);
+	    confirmarPedidoConEnvio();
 
 	    assertEquals("El pedido se puede retirar en 2 días hábiles", pedido.estimacionDeEntrega());
 
@@ -188,13 +184,17 @@ class EnvioTestCase {
 		Direccion direccion = new Direccion("Direccion a +100km", -33.86560d, -58.278418d);
 		sucursalCorrientes.setDireccion(direccion);
 		
-	    RetiroEnSucursal envio = new RetiroEnSucursal(sucursalUNQ, pedido);
-
-	    pedido.agregarProducto(catalogoCorrientes.buscarProducto(1));
-	    pedido.confirmarPedido(tarjetaDummy, envio);
+		confirmarPedidoConEnvio();
 
 	    assertEquals("El pedido se puede retirar en 3 días hábiles", pedido.estimacionDeEntrega());
 
+	}
+
+	private void confirmarPedidoConEnvio() {
+		RetiroEnSucursal envio = new RetiroEnSucursal(sucursalCorrientes, pedido);
+
+	    pedido.agregarProducto(catalogoUNQ.buscarProducto(1));
+	    pedido.confirmarPedido(tarjetaDummy, envio);
 	}
 	
 
