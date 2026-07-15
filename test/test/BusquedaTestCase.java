@@ -17,7 +17,6 @@ import busquedas.BusquedaPorCategoria;
 import busquedas.BusquedaPorDisponibilidad;
 import busquedas.BusquedaPorNOT;
 import busquedas.BusquedaPorPrecioMax;
-import busquedas.SinTipoDeBusquedaDefinido;
 import busquedas.TipoDeBusqueda;
 import productos.Atributo;
 import productos.Producto;

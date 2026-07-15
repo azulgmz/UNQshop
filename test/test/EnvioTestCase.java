@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,7 +15,6 @@ import envios.EnvioEstandar;
 import envios.EnvioExpress;
 import envios.RetiroEnSucursal;
 import envios.TipoEnvio;
-import metodosDePago.ApiTarjetaDeCredito;
 import metodosDePago.TarjetaDeCredito;
 import pedido.Pedido;
 import productos.Atributo;
@@ -197,6 +197,25 @@ class EnvioTestCase {
 	    pedido.confirmarPedido(tarjetaDummy, envio);
 	}
 	
+	@Test
+	void testNoSePuedeEstimarLaEntregaSiEsSinEnvioDefinido() {
+		
+		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.estimacionDeEntrega());
+		
+	    assertEquals("Se debe elegir un tipo de envio para poder estimar la entrega", error.getMessage());
+	    assertEquals(pedido.getEnvio(), TipoEnvio.SINENVIODEFINIDO);
 
+	}
+	
+	@Test
+	void testNoSePuedeCalcularElCostoDeEnvioSiEsSinEnvioDefinido() {
+		
+		IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> pedido.calcularCosto());
+		
+	    assertEquals("Se debe elegir un tipo de envio para poder calcular el costo de envio", error.getMessage());
+	    assertEquals(pedido.getEnvio(), TipoEnvio.SINENVIODEFINIDO);
+
+	}
+	
 
 }

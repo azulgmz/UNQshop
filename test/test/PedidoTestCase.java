@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import envios.RetiroEnSucursal;
 import envios.TipoEnvio;
 import metodosDePago.BilleteraVirtual;
-import metodosDePago.TipoMetodoDePago;
 import pedido.Pedido;
 import pedido.TipoEstado;
 import productos.Atributo;
@@ -54,7 +53,7 @@ class PedidoTestCase {
 	void testIUnPedidoRecienCreadoNoTieneDatosDeEnvioBilleteraNiProductosYEstaComoBorrador() {
 		
 		assertEquals(pedido.getEnvio(), TipoEnvio.SINENVIODEFINIDO);
-		//assertEquals(pedido.getMetodoDePago(), TipoMetodoDePago.SINMETODODEPAGODEFINIDO);
+		assertTrue(pedido.getMetodoDePago().esSinDefinir());
 		assertEquals(pedido.getEstado(), TipoEstado.BORRADOR);
 	}
 	

@@ -32,6 +32,10 @@ public class Individual extends Producto {
 	public float getPeso() {
 		return peso;
 	}
+
+	public String getMarca() {
+		return marca;
+	}
 	
 
 }

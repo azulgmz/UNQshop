@@ -8,12 +8,13 @@ public class SinEnvioDefinido implements Envio {
 	public TipoEnvio getTipo() {
 		return TipoEnvio.SINENVIODEFINIDO;
 	}
+	
 	public float costoEnvio(Pedido pedido) {
-		return 0;
+		throw new IllegalArgumentException("Se debe elegir un tipo de envio para poder calcular el costo de envio");
 	}
 
 	public String estimacionDeEntrega(Direccion origen, Direccion destino) {
-		return "Sin Envio";
+		throw new IllegalArgumentException("Se debe elegir un tipo de envio para poder estimar la entrega");
 	}
 
 }

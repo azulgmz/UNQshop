@@ -58,6 +58,8 @@ class IndividualTestCase {
 		assertEquals("Teclado", teclado.getNombre());
 		assertEquals("Color: Azul.\n", teclado.getDescripcion());
 		assertEquals(6500f, teclado.precioFinal());
+		assertEquals(530f, teclado.getPeso());
+		assertEquals("SnapDragon", teclado.getMarca());
 	}
 	
 	@Test
