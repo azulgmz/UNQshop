@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
@@ -20,14 +21,17 @@ import ubicacionGeografica.Direccion;
 
 class PaqueteTestCase {
 	
-	private SistemaDeProductos sistemaDeProductos;
-	private Catalogo catalogoUNQ;	
-	private Sucursal sucursalUNQ;
-	private Direccion direccionUNQ;
+	private SistemaDeProductos  sistemaDeProductos;
+	private Catalogo            catalogoUNQ;	
+	private Sucursal            sucursalUNQ;
+	private Direccion           direccionDummy;
 	private ArrayList<Sucursal> sucursales;
 	private ArrayList<Atributo> atributos, a2, a3, a4, a5;
 	private ArrayList<Producto> productos;
-	private Atributo color, p2, p3, p4;
+	private Atributo            color, p2, p3, p4;
+	private Paquete             packParaComputadora;
+	private Individual          microfono;
+	private ArrayList<Producto> productos2;
 	
 	@BeforeEach
 	public void setUp() {
@@ -42,12 +46,34 @@ class PaqueteTestCase {
 		
 		catalogoUNQ     = new Catalogo();
 		sucursales      = new ArrayList<Sucursal>();
-		direccionUNQ    = new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d);
-		sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, direccionUNQ, sucursales);
+		direccionDummy  = mock(Direccion.class);
+		sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, direccionDummy, sucursales);
 		
 		sistemaDeProductos.agregarSucursal(sucursalUNQ);
 		
-		color = new Atributo("Color", "Blanco");
+		registrarIndividuales();
+	
+		productos.add((Individual) catalogoUNQ.buscarProducto(1));
+		productos.add((Individual) catalogoUNQ.buscarProducto(2));
+		productos.add((Individual) catalogoUNQ.buscarProducto(3));
+		productos.add((Individual) catalogoUNQ.buscarProducto(4));
+		
+		sistemaDeProductos.registrarPaquete("Pack para computadora", "Accesesorios y Perifericos", a5, productos, 10, 3);   // SKU = 5
+		
+		productos2 = new ArrayList<>(productos);
+		
+		packParaComputadora = (Paquete) catalogoUNQ.buscarProducto(5);
+		
+		sistemaDeProductos.registrarIndividual("Microfono", "SnapDragon", "Periferico", a4, 1500f, 10, 98f);    // SKU = 6
+		microfono = (Individual) catalogoUNQ.buscarProducto(6);
+		
+		productos2.add(packParaComputadora);
+		productos2.add(microfono);
+	
+	}
+
+	private void registrarIndividuales() {
+		color     = new Atributo("Color", "Blanco");
 		productos = new ArrayList<Producto>();
 		
 		atributos.add(color);
@@ -65,25 +91,14 @@ class PaqueteTestCase {
 		p4 = new Atributo("Color", "Negro");
 		a4.add(p4);
 		sistemaDeProductos.registrarIndividual("Mousepad", "SnapDragon", "Accesesorio", a4, 6500f, 10, 25f);    // SKU = 4
-		
-		Individual teclado     = (Individual) catalogoUNQ.buscarProducto(1);
-		Individual mouse       = (Individual) catalogoUNQ.buscarProducto(2);
-		Individual auriculares = (Individual) catalogoUNQ.buscarProducto(3);
-		Individual mousepad    = (Individual) catalogoUNQ.buscarProducto(4);
-		
-		productos.add(teclado);
-		productos.add(mouse);
-		productos.add(auriculares);
-		productos.add(mousepad);
-		sistemaDeProductos.registrarPaquete("Pack para computadora", "Accesesorios y Perifericos", a5, productos, 10, 3);   // SKU = 5
 	}
 
 	@Test
 	void testSeRegistraPaqueteEnElCatalogo() {
 		
-		assertTrue(catalogoUNQ.tieneProducto(5));   		 // Comprueba si hay al menos un producto que tenga ese SKU
+		assertTrue(catalogoUNQ.tieneProducto(5));   	    // Comprueba si hay al menos un producto que tenga ese SKU
 		assertEquals(3, catalogoUNQ.cantidadDe(5));         // Comprueba la cantidad que hay de tal prodcuto (con SKU=5)
-		assertEquals(5, catalogoUNQ.cantidadDeProductos()); // Comprueba cuantos productos distintos hay en el catalogo
+		assertEquals(6, catalogoUNQ.cantidadDeProductos()); // Comprueba cuantos productos distintos hay en el catalogo
 	}
 	
 	@Test
@@ -97,60 +112,74 @@ class PaqueteTestCase {
 	}
 	
 	@Test
-	void testLosProductosPaquetesTambiénPuedenTenerIncluidosPaquetes() {
-		
-		sistemaDeProductos.registrarIndividual("Microfono", "SnapDragon", "Periferico", a4, 1500f, 10, 98f);    // SKU = 6
-	
-		Paquete packParaComputadora = (Paquete) catalogoUNQ.buscarProducto(5);
-		Individual microfono = (Individual) catalogoUNQ.buscarProducto(6);
-		
-		ArrayList<Producto> productos2 = new ArrayList<>(productos);
-		productos2.add(packParaComputadora);
-		productos2.add(microfono);
+	void testLosProductosPaquetesTambiénPuedenTenerIncluidosPaquetes() {		
 		
 		sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 2);   // SKU = 7
 		
-		assertEquals(27120.002, catalogoUNQ.buscarProducto(7).precioFinal(), 0.01f);
-		// Se suma el precio del paquete 'Pack para computadora' + el precio del 'Microfono' y el descuento del paquete 'Pack para computadora 2'
+		Paquete paquete = (Paquete) catalogoUNQ.buscarProducto(7);
+		
+		assertEquals(7, catalogoUNQ.cantidadDeProductos()); // Se registra el nuevo producto
+		assertTrue(paquete.tieneProducto(microfono));
+		assertTrue(paquete.tieneProducto(packParaComputadora));
 	}
 	
 	@Test
 	void testNoSePuedeRegistrarUnPaqueteConUnStockMenorA0() {
-		Paquete packParaComputadora = (Paquete) catalogoUNQ.buscarProducto(5);
-		ArrayList<Producto> productos2 = new ArrayList<>(productos);
-		productos2.add(packParaComputadora);
 		
 		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, -1));
 																													// SKU = 6
 		 assertEquals("El stock no puede ser negativo", error.getMessage());
 		
-		 assertEquals(5, catalogoUNQ.cantidadDeProductos()); // No se registro el nuevo producto
+		 assertEquals(6, catalogoUNQ.cantidadDeProductos()); // No se registro el nuevo producto
 	}
 	
 	@Test
 	void testSePuedeRegistrarUnPaqueteConUnStock0() {
-		Paquete packParaComputadora = (Paquete) catalogoUNQ.buscarProducto(5);
-		ArrayList<Producto> productos2 = new ArrayList<>(productos);
-		productos2.add(packParaComputadora);
-		 
+		
 		sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 0);
-							// SKU = 6
+							// SKU = 7
 			
-		 assertTrue(catalogoUNQ.tieneProducto(6));   		  // Comprueba si hay al menos un producto que tenga ese SKU
-		 assertEquals(0, catalogoUNQ.cantidadDe(6)); 		  // Verifica que el prefio sea 0
-		 assertEquals(6, catalogoUNQ.cantidadDeProductos()); // Verifica que se sumo al catalogo
+		 assertTrue(catalogoUNQ.tieneProducto(7));   		  // Comprueba si hay al menos un producto que tenga ese SKU
+		 assertEquals(0, catalogoUNQ.cantidadDe(7)); 		  // Verifica que el prefio sea 0
+		 assertEquals(7, catalogoUNQ.cantidadDeProductos());  // Verifica que se sumo al catalogo
 	}
 	
 	@Test
 	void testNoSePuedeRegistrarUnPaqueteQueNoTieneProdcutos() {
 		
-		 ArrayList<Producto> productos2 = new ArrayList<>();
+		 ArrayList<Producto> productos3 = new ArrayList<>();
 		 
-		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 10));
+		 IllegalArgumentException error = assertThrows(IllegalArgumentException.class,() -> sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos3, 40, 10));
 			                                                                                                    // SKU = 6
 		 assertEquals("El paquete debe tener al menos un producto", error.getMessage());
-		 assertEquals(5, catalogoUNQ.cantidadDeProductos()); // No se registro el nuevo producto
+		 assertEquals(6, catalogoUNQ.cantidadDeProductos()); // No se registro el nuevo producto
 	}
 	
-
+	@Test
+	void testCuandoUnPaqueteTieneDescuentoDel100PorCientoSuPrecioEsGratis() {
+		sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 100, 0);
+		// SKU = 7
+		
+		assertEquals(0, catalogoUNQ.buscarProducto(7).precioFinal());
+	}
+	
+	@Test
+	void testElPaqueteSabeSuPrecioFinal() {
+		sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 0);
+		// SKU = 7
+		
+		assertEquals(27120.002, catalogoUNQ.buscarProducto(7).precioFinal(), 0.01f);
+		// Se suma el precio del paquete 'Pack para computadora' + el precio del 'Microfono' y el descuento del paquete 'Pack para computadora 2'
+	}
+	
+	
+	@Test
+	void testElPaqueteSabeSuPeso() {
+		sistemaDeProductos.registrarPaquete("Pack para computadora 2", "Accesesorios y Perifericos", a5, productos2, 40, 0);
+		// SKU = 7
+		
+		assertEquals(548, catalogoUNQ.buscarProducto(7).getPeso());
+		// Se suma el peso del paquete 'Pack para computadora' + el peso del 'Microfono'
+	}
+	
 }

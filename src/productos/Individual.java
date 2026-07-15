@@ -9,9 +9,9 @@ public class Individual extends Producto {
 	
 	public Individual(int SKU, String nombre, String marca, String categoria, ArrayList<Atributo> atributos, float precio, int cantidad, float peso) {
 		super(SKU, nombre, categoria, atributos, cantidad);
-		this.marca = marca;
+		this.marca  = marca;
 		this.precio = precio;
-		this.peso = peso;
+		this.peso   = peso;
 	}
 
 	public String getDescripcion() {
