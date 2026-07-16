@@ -1,11 +1,8 @@
-package sistemas;
+package productos;
 
 import java.util.ArrayList;
 
-import productos.Atributo;
-import productos.Individual;
-import productos.Paquete;
-import productos.Producto;
+import sistemas.Sucursal;
 
 public class SistemaDeProductos {
 	

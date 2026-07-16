@@ -1,29 +1,35 @@
 package sistemas;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.function.BooleanSupplier;
 
+import NotaDeCredito.NotaDeCreditoProducto;
+import NotaDeCredito.SistemaDeNotaDeCredito;
 import pedido.Pedido;
 import productos.Producto;
 import ubicacionGeografica.Direccion;
 
 public class Sucursal {
 	
-	private int 				CUIT;
-	private Catalogo 			catalogo;
-	private float 				dineroDisponible;
-	private Direccion 			direccion;
-	private ArrayList<String> 	comprobantesFiscales;
-	private ArrayList<Sucursal> sucursales;
-	private ArrayList<Producto> deposito;
+	private int 				     CUIT;
+	private Catalogo 			     catalogo;
+	private float 				     dineroDisponible;
+	private Direccion 			     direccion;
+	private ArrayList<String> 	     comprobantesFiscales;
+	private ArrayList<Sucursal>      sucursales;
+	private ArrayList<Producto>      deposito;
+	private SistemaDeNotaDeCredito   sistemaDeNotaDeCredito;
 
 	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion, ArrayList<Sucursal> sucursales) {
-		this.CUIT = CUIT;
-		this.catalogo = catalogo;
-		this.dineroDisponible = dineroDisponible; 
-		this.direccion = direccion;
-		this.comprobantesFiscales = new ArrayList<>();
-		this.sucursales = sucursales;
-		this.deposito = new ArrayList<Producto>();
+		this.CUIT                   = CUIT;
+		this.catalogo               = catalogo;
+		this.dineroDisponible       = dineroDisponible; 
+		this.direccion              = direccion;
+		this.comprobantesFiscales   = new ArrayList<>();
+		this.sucursales             = sucursales;
+		this.deposito               = new ArrayList<Producto>();
+		this.sistemaDeNotaDeCredito = new SistemaDeNotaDeCredito();
 	}
 
 	public int getCUIT() {
@@ -107,5 +113,23 @@ public class Sucursal {
 			catalogo.descontarStockDe(p);
 		}
 	}
+
+	public void generarNotaDeCreditoDeProductos(Pedido pedido) {
+		sistemaDeNotaDeCredito.agregarNotaProducto(pedido, LocalDate.now(), pedido.precioTotal(), CUIT);
+	}
+
+	public int cantidadDeNotasDeCreditos() {
+		return sistemaDeNotaDeCredito.cantidadDeNotasDeCreditos();
+	}
+
+	public boolean tieneNotaDeCreditoNro(int nro) {
+		return sistemaDeNotaDeCredito.tieneNotaDeCreditoNro(nro);
+	}
+
+	public String detallesNotaDeCredito(int nro) {
+		return sistemaDeNotaDeCredito.detallesDe(nro);
+	}
+
+
 
 }

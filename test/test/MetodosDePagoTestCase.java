@@ -26,8 +26,8 @@ import metodosDePago.TransferenciaBancaria;
 import pedido.ExceptionMsg;
 import pedido.Pedido;
 import productos.Atributo;
+import productos.SistemaDeProductos;
 import sistemas.Catalogo;
-import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 

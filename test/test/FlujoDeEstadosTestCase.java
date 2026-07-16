@@ -15,8 +15,8 @@ import pedido.Pedido;
 import pedido.TipoEstado;
 import productos.Atributo;
 import productos.Individual;
+import productos.SistemaDeProductos;
 import sistemas.Catalogo;
-import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 

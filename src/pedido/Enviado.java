@@ -5,6 +5,7 @@ public class Enviado extends EstadoDelPedido {
 	public TipoEstado getTipo() {
 		return TipoEstado.ENVIADO;
 	}
+	
 	@Override
 	public void avanzarEstado(Pedido pedido) {
 		pedido.cambiarEstado(new Entregado());
@@ -12,8 +13,8 @@ public class Enviado extends EstadoDelPedido {
 
 	@Override
 	public void cancelarPedido(Pedido pedido) {
-		pedido.devolverStock();
 		pedido.cancelarse();
+		pedido.getSucursal().generarNotaDeCreditoDeProductos(pedido);
 	}
 	
 	public Boolean debeNotificar() {

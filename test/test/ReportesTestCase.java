@@ -15,6 +15,7 @@ import envios.Envio;
 import metodosDePago.MetodoDePago;
 import pedido.Pedido;
 import productos.Atributo;
+import productos.SistemaDeProductos;
 import reportes.LineaReporteProducto;
 import reportes.RegistradorDeVentasObserver;
 import reportes.RegistroDeVentas;
@@ -24,7 +25,6 @@ import reportes.VisitorCSV;
 import reportes.VisitorHTML;
 import reportes.VisitorTextoPlano;
 import sistemas.Catalogo;
-import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 

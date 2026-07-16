@@ -14,8 +14,8 @@ import productos.Atributo;
 import productos.Individual;
 import productos.Paquete;
 import productos.Producto;
+import productos.SistemaDeProductos;
 import sistemas.Catalogo;
-import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 

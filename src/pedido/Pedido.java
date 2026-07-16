@@ -5,7 +5,6 @@ import java.util.List;
 import notificadores.*;
 
 import envios.Envio;
-import envios.EnvioEstandar;
 import envios.SinEnvioDefinido;
 import envios.TipoEnvio;
 import metodosDePago.MetodoDePago;
@@ -16,14 +15,14 @@ import ubicacionGeografica.Direccion;
 
 public class Pedido {
 
-	private Sucursal            sucursal;
-	private EstadoDelPedido     estadoActual;
-	private ArrayList<Producto> listaDeProductos;
-	private String              mail;
-	private Direccion              direccion;
-	private MetodoDePago        metodoDePago;
-	private Envio               envio;
-	private List<PedidoObserver> observers = new ArrayList<>();
+	private Sucursal             sucursal;
+	private EstadoDelPedido      estadoActual;
+	private ArrayList<Producto>  listaDeProductos;
+	private String               mail;
+	private Direccion            direccion;
+	private MetodoDePago         metodoDePago;
+	private Envio                envio;
+	private List<PedidoObserver> observers;
 	
 	public Pedido(Sucursal sucursal, ArrayList<Producto> listaDeProductos, String mail, Direccion direccion) {
 		this.sucursal         = sucursal;
@@ -33,6 +32,7 @@ public class Pedido {
 		this.direccion        = direccion;
 		this.metodoDePago     = new SinMetodoDePagoDefinido();
 	    this.envio            = new SinEnvioDefinido();
+	    this.observers        = new ArrayList<PedidoObserver>();
 	    
 	}
 
@@ -173,5 +173,6 @@ public class Pedido {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
+
 	
 }

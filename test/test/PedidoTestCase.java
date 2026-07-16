@@ -10,15 +10,16 @@ import org.junit.jupiter.api.Test;
 import envios.RetiroEnSucursal;
 import envios.TipoEnvio;
 import metodosDePago.BilleteraVirtual;
+import pedido.Enviado;
 import pedido.Pedido;
 import pedido.TipoEstado;
 import productos.Atributo;
 import productos.Individual;
+import productos.SistemaDeProductos;
 
 import java.util.ArrayList;
 
 import sistemas.Catalogo;
-import sistemas.SistemaDeProductos;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 
@@ -135,6 +136,44 @@ class PedidoTestCase {
 		
 		assertEquals(pedido.getEstado(), TipoEstado.CANCELADO); // Se verifica que cambio el estado del pedido
 		assertEquals(100, catalogoUNQ.cantidadDe(1));           // Se verifica que el stock de 'Monitor' vuelve a 100
+	}
+	
+	@Test
+	void testIUnPedidoSabeSuPesoTotal() {
+		Individual monitor = (Individual) catalogoUNQ.buscarProducto(1);
+		
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(monitor);
+		
+		assertEquals(4000, pedido.pesoTotal()); // Se suma el pedo de los dos monitores
+	}
+	
+	@Test
+	void testIUnPedidoEnEstadoEnviadoCuandoSeCancelaGeneraUnaNotaDeCreditoQueLaGuardaLaSucursal() {
+		Individual monitor = (Individual) catalogoUNQ.buscarProducto(1);
+		Individual CPU     = (Individual) catalogoUNQ.buscarProducto(2);
+		
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(CPU);
+		
+		pedido.cambiarEstado(new Enviado());
+		
+		pedido.cancelarPedido();
+		
+		String detallesNotaDeCredito = "NOTA DE CREDITO DE 28062026   NUMERO: 1." + "\n"
+				+ "Cliente: juan@gmail.com." + "\n"
+				+ "Fecha: 2026-07-16." + "\n"
+				+ "Detalles de montos." + "\n"
+				+ "NOTA DE CREDITO DE 28062026   NUMERO: 1." + "\n"
+				+ "Cliente: juan@gmail.com." + "\n"
+				+ "Fecha: 2026-07-16." + "\n"
+				+ "Monitor: 8900.0." + "\n"
+				+ "CPU: 10000.0." + "\n"
+				+ "Valor total: 18900.0." + "\n";
+		
+		assertEquals(1, sucursalUNQ.cantidadDeNotasDeCreditos());
+		assertTrue(sucursalUNQ.tieneNotaDeCreditoNro(1));
+		assertEquals(detallesNotaDeCredito, sucursalUNQ.detallesNotaDeCredito(1));
 	}
 	
 	
