@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,8 +45,10 @@ public class MetodosDePagoTestCase {
 		TarjetaDeCredito tarjeta = new TarjetaDeCredito(api, 4111, 123, "12/28");
 		tarjeta.procesarPago(1000f);
  
+		assertFalse(tarjeta.esSinDefinir());
 		assertEquals(1, tarjeta.getCuponesGenerados().size());
 		assertEquals(9001, tarjeta.getCuponesGenerados().get(0).getCodigoTransaccion());
+		assertEquals("Cupon de Pago. N° Transaccion: 9001", tarjeta.getCuponesGenerados().get(0).imprimir());
 		verify(api).preAutorizar(4111, 1000f);
 	}
  
@@ -70,9 +73,11 @@ public class MetodosDePagoTestCase {
  
 		TransferenciaBancaria transferencia = new TransferenciaBancaria(api, 123456, false);
 		transferencia.procesarPago(500f);
- 
+		
+		assertFalse(transferencia.esSinDefinir());
 		assertEquals(1, transferencia.getComprobantesGenerados().size());
 		assertEquals(99, transferencia.getComprobantesGenerados().get(0).getNumeroOperacion());
+		assertEquals(123456, transferencia.getComprobantesGenerados().get(0).getCbu());
 	}
  
 	@Test
@@ -86,6 +91,7 @@ public class MetodosDePagoTestCase {
 		billetera.procesarPago(250f);
  
 		verify(api).enviarNotificacion(eq(1), contains("7777"));
+		assertFalse(billetera.esSinDefinir());
 		assertEquals(1, billetera.getNotificacionesEnviadas().size());
 	}
  
