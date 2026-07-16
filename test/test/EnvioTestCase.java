@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ class EnvioTestCase {
 	private Catalogo            catalogoUNQ, catalogoCorrientes;
 	private Sucursal            sucursalUNQ, sucursalCorrientes;
 	private Pedido              pedido;
-	private CorreoArgentina     correoStub;
+	private CorreoArgentina     correoMock;
 	private ArrayList<Sucursal> sucursales;
 	private ArrayList<Atributo> atributosDummy;
 	private TarjetaDeCredito    tarjetaDummy;
@@ -40,7 +41,7 @@ class EnvioTestCase {
 	public void setUp() {
 		sistemaDeProductos = new SistemaDeProductos();
 		
-		correoStub     = mock(CorreoArgentina.class);
+		correoMock     = mock(CorreoArgentina.class);
 		catalogoUNQ    = new Catalogo();
 		sucursales     = new ArrayList<Sucursal>();
 	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales, new RegistroDeVentas());
@@ -69,21 +70,22 @@ class EnvioTestCase {
 	@Test
 	void testElCostoYEstimacionDeUnEnvioCuandoElPedidoEstaHechoComoEstandar() {
 		
-		when(correoStub.estimarEnvio(pedido.pesoTotal(), pedido.getDireccion())).thenReturn(1000f);
+		when(correoMock.estimarEnvio(pedido.pesoTotal(), pedido.getDireccion())).thenReturn(1000f);
 
-	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    EnvioEstandar envio = new EnvioEstandar(correoMock);
 
 	    pedido.setEnvio(envio);
 
 	    assertEquals(TipoEnvio.ESTANDAR, pedido.getEnvio());
 	    assertEquals(1000f, pedido.calcularCosto());
+	    verify(correoMock).estimarEnvio(pedido.pesoTotal(), pedido.getDireccion());
 	    assertEquals("El envio llegará en 5 días hábiles", pedido.estimacionDeEntrega());
 	}
 	
 	@Test
 	void testLaEstimacionDeEntregaEnEnvioEstandarEs5DiasSiLaDistanciaEsHasta20Inclusive() {
 	
-	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    EnvioEstandar envio = new EnvioEstandar(correoMock);
 	    
 	    pedido.setDireccion(new Direccion("Calle 146", -34.58508d, -58.278418d));
 	    pedido.setEnvio(envio);
@@ -96,7 +98,7 @@ class EnvioTestCase {
 	@Test
 	void testLaEstimacionDeEntregaEnEnvioEstandarEs6DiasSiLaDistanciaEsMasDe20() {
 	
-	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    EnvioEstandar envio = new EnvioEstandar(correoMock);
 	    
 	    pedido.setDireccion(new Direccion("Calle 189", -34.58504d, -58.278418d));
 	    pedido.setEnvio(envio);
@@ -109,7 +111,7 @@ class EnvioTestCase {
 	@Test
 	void testLaEstimacionDeEntregaEnEnvioEstandarEs6DiasSiLaDistanciaEsHasta100Inclusive() {
 	
-	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    EnvioEstandar envio = new EnvioEstandar(correoMock);
 	    
 	    pedido.setDireccion(new Direccion("Calle 189", -33.86561d, -58.278418d));
 	    pedido.setEnvio(envio);
@@ -122,7 +124,7 @@ class EnvioTestCase {
 	@Test
 	void testLaEstimacionDeEntregaEnEnvioEstandarEs7DiasSiLaDistanciaEsMasDe100() {
 	
-	    EnvioEstandar envio = new EnvioEstandar(correoStub);
+	    EnvioEstandar envio = new EnvioEstandar(correoMock);
 	    
 	    pedido.setDireccion(new Direccion("Calle 189", -33.86560d, -58.278418d));
 	    pedido.setEnvio(envio);
