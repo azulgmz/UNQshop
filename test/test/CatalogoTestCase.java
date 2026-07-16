@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import productos.Atributo;
 import productos.Individual;
-import productos.Producto;
 import sistemas.Catalogo;
 
 class CatalogoTestCase {

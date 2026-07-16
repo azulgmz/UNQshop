@@ -19,6 +19,7 @@ import productos.SistemaDeProductos;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
+import reportes.RegistroDeVentas;
 
 public class FlujoDeEstadosTestCase {
 	private SistemaDeProductos sistemaDeProductos;
@@ -35,7 +36,7 @@ public class FlujoDeEstadosTestCase {
     	
     	catalogoUNQ    = new Catalogo();
     	sucursales     = new ArrayList<Sucursal>();
-    	sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
+    	sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales, new RegistroDeVentas());
         atributosDummy = new ArrayList<>();
  
         sistemaDeProductos.agregarSucursal(sucursalUNQ);

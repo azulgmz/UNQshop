@@ -18,6 +18,7 @@ import productos.SistemaDeProductos;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
+import reportes.RegistroDeVentas;
 
 class PaqueteTestCase {
 	
@@ -47,7 +48,7 @@ class PaqueteTestCase {
 		catalogoUNQ     = new Catalogo();
 		sucursales      = new ArrayList<Sucursal>();
 		direccionDummy  = mock(Direccion.class);
-		sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, direccionDummy, sucursales);
+		sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, direccionDummy, sucursales, new RegistroDeVentas());
 		
 		sistemaDeProductos.agregarSucursal(sucursalUNQ);
 		

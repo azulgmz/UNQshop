@@ -13,7 +13,6 @@ import pedido.*;
 import notificadores.*;
 
 import productos.Producto;
-import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
 

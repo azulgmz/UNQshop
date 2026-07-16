@@ -21,6 +21,7 @@ import busquedas.TipoDeBusqueda;
 import productos.Atributo;
 import productos.Producto;
 import productos.SistemaDeProductos;
+import reportes.RegistroDeVentas;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
@@ -40,7 +41,7 @@ class BusquedaTestCase {
 		
 		catalogoCorrientes = new Catalogo();
 		
-		sucursalCorrientes = new Sucursal(28062026, catalogoCorrientes, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d),  new ArrayList<Sucursal>());
+		sucursalCorrientes = new Sucursal(28062026, catalogoCorrientes, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d),  new ArrayList<Sucursal>(), new RegistroDeVentas());
 		atributosDummy     = new ArrayList<>();
 		productosDeseados  = new ArrayList<>();
 		

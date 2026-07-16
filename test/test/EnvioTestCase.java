@@ -22,6 +22,7 @@ import productos.SistemaDeProductos;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
+import reportes.RegistroDeVentas;
 
 class EnvioTestCase {
 	
@@ -42,14 +43,14 @@ class EnvioTestCase {
 		correoStub     = mock(CorreoArgentina.class);
 		catalogoUNQ    = new Catalogo();
 		sucursales     = new ArrayList<Sucursal>();
-	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales);
+	    sucursalUNQ    = new Sucursal(28062026, catalogoUNQ, 100000f, new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d), sucursales, new RegistroDeVentas());
 	    
 	    atributosDummy = new ArrayList<Atributo>();
 	    
 	    pedido = sucursalUNQ.crearPedido("juan@gmail.com", new Direccion("9 de Julio 217", -34.712445d, -58.284493d));
 	    
 	    catalogoCorrientes = new Catalogo();
-		sucursalCorrientes = new Sucursal(895422, catalogoCorrientes, 20000, new Direccion("Direccion a 20km aprox", -34.58508d, -58.278418d), sucursales);
+		sucursalCorrientes = new Sucursal(895422, catalogoCorrientes, 20000, new Direccion("Direccion a 20km aprox", -34.58508d, -58.278418d), sucursales, new RegistroDeVentas());
 		
 		sistemaDeProductos.agregarSucursal(sucursalUNQ);
 		sistemaDeProductos.agregarSucursal(sucursalCorrientes);

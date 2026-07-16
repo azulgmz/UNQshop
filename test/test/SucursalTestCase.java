@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import envios.TipoEnvio;
 import pedido.Pedido;
 import pedido.TipoEstado;
+import reportes.RegistroDeVentas;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
@@ -26,7 +27,7 @@ class SucursalTestCase {
 		catalogoUNQ     = new Catalogo();
 		sucursales      = new ArrayList<Sucursal>();
 		direccionUNQ    = new Direccion("Roque Sáenz Peña 124", -34.76493d, -58.278418d);
-		sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, direccionUNQ, sucursales);
+		sucursalUNQ     = new Sucursal(28062026, catalogoUNQ, 100000f, direccionUNQ, sucursales, new RegistroDeVentas());
 	                                  // CUIT       CATALOGO   DINERO   DIRECCION    SUCURSALES
 	}
 	

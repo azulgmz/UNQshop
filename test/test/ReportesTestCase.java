@@ -98,7 +98,7 @@ public class ReportesTestCase {
 		SistemaDeProductos sistemaDeProductos = new SistemaDeProductos();
 		
 		Catalogo catalogo = new Catalogo();
-		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, new ArrayList<Sucursal>());
+		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, new ArrayList<Sucursal>(), new RegistroDeVentas());
 		
 		sistemaDeProductos.agregarSucursal(sucursal);
 		
