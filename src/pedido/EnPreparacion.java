@@ -15,6 +15,7 @@ public class EnPreparacion extends EstadoDelPedido {
 	public void cancelarPedido(Pedido pedido) {
 		pedido.devolverStock();
 		pedido.cancelarse();
+		pedido.getSucursal().generarNotaDeCreditoDeProductosYEnvio(pedido);
 	}
 	
 	public String getNombre() {

@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
- 
+import static org.mockito.Mockito.mock;
+
 import java.util.ArrayList;
  
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
- 
+
+import envios.RetiroEnSucursal;
 import pedido.ExceptionMsg;
 import pedido.Pedido;
 import pedido.TipoEstado;
@@ -69,19 +71,10 @@ public class FlujoDeEstadosTestCase {
  
     @Test
     void testCancelarUnPedidoEnPreparacionDevuelveElStock() {
-        pedido.avanzarEstado(); 
+        pedido.setEnvio(mock(RetiroEnSucursal.class));
+    	
+    	pedido.avanzarEstado(); 
         pedido.avanzarEstado();
- 
-        pedido.cancelarPedido();
- 
-        assertEquals(TipoEstado.CANCELADO, pedido.getEstado());
-        assertEquals(100, catalogoUNQ.cantidadDe(1));
-    }
- 
-    @Test
-    void testCancelarUnPedidoEnviadoDevuelveElStock() {
-        pedido.avanzarEstado(); // 
-        pedido.avanzarEstado(); //
  
         pedido.cancelarPedido();
  

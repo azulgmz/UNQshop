@@ -2,9 +2,7 @@ package sistemas;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.function.BooleanSupplier;
 
-import NotaDeCredito.NotaDeCreditoProducto;
 import NotaDeCredito.SistemaDeNotaDeCredito;
 import pedido.Pedido;
 import productos.Producto;
@@ -128,6 +126,10 @@ public class Sucursal {
 
 	public String detallesNotaDeCredito(int nro) {
 		return sistemaDeNotaDeCredito.detallesDe(nro);
+	}
+
+	public void generarNotaDeCreditoDeProductosYEnvio(Pedido pedido) {
+		sistemaDeNotaDeCredito.agregarNotaProductoYEnvio(pedido, LocalDate.now(), pedido.precioTotal(), pedido.calcularCosto(), CUIT);
 	}
 
 

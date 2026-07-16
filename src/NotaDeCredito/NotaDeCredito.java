@@ -42,7 +42,7 @@ public abstract class NotaDeCredito {
 	}
 	
 	protected String detallesProducto() { // Solo quiero que acceden los hijos, es para armar la nota total
-		String detalles = detallesDatos();
+		String detalles = "";
 		ArrayList<Producto> productos = getPedido().getListaDeProductos();
 		
 		for(Producto p : productos) {

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import envios.RetiroEnSucursal;
 import envios.TipoEnvio;
 import metodosDePago.BilleteraVirtual;
+import pedido.EnPreparacion;
 import pedido.Enviado;
 import pedido.Pedido;
 import pedido.TipoEstado;
@@ -163,12 +164,36 @@ class PedidoTestCase {
 		String detallesNotaDeCredito = "NOTA DE CREDITO DE 28062026   NUMERO: 1." + "\n"
 				+ "Cliente: juan@gmail.com." + "\n"
 				+ "Fecha: 2026-07-16." + "\n"
-				+ "Detalles de montos." + "\n"
-				+ "NOTA DE CREDITO DE 28062026   NUMERO: 1." + "\n"
-				+ "Cliente: juan@gmail.com." + "\n"
-				+ "Fecha: 2026-07-16." + "\n"
+				+ "Detalles de montos: " + "\n"
 				+ "Monitor: 8900.0." + "\n"
 				+ "CPU: 10000.0." + "\n"
+				+ "Valor total: 18900.0." + "\n";
+		
+		assertEquals(1, sucursalUNQ.cantidadDeNotasDeCreditos());
+		assertTrue(sucursalUNQ.tieneNotaDeCreditoNro(1));
+		assertEquals(detallesNotaDeCredito, sucursalUNQ.detallesNotaDeCredito(1));
+	}
+	
+	@Test
+	void testIUnPedidoEnEstadoEnPreparacionCuandoSeCancelaGeneraUnaNotaDeCreditoQueLaGuardaLaSucursal() {
+		Individual monitor = (Individual) catalogoUNQ.buscarProducto(1);
+		Individual CPU     = (Individual) catalogoUNQ.buscarProducto(2);
+		
+		pedido.agregarProducto(monitor);
+		pedido.agregarProducto(CPU);
+		
+		pedido.setEnvio(new RetiroEnSucursal(sucursalUNQ, pedido));
+		pedido.cambiarEstado(new EnPreparacion());
+		
+		pedido.cancelarPedido();
+		
+		String detallesNotaDeCredito = "NOTA DE CREDITO DE 28062026   NUMERO: 1." + "\n"
+				+ "Cliente: juan@gmail.com." + "\n"
+				+ "Fecha: 2026-07-16." + "\n"
+				+ "Detalles de montos:" + "\n"
+				+ "Monitor: 8900.0." + "\n"
+				+ "CPU: 10000.0." + "\n"
+				+ "Envio: 0.0" + ".\n"
 				+ "Valor total: 18900.0." + "\n";
 		
 		assertEquals(1, sucursalUNQ.cantidadDeNotasDeCreditos());

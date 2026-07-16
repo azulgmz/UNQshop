@@ -15,7 +15,7 @@ public class NotaDeCreditoProducto extends NotaDeCredito{
 	
 	public String detalles() {
 		String detalles = detallesDatos();
-		detalles += "Detalles de montos" + ".\n";
+		detalles += "Detalles de montos: " + "\n";
 		detalles += detallesProducto();
 		detalles += "Valor total: " + costoDeProductos + ".\n";
 		

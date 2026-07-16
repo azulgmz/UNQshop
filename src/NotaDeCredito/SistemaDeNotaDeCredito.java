@@ -41,5 +41,14 @@ public class SistemaDeNotaDeCredito {
 		}
 		throw new IllegalArgumentException("No hay registro de alguna nota con ese numero");
 	}
+
+	public void agregarNotaProductoYEnvio(Pedido pedido, LocalDate fecha, float precioTotal, float precioEnvio,
+			int CUIT) {
+		nroDeNota++;
+		
+		NotaDeCreditoProductoYEnvio notaDeCredito = new NotaDeCreditoProductoYEnvio(nroDeNota, pedido, fecha, precioTotal, precioEnvio, CUIT); 
+		
+		notasDeCredito.add(notaDeCredito);
+	}
 	
 }
