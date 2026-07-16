@@ -38,4 +38,9 @@ public class TransferenciaBancaria extends MetodoDePagoTemplate {
 	public List<ComprobanteCBU> getComprobantesGenerados() {
 		return comprobantesGenerados;
 	}
+
+
+	public TipoMetodoDePago TipoMetodoDePago() {
+		return TipoMetodoDePago.TRANSFERENCIA_BANCARIA;
+	}
 }

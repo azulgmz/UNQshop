@@ -35,4 +35,7 @@ public class BilleteraVirtual extends MetodoDePagoTemplate {
 	public List<String> getNotificacionesEnviadas() {
 		return notificacionesEnviadas;
 	}
+	public TipoMetodoDePago TipoMetodoDePago() {
+		return TipoMetodoDePago.BILLETERA_VIRTUAL;
+	}
 }

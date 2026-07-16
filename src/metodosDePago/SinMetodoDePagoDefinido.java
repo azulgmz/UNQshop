@@ -10,4 +10,8 @@ public class SinMetodoDePagoDefinido implements MetodoDePago {
 	public void procesarPago(float monto) {
 		throw new ExceptionMsg("Metodo de pago no definido");
 	}
+
+	public TipoMetodoDePago TipoMetodoDePago() {
+		return TipoMetodoDePago.SIN_METODO_DE_PAGO;
+	}
 }

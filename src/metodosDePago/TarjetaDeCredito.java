@@ -40,4 +40,9 @@ public class TarjetaDeCredito extends MetodoDePagoTemplate {
 	public List<CuponDePago> getCuponesGenerados() {
 		return cuponesGenerados;
 	}
+
+	@Override
+	public TipoMetodoDePago TipoMetodoDePago() {
+		return TipoMetodoDePago.TARJETA_DE_CREDITO;
+	}
 }

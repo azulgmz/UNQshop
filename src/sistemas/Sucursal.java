@@ -2,8 +2,11 @@ package sistemas;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.function.BooleanSupplier;
 
 import NotaDeCredito.SistemaDeNotaDeCredito;
+import metodosDePago.MetodoDePago;
+import notificadores.ComprobanteFiscal;
 import pedido.Pedido;
 import productos.Producto;
 import ubicacionGeografica.Direccion;
@@ -12,15 +15,15 @@ import reportes.RegistradorDeVentasObserver;
 
 public class Sucursal {
 	
-	private int 				     CUIT;
-	private Catalogo 			     catalogo;
-	private float 				     dineroDisponible;
-	private Direccion 			     direccion;
-	private ArrayList<String> 	     comprobantesFiscales;
-	private ArrayList<Sucursal>      sucursales;
-	private ArrayList<Producto>      deposito;
-	private SistemaDeNotaDeCredito   sistemaDeNotaDeCredito;
-	private RegistroDeVentas registroDeVentas;
+	private int 				          CUIT;
+	private Catalogo 			          catalogo;
+	private float 				          dineroDisponible;
+	private Direccion 			          direccion;
+	private ArrayList<ComprobanteFiscal>  comprobantesFiscales;
+	private ArrayList<Sucursal>           sucursales;
+	private ArrayList<Producto>           deposito;
+	private SistemaDeNotaDeCredito        sistemaDeNotaDeCredito;
+	private RegistroDeVentas              registroDeVentas;
 
 
 	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion, ArrayList<Sucursal> sucursales, RegistroDeVentas registroDeVentas) {
@@ -30,7 +33,7 @@ public class Sucursal {
 		this.direccion = direccion;
 		this.sucursales = sucursales;
 		this.registroDeVentas = registroDeVentas;
-		this.comprobantesFiscales = new ArrayList<>();
+		this.comprobantesFiscales = new ArrayList<ComprobanteFiscal>();
 		this.deposito = new ArrayList<Producto>();
 		this.sistemaDeNotaDeCredito = new SistemaDeNotaDeCredito();
 
@@ -143,12 +146,32 @@ public class Sucursal {
 
 
 
-	public ArrayList<String> getComprobantesFiscales(){
+	public ArrayList<ComprobanteFiscal> getComprobantesFiscales(){
 		return comprobantesFiscales;
 	}
 
 	public boolean tieneSucursal(Sucursal otraSucursal) {
 		return sucursales.contains(otraSucursal);
+	}
+
+	public void agregarComprobanteFiscal(Pedido pedido, LocalDate fechaEmision, MetodoDePago metodoDePago, int nroComprobante,
+			String claseDelComprobante) {
+		comprobantesFiscales.add(new ComprobanteFiscal(this, pedido, fechaEmision, metodoDePago, nroComprobante, claseDelComprobante));
+		
+	}
+
+	public boolean tieneComprobanteFiscal(int nroComprobante) {
+		return comprobantesFiscales.stream().anyMatch(cf -> cf.getNroComprobante() == nroComprobante);
+
+	}
+
+	public String detallesDelComprobanteFiscal(int nroComprobante) {
+		for(ComprobanteFiscal cf : comprobantesFiscales) {
+			if(cf.getNroComprobante() == nroComprobante) {
+				return cf.detalles();
+			}
+		}
+		throw new IllegalArgumentException("No existe ningun comprobante fiscal con numero  " + nroComprobante);
 	}
 
 }

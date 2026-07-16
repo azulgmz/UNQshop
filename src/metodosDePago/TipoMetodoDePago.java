@@ -1,0 +1,5 @@
+package metodosDePago;
+
+public enum TipoMetodoDePago {
+	BILLETERA_VIRTUAL, SIN_METODO_DE_PAGO, TARJETA_DE_CREDITO, TRANSFERENCIA_BANCARIA
+}
