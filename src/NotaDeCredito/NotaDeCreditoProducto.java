@@ -22,6 +22,10 @@ public class NotaDeCreditoProducto extends NotaDeCredito{
 		return detalles;
 		
 	}
+	
+	public float getCostoDeProductos() {
+		return costoDeProductos;
+	}
 
 
 

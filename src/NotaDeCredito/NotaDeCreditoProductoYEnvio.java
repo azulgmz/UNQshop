@@ -25,5 +25,13 @@ public class NotaDeCreditoProductoYEnvio extends NotaDeCredito{
 		
 	}
 
+	public float getCostoDeProductos() {
+		return costoDeProductos;
+	}
+
+	public float getPrecioEnvio() {
+		return precioEnvio;
+	}
+
 
 }
