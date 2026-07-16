@@ -147,4 +147,8 @@ public class Sucursal {
 		return comprobantesFiscales;
 	}
 
+	public boolean tieneSucursal(Sucursal otraSucursal) {
+		return sucursales.contains(otraSucursal);
+	}
+
 }

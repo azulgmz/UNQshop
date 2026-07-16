@@ -50,5 +50,18 @@ class SucursalTestCase {
 		 assertTrue(pedido.estaSinDefinirMetodoDePago());
 		 assertEquals(pedido.getEnvio(), TipoEnvio.SINENVIODEFINIDO);
 	}
+	
+	
+	@Test
+	void testUnaSucursalPuedeAgregarYEliminarAOtraDeSuLista() {
+		
+		sucursalUNQ.agregarSucursal(sucursalUNQ); 
+		assertTrue(sucursalUNQ.tieneSucursal(sucursalUNQ));
+		
+		
+		sucursalUNQ.eliminarSucursal(sucursalUNQ);
+		assertFalse(sucursalUNQ.tieneSucursal(sucursalUNQ));
+	}
+	
 
 }
