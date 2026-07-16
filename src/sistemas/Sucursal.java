@@ -7,6 +7,8 @@ import NotaDeCredito.SistemaDeNotaDeCredito;
 import pedido.Pedido;
 import productos.Producto;
 import ubicacionGeografica.Direccion;
+import reportes.RegistroDeVentas;
+import reportes.RegistradorDeVentasObserver;
 
 public class Sucursal {
 	
@@ -18,16 +20,20 @@ public class Sucursal {
 	private ArrayList<Sucursal>      sucursales;
 	private ArrayList<Producto>      deposito;
 	private SistemaDeNotaDeCredito   sistemaDeNotaDeCredito;
+	private RegistroDeVentas registroDeVentas;
 
-	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion, ArrayList<Sucursal> sucursales) {
-		this.CUIT                   = CUIT;
-		this.catalogo               = catalogo;
-		this.dineroDisponible       = dineroDisponible; 
-		this.direccion              = direccion;
-		this.comprobantesFiscales   = new ArrayList<>();
-		this.sucursales             = sucursales;
-		this.deposito               = new ArrayList<Producto>();
+
+	public Sucursal(int CUIT, Catalogo catalogo, float dineroDisponible, Direccion direccion, ArrayList<Sucursal> sucursales, RegistroDeVentas registroDeVentas) {
+		this.CUIT = CUIT;
+		this.catalogo = catalogo;
+		this.dineroDisponible = dineroDisponible; 
+		this.direccion = direccion;
+		this.sucursales = sucursales;
+		this.registroDeVentas = registroDeVentas;
+		this.comprobantesFiscales = new ArrayList<>();
+		this.deposito = new ArrayList<Producto>();
 		this.sistemaDeNotaDeCredito = new SistemaDeNotaDeCredito();
+
 	}
 
 	public int getCUIT() {
@@ -49,6 +55,7 @@ public class Sucursal {
 	public Pedido crearPedido(String mail, Direccion direccion) {
 		ArrayList<Producto> listaDeProductos = new ArrayList<>();
 		Pedido pedido = new Pedido(this, listaDeProductos, mail, direccion);
+		pedido.agregarObserver(new RegistradorDeVentasObserver(registroDeVentas));
 		
 		return pedido;
 	}
@@ -112,6 +119,7 @@ public class Sucursal {
 		}
 	}
 
+
 	public void generarNotaDeCreditoDeProductos(Pedido pedido) {
 		sistemaDeNotaDeCredito.agregarNotaProducto(pedido, LocalDate.now(), pedido.precioTotal(), CUIT);
 	}
@@ -133,5 +141,10 @@ public class Sucursal {
 	}
 
 
+
+
+	public ArrayList<String> getComprobantesFiscales(){
+		return comprobantesFiscales;
+	}
 
 }

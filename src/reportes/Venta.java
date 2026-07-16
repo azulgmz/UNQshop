@@ -4,18 +4,18 @@ import java.time.LocalDate;
 
 public class Venta {
 	
-	private  String nombreItem;
+	private  String nombreProducto;
 	private  float precioCobrado;
 	private  LocalDate fecha;
  
-	public Venta(String nombreItem, float precioCobrado, LocalDate fecha) {
-		this.nombreItem = nombreItem;
+	public Venta(String nombreProducto, float precioCobrado, LocalDate fecha) {
+		this.nombreProducto = nombreProducto;
 		this.precioCobrado = precioCobrado;
 		this.fecha = fecha;
 	}
  
-	public String getNombreItem() {
-		return nombreItem;
+	public String getNombreProducto() {
+		return nombreProducto;
 	}
  
 	public float getPrecioCobrado() {

@@ -8,7 +8,9 @@ public class Direccion extends UbicacionGeografica{
 		super(latitud, longitud);
 		this.direccion = direccion;
 	}
-
 	
+	public String getDireccion() {
+		return direccion;
+	}
 	
 }

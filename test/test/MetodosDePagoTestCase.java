@@ -30,6 +30,7 @@ import productos.SistemaDeProductos;
 import sistemas.Catalogo;
 import sistemas.Sucursal;
 import ubicacionGeografica.Direccion;
+import reportes.RegistroDeVentas;
 
 
 public class MetodosDePagoTestCase {
@@ -116,7 +117,7 @@ public class MetodosDePagoTestCase {
 		SistemaDeProductos sistemaDeProductos = new SistemaDeProductos();
 		
 		Catalogo catalogo = new Catalogo();
-		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, sucursales);
+		Sucursal sucursal = new Sucursal(1, catalogo, 0f, direccionSucursal, sucursales, new RegistroDeVentas());
 		
 		sistemaDeProductos.agregarSucursal(sucursal);
 		

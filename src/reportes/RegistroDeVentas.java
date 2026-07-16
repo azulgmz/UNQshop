@@ -26,7 +26,7 @@ public class RegistroDeVentas {
 		for (Venta venta : ventas) {
 			if (estaEnPeriodo(venta, desde, hasta)) {
 				ventasPorItem
-						.computeIfAbsent(venta.getNombreItem(), nombre -> new ArrayList<>())
+						.computeIfAbsent(venta.getNombreProducto(), nombre -> new ArrayList<>())
 						.add(venta);
 			}
 		}
